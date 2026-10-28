@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>HARTHELM｜家舵 准备度自测（离线）</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">HARTHELM｜家舵 <span>准备度自测</span></div>
+      <div class="badge">离线本地 · 非官方系统 · 无留资</div>
+    </div>
+
+    <div class="hero">
+      <h1>高才通 / 优才 / 新加坡 EP 资料准备度自测</h1>
+      <p>勾选「有 / 无 / 已过期 / 不适用」，本机生成缺失清单与准备度描述。不评分、不报价、不承诺获批。</p>
+    </div>
+
+    <div class="notice">
+      本工具由 HARTHELM｜家舵 提供，仅供资料整理参考，不构成法律意见，亦非香港入境事务处、人才办、新加坡 MOM 或其他机关的官方系统或标准。清单以当日官网为准。
+    </div>
+
+    <div class="notice" style="margin-top:12px">
+      想离线使用？<a href="HARTHELM-selfcheck-offline-v1.zip" download>下载离线包（zip，约 12 KB）</a>，解压后用浏览器打开 index.html 即可，无需联网。 · <a href="../">返回 HARTHELM 主页</a>
+    </div>
+
+    <!-- HOME -->
+    <section id="step-home" class="card">
+      <h2>选择身份入口</h2>
+      <p class="sub">三选一进入；答卷可选保存在本机浏览器，默认不外传。</p>
+      <div class="grid-3">
+        <button type="button" class="entry-btn" data-type="ttps">
+          <strong>高才通 TTPS</strong>
+          <small>含人才办问卷、首次入境标签口径</small>
+        </button>
+        <button type="button" class="entry-btn" data-type="qmas">
+          <strong>优才 QMAS</strong>
+          <small>申请 / 原则批 / 续签资料自检</small>
+        </button>
+        <button type="button" class="entry-btn" data-type="ep">
+          <strong>新加坡 EP</strong>
+          <small>Employment Pass 申请或更新自检</small>
+        </button>
+      </div>
+      <div class="actions" style="margin-top:16px">
+        <label class="toolbar-note">
+          <input type="checkbox" id="saveLocal" /> 在本机保存进度（localStorage，不上传）
+        </label>
+        <button type="button" class="btn btn-danger-ghost" id="btn-clear">清除本机答卷</button>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section id="step-form" class="hidden">
+      <div class="card">
+        <h2 id="form-title">资料自检</h2>
+        <p class="sub" id="form-blurb"></p>
+        <div id="entry-fields"></div>
+        <div id="expiry-fields"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-back-home">返回入口</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>个人资料清单</h2>
+        <p class="sub">必检项影响准备度描述；选检项只进入「可按情况补充」。</p>
+        <div id="personal-list"></div>
+      </div>
+
+      <div class="card hidden" id="company-card">
+        <h2>公司 / 雇主资料清单</h2>
+        <p class="sub">仅当入口选择「已有公司 / 雇主」时展开。请勿填写账号、薪金等敏感数字。</p>
+        <div id="company-list"></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="btn-eval">生成缺失清单与准备度</button>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="step-result" class="hidden">
+      <div class="card">
+        <h2>自测结果</h2>
+        <p class="sub" id="result-meta"></p>
+        <div id="result-tier" class="result-tier tier-gaps"></div>
+
+        <div class="section-title">建议优先补齐</div>
+        <ul class="miss-list" id="miss-priority"></ul>
+
+        <div class="section-title">可按情况补充</div>
+        <ul class="miss-list" id="miss-optional"></ul>
+
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-back-form">返回修改勾选</button>
+          <button type="button" class="btn btn-primary" onclick="window.print()">打印 / 另存为 PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">为家掌舵，为业远行
+本工具由 HARTHELM｜家舵 提供，仅供资料准备自测参考，不构成法律意见，
+亦非香港入境事务处、人才办、新加坡 MOM 或其他机关之官方系统或标准。
+不收集您的邮箱、电话或证件号码；答卷默认仅存于本机。
+请勿将本结果理解为获批承诺、通过率或报价依据。
+资料清单更新日期：2026-10-23</footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
