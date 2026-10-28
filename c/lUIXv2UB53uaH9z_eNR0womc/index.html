@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<title>客户看板 · HARTHELM｜家舵</title>
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="stylesheet" href="board.css">
+</head>
+<body>
+<header class="top"><div class="brand-row"><img src="/assets/logo-horizontal-reversed.svg" alt="HARTHELM｜家舵" class="logo"><span class="brand-zh" aria-hidden="true">｜家舵</span></div></header>
+<main id="main">
+<section class="card login" id="gate">
+<h1>客户看板</h1>
+<p class="muted">本看板仅供 HARTHELM｜家舵 客户查阅本人资料进度。</p>
+<p class="muted">请输入顾问单独提供的访问密码。</p>
+<p class="err hidden" id="err" role="alert"></p>
+<form id="f" autocomplete="off">
+<label>访问密码<input id="pw" type="password" required maxlength="256" autocomplete="current-password"></label>
+<button type="submit" id="go">查看看板</button>
+</form>
+<p class="muted small">资料以加密形式保存，只在您的设备上解开显示，密码不会发送到任何服务器。</p>
+</section>
+<div id="app" class="hidden"></div>
+</main>
+<footer><p class="slogan">为家掌舵，为业远行</p>
+<p>个人资料按香港《个人资料（私隐）条例》（第486章）处理。如需查阅或更正个人资料，请联系负责顾问。</p>
+<p>本页只反映资料整理进度，不构成入境处的审批结果，也不构成任何承诺。</p><p>© 2026 HARTHELM｜家舵</p></footer>
+<script src="app.js"></script>
+</body>
+</html>

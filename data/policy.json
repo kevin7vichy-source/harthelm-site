@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "status": "示例 · 测试版（每日格式待确认）",
+  "date": "2026-10-28",
+  "window": "2026-10-24 至 2026-10-28",
+  "headline": "高才通、优才、IANG 及新加坡 EP 的续签门槛，本期未见新的官方修订。",
+  "items": [
+    {
+      "level": "提醒",
+      "region": "香港",
+      "title": "新资本投资者入境计划：2026-11-01 起非指定账户购入的资产不计入",
+      "summary": "11 月 1 日或之后提交的净资产审查申请，经非指定账户购入的金融资产不计入投资规定；3,000 万港元门槛及投资结构不变。只与拟走投资类计划的人士有关。",
+      "sources": [{"label": "新资本投资者入境计划官网", "url": "https://www.newcies.gov.hk/en/"}]
+    },
+    {
+      "level": "动态",
+      "region": "香港",
+      "title": "政府公布人才计划最新申请与抵港数字",
+      "summary": "截至 2026 年 9 月的统计数字，人才办来年继续海外推广。不涉及任何规则变更。",
+      "sources": [{"label": "政府新闻公报（2026-10-25）", "url": "https://www.info.gov.hk/gia/general/202610/25/P2026102500264.htm"}]
+    },
+    {
+      "level": "核对",
+      "region": "香港 / 新加坡",
+      "title": "入境处、MOM 本期无新的续签相关公告",
+      "summary": "入境处新闻公报本期无人才计划或续签规则公告。新加坡 EP 最低薪金调整（2027-01 起适用于新申请，2028-01 起适用于续签）为早前已公布的安排，并非本期新增。",
+      "sources": [
+        {"label": "入境处新闻公报", "url": "https://www.immd.gov.hk/hkt/press/press_releases.html"},
+        {"label": "MOM 新闻稿", "url": "https://www.mom.gov.sg/newsroom/press-releases"}
+      ]
+    }
+  ],
+  "disclaimer": "以上为公开政策摘要，仅供参考，不构成法律意见；一切以有关政府部门官网当日公布为准。"
+}
