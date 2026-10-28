@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1280"/>
+<title>【演示·示例数据】HARTHELM｜家舵 · 签约客户看板模拟</title>
+<meta name="robots" content="noindex,nofollow"/>
+<style>
+:root{--navy:#1F2A44;--gold:#B08D57;--ivory:#F5F1E8;--line:#e2dccd;--muted:#6b6f7a;--ok:#2f6b4f}
+*{box-sizing:border-box}body{margin:0;background:var(--ivory);color:var(--navy);font-family:-apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px 36px;background:#fff;border-bottom:1px solid var(--line)}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:22px;letter-spacing:.12em;font-weight:600}
+.brand span{color:var(--gold);font-family:-apple-system,"PingFang SC",sans-serif;letter-spacing:.08em;margin-left:6px;font-size:18px}
+.meta{display:flex;gap:18px;align-items:center;color:var(--muted);font-size:13px}
+.wrap{padding:28px 36px 20px;max-width:1280px}
+.hero{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:22px}
+.hero h1{margin:0 0 10px;font-size:34px;line-height:1.25}
+.hero h1 em{font-style:normal;color:var(--gold);font-size:42px}
+.tag{display:inline-block;background:var(--gold);color:#fff;padding:4px 12px;border-radius:999px;font-size:12px}
+.note{display:flex;gap:10px;align-items:flex-start;max-width:360px;color:var(--muted);font-size:13px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;min-height:220px}
+.card h2{margin:0 0 12px;font-size:15px}
+.prog{font-size:28px;font-weight:700;color:var(--navy);margin:8px 0 14px}
+.list{list-style:none;padding:0;margin:0;font-size:14px}
+.list li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0ebe0}
+.ok{color:var(--ok)}.wait{color:#a3561f}.muted{color:var(--muted)}
+.foot-note{margin-top:12px;font-size:12px;color:var(--muted)}
+.diag{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;gap:20px}
+.diag h3{margin:0 0 8px;font-size:15px}.diag ul{margin:0;padding-left:18px;font-size:13px;line-height:1.55}
+.badge{color:var(--ok);font-size:13px;white-space:nowrap}
+.footer{text-align:center;padding:18px;color:var(--muted);font-size:12px}
+.slogan{color:var(--navy);letter-spacing:.2em;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div style="background:#B08D57;color:#fff;text-align:center;padding:8px 12px;font-size:13px;letter-spacing:.04em">演示页面 · 示例数据（Demo · mock data）— 非真实客户资料 · <a href="./" style="color:#fff;text-decoration:underline">返回看板演示列表</a> · <a href="../" style="color:#fff;text-decoration:underline">HARTHELM 主页</a></div>
+<header class="top">
+  <div class="brand">HARTHELM<span>｜家舵</span></div>
+  <div class="meta"><span>🔒 密码保护 · 仅本人可见</span><span>您好，王先生</span></div>
+</header>
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <h1>距签证到期还剩 <em>124</em> 天</h1>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span class="muted" style="font-size:14px">续签窗口预计 2027-02 开放</span>
+        <span class="tag">资料收集中</span>
+      </div>
+    </div>
+    <div class="note">📄 我们正在为您收集与核对续签所需资料，窗口开放时会通知您。</div>
+  </div>
+  <div class="grid">
+    <section class="card">
+      <h2>个人资料进度</h2>
+      <div class="prog">核对中</div>
+      <ul class="list">
+        <li><span>护照</span><span class="ok">✓</span></li>
+        <li><span>学历</span><span class="wait">请按说明补交</span></li>
+        <li><span>无犯罪记录</span><span class="ok">✓</span></li>
+      </ul>
+      <div class="foot-note">正在核对中 · 资料越完整，续签越顺利</div>
+    </section>
+    <section class="card">
+      <h2>公司资料进度</h2>
+      <div class="prog">资料收集中</div>
+      <ul class="list">
+        <li><span>商业登记证 BR</span><span class="ok">✓</span></li>
+        <li><span>公司章程</span><span class="wait">已收到·核对中</span></li>
+        <li><span>银行流水</span><span class="muted">待提交</span></li>
+      </ul>
+      <div class="foot-note">部分资料待确认 · 我们会及时跟进</div>
+    </section>
+    <section class="card">
+      <h2>本阶段建议</h2>
+      <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7">
+        <li>补学历核证材料</li>
+        <li>与公司秘书确认年审时间</li>
+        <li>整理贸易往来凭证</li>
+      </ul>
+    </section>
+  </div>
+  <section class="diag">
+    <div>
+      <h3>运营诊断摘要</h3>
+      <ul>
+        <li>整体准备度：个人与公司资料推进中，部分项待补齐。</li>
+        <li>重点关注：学历核证、公司章程核对进度。</li>
+      </ul>
+    </div>
+    <div class="badge">✓ 顾问已发布</div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="slogan">为家掌舵，为业远行</div>
+  <div>HARTHELM｜家舵 · 已签约客户专属看板</div>
+</footer>
+</body>
+</html>
