@@ -3,7 +3,7 @@
   "use strict";
 
   var STORAGE_KEY = "harthelm_selfcheck_v1";
-  var BRAND = "HARTHELM｜家舵";
+  var BRAND = "HARTHELM";
 
   var STATUS_OPTS = [
     { v: "have", t: "有（仍有效）" },
