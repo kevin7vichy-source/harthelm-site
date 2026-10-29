@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<meta name="version" content="HARTHELM 对账中心 · 正式 v1.1 · 2026-10-29" />
+<meta name="referrer" content="no-referrer" />
+<link rel="icon" href="/assets/favicon.svg" />
+<title>HARTHELM · 业务管理 · 对账中心</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --panel: #171d25;
+    --panel2: #1c2430;
+    --border: #2a3544;
+    --text: #e8eef5;
+    --muted: #8b9aab;
+    --accent: #c9a86c;
+    --accent2: #8b7355;
+    --ok: #3d9a6a;
+    --warn: #c9a03c;
+    --danger: #c45c5c;
+    --in: #4a8fd4;
+    --out: #c98a4a;
+    --radius: 10px;
+    --sidebar: 220px;
+    --font: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; min-height: 100%; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  a { color: var(--accent); }
+  button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+  .hidden { display: none !important; }
+
+  /* Login */
+  #login-view {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(201,168,108,0.12), transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(74,143,212,0.08), transparent 45%),
+      var(--bg);
+  }
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .brand-mark .logo {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: grid; place-items: center;
+    font-weight: 700; color: #1a1208; font-size: 14px;
+  }
+  .brand-mark h1 {
+    margin: 0; font-size: 20px; font-weight: 600; letter-spacing: 0.04em;
+  }
+  .login-card .sub {
+    color: var(--muted); font-size: 13px; margin: 0 0 20px;
+  }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    outline: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--accent);
+  }
+  .field textarea { min-height: 72px; resize: vertical; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #1a1208; font-weight: 600;
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .btn-block { width: 100%; }
+  .login-error {
+    color: var(--danger); font-size: 13px; margin: 0 0 12px; min-height: 1.2em;
+  }
+  .notice {
+    margin-top: 18px;
+    padding: 12px;
+    background: rgba(201,168,108,0.08);
+    border: 1px solid rgba(201,168,108,0.25);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .notice strong { color: var(--accent); }
+  .status-banner.off { background: rgba(196,92,92,0.15); border-color: rgba(196,92,92,0.4); color: #f0b0b0; }
+  .status-banner {
+    margin-bottom: 14px;
+    padding: 8px 10px;
+    background: rgba(80,160,110,0.15);
+    border: 1px solid rgba(80,160,110,0.45);
+    border-radius: 6px;
+    font-size: 12px;
+    color: #a8dcbc;
+  }
+  .ver { margin-top: 10px; font-size: 11px; color: var(--muted); text-align: right; }
+
+  /* App shell */
+  #app-view { min-height: 100vh; display: flex; }
+  .sidebar {
+    width: var(--sidebar);
+    flex-shrink: 0;
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
+  }
+  .sidebar .nav-brand {
+    font-size: 13px; letter-spacing: 0.08em; color: var(--accent);
+    font-weight: 700; margin-bottom: 4px;
+  }
+  .sidebar .nav-mod {
+    font-size: 12px; color: var(--muted); margin-bottom: 20px;
+  }
+  .nav-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  .nav-item:hover { background: var(--panel2); color: var(--text); }
+  .nav-item.active {
+    background: rgba(201,168,108,0.15);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .sidebar-foot {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .sidebar-foot .user-name { color: var(--text); font-weight: 600; margin-bottom: 4px; }
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(23,29,37,0.85);
+    backdrop-filter: blur(8px);
+  }
+  .topbar h2 { margin: 0; font-size: 18px; font-weight: 600; }
+  .topbar .crumbs { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .content { padding: 20px 24px 40px; flex: 1; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .stat-card .label { font-size: 12px; color: var(--muted); }
+  .stat-card .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .stat-card .value.pos { color: var(--ok); }
+  .stat-card .value.neg { color: var(--out); }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .panel h3 {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .panel-head h3 { margin: 0; }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 720px) {
+    #app-view { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 4px; }
+    .sidebar-foot { width: 100%; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-out { background: rgba(201,138,74,0.2); color: var(--out); }
+  .tag-in { background: rgba(74,143,212,0.2); color: var(--in); }
+  .tag-pending { background: rgba(201,160,60,0.2); color: var(--warn); }
+  .tag-ok { background: rgba(61,154,106,0.2); color: var(--ok); }
+  .tag-cancel { background: rgba(139,154,171,0.2); color: var(--muted); }
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+    font-size: 13px;
+  }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--panel2);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .whitelist {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    background: var(--panel2);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+  }
+  .actions-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  /* v1.1：手机端表格横向滑动，避免文字被挤成竖排 */
+  #recent-table, #projects-table, #confirm-table, #query-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  @media (max-width: 720px) { #recent-table table, #projects-table table, #confirm-table table, #query-table table { min-width: 680px; } }
+</style>
+</head>
+<body>
+
+<!-- ========== LOGIN ========== -->
+<div id="login-view">
+  <div class="login-card">
+    <div class="status-banner" id="mode-banner">仅限 HARTHELM 授权合作中介账号</div>
+    <div class="brand-mark">
+      <div class="logo">H</div>
+      <h1>HARTHELM</h1>
+    </div>
+    <p class="sub">业务管理 · 对账中心（合作中介）</p>
+    <div class="field">
+      <label for="username">账号</label>
+      <input id="username" type="text" autocomplete="username" placeholder="合作中介账号" />
+    </div>
+    <div class="field">
+      <label for="password">密码</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="密码" />
+    </div>
+    <p class="login-error" id="login-error"></p>
+    <button class="btn btn-block" id="btn-login" type="button">登录</button>
+    <div class="notice">
+      <strong>使用声明（PDPO）</strong><br />
+      本页仅供 HARTHELM 已授权合作中介查询与确认对账信息。请勿将账号转借他人；勿通过本页提交与对账无关的个人敏感资料。数据仅用于渠道业务跟进与佣金对账。疑问请联系 office@harthelm.com · 852-52612799。<br /><br />
+      <strong>渠道白名单</strong>：中介仅可通过（1）本对账前台网页（2）日后微信小程序（3）Lark/飞书群内指定表单 进行<strong>提交、查询、确认</strong>。不接受邮件、公开网页表单、WhatsApp 等其它入口提交。
+    </div>
+    <div class="ver">正式 v1.1</div>
+  </div>
+</div>
+
+<!-- ========== APP ========== -->
+<div id="app-view" class="hidden">
+  <aside class="sidebar">
+    <div class="nav-brand">HARTHELM</div>
+    <div class="nav-mod">企业管理 · 业务管理</div>
+    <button type="button" class="nav-item active" data-page="dashboard">对账中心</button>
+    <button type="button" class="nav-item" data-page="projects">项目列表</button>
+    <button type="button" class="nav-item" data-page="submit">提交对账</button>
+    <button type="button" class="nav-item" data-page="confirm">待确认</button>
+    <button type="button" class="nav-item" data-page="query">查询汇总</button>
+    <div class="sidebar-foot">
+      <div class="user-name" id="sid-user">—</div>
+      <div id="sid-agent">—</div>
+      <button type="button" class="btn btn-ghost btn-sm" id="btn-logout" style="margin-top:10px;width:100%">退出登录</button>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h2 id="page-title">对账中心</h2>
+        <div class="crumbs">业务管理 / 对账中心</div>
+      </div>
+      <div class="actions-row">
+        <span style="font-size:12px;color:var(--muted)" id="clock"></span>
+      </div>
+    </div>
+    <div class="content">
+      <p class="whitelist">
+        <strong>渠道白名单</strong>：提交 / 查询 / 确认 仅限本网页、日后微信小程序、Lark/飞书群指定表单。<span id="mode-note"></span>
+      </p>
+
+      <!-- Dashboard -->
+      <section id="page-dashboard">
+        <div class="cards">
+          <div class="stat-card"><div class="label">项目数</div><div class="value" id="stat-projects">0</div></div>
+          <div class="stat-card"><div class="label">应付合计（支出）</div><div class="value neg" id="stat-payable">0</div></div>
+          <div class="stat-card"><div class="label">应收合计（收入）</div><div class="value pos" id="stat-receivable">0</div></div>
+          <div class="stat-card"><div class="label">净额（应收−应付）</div><div class="value" id="stat-net">0</div></div>
+          <div class="stat-card"><div class="label">待确认笔数</div><div class="value" id="stat-pending">0</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h3>最近对账记录</h3>
+            <button type="button" class="btn btn-sm" data-goto="submit">＋ 提交一笔</button>
+          </div>
+          <div id="recent-table"></div>
+        </div>
+      </section>
+
+      <!-- Projects list / query -->
+      <section id="page-projects" class="hidden">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>我的项目</h3>
+            <button type="button" class="btn btn-sm" data-goto="submit">＋ 新建项目对账</button>
+          </div>
+          <div id="projects-table"></div>
+        </div>
+      </section>
+
+      <!-- Submit -->
+      <section id="page-submit" class="hidden">
+        <div class="panel">
+          <h3>提交对账 / 项目</h3>
+          <p style="font-size:13px;color:var(--muted);margin:0 0 14px">
+            填写项目名称、合同执行时间与对账细节。提交后状态为「待确认」，双方在本页或 Lark 群确认；分佣比例逐条谈，无默认。
+          </p>
+          <form id="form-submit">
+            <div class="grid-2">
+              <div class="field">
+                <label for="f-project">项目名称 *</label>
+                <input id="f-project" required placeholder="请填写项目名称" />
+              </div>
+              <div class="field">
+                <label for="f-case">案件编号（可选）</label>
+                <input id="f-case" placeholder="RF-… 或内部编号" />
+              </div>
+              <div class="field">
+                <label for="f-start">合同执行开始 *</label>
+                <input id="f-start" type="date" required />
+              </div>
+              <div class="field">
+                <label for="f-end">合同执行结束 *</label>
+                <input id="f-end" type="date" required />
+              </div>
+              <div class="field">
+                <label for="f-dir">方向 *</label>
+                <select id="f-dir" required>
+                  <option value="应付给中介">应付给中介（HARTHELM 付贵司）</option>
+                  <option value="应收自中介">应收自中介（贵司返 HARTHELM）</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-currency">币种 *</label>
+                <select id="f-currency" required>
+                  <option>HKD</option>
+                  <option>RMB</option>
+                  <option>USD</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-base">签约额基数 *</label>
+                <input id="f-base" type="number" min="0" step="0.01" required />
+              </div>
+              <div class="field">
+                <label for="f-rate">分佣比例%（逐条谈）*</label>
+                <input id="f-rate" type="number" min="0" max="100" step="0.01" required placeholder="无默认，请填写谈定值" />
+              </div>
+              <div class="field">
+                <label for="f-amount">金额 *</label>
+                <input id="f-amount" type="number" min="0" step="0.01" required />
+              </div>
+              <div class="field">
+                <label for="f-client">客户编号（脱敏，可选）</label>
+                <input id="f-client" placeholder="A-C-…" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-note">协议依据 / 备注</label>
+              <textarea id="f-note" placeholder="如：协议条款依据；对账细节说明"></textarea>
+            </div>
+            <div class="actions-row">
+              <button type="submit" class="btn">提交（待确认）</button>
+              <button type="button" class="btn btn-ghost" id="btn-calc">按基数×比例计算金额</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Confirm -->
+      <section id="page-confirm" class="hidden">
+        <div class="panel">
+          <h3>待确认清单</h3>
+          <p style="font-size:13px;color:var(--muted);margin:0 0 14px">
+            对 HARTHELM 录入的「待确认」记录执行<strong>确认</strong>（进入应付/应收）或<strong>取消</strong>；贵司提交的记录显示「待 HARTHELM 确认」，由 HARTHELM 核对后确认。确认不等于已结算；结算由双方线下完成后，由 HARTHELM 更新为「已结清」。
+          </p>
+          <div id="confirm-table"></div>
+        </div>
+      </section>
+
+      <!-- Query summary -->
+      <section id="page-query" class="hidden">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>查询 · 对账汇总</h3>
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-refresh-query">刷新</button>
+          </div>
+          <div class="cards" style="margin-bottom:16px">
+            <div class="stat-card"><div class="label">应付合计</div><div class="value neg" id="q-payable">0</div></div>
+            <div class="stat-card"><div class="label">应收合计</div><div class="value pos" id="q-receivable">0</div></div>
+            <div class="stat-card"><div class="label">净额</div><div class="value" id="q-net">0</div></div>
+            <div class="stat-card"><div class="label">未结应付</div><div class="value" id="q-open-pay">0</div></div>
+            <div class="stat-card"><div class="label">未结应收</div><div class="value" id="q-open-rec">0</div></div>
+          </div>
+          <div class="field" style="max-width:280px">
+            <label for="q-filter">按状态筛选</label>
+            <select id="q-filter">
+              <option value="">全部</option>
+              <option>待确认</option>
+              <option>应付</option>
+              <option>应收</option>
+              <option>部分已结</option>
+              <option>已结清</option>
+              <option>取消</option>
+            </select>
+          </div>
+          <div id="query-table"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* HARTHELM 对账中心 · 正式 v1.1（2026-10-29，基于 v1.0a，已接正式 API；入口 harthelm.com/partners/）
+   * API_URL：正式 Apps Script Web App 的 /exec 网址（与内部部署分开）。
+   * 前端不存任何账号或密码；账号密码只在服务端校验。 */
+  const CONFIG = {
+    API_URL: "https://script.google.com/macros/s/AKfycbxqRqVoiDcscWpidCDC7I2gO16Pg5t4R1rThgay4pKgXbw1yti_BUG0aZqKR98TxlOq_A/exec"
+  };
+  const API_URL = CONFIG.API_URL;
+  const API_READY = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(API_URL);
+  const MODE = "api";
+
+  const SOURCE_WEB = "中介网页";
+  const SESSION_KEY = "harthelm_partner_session_formal_v1";
+
+  function today() {
+    const d = new Date();
+    const z = (n) => String(n).padStart(2, "0");
+    return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+  }
+  function money(n) {
+    const x = Number(n) || 0;
+    return x.toLocaleString("zh-CN", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  }
+  function toast(msg) {
+    const el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2800);
+  }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  /* ========================= 后端：接口模式 ========================= */
+  const ApiBackend = {
+    async call(action, payload) {
+      const body = Object.assign({ action }, payload || {});
+      if (session && session.token) body.token = session.token;
+      if (!API_READY) throw new Error("对账服务暂未开通，请联系 HARTHELM");
+      let res;
+      try {
+        res = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body), redirect: "follow" });
+      } catch (e) {
+        throw new Error("网络异常，无法连接对账服务");
+      }
+      let data;
+      try { data = await res.json(); } catch (e) { throw new Error("服务返回异常"); }
+      if (!data.ok && data.code === "AUTH") { forceLogout(data.error); }
+      if (!data.ok) throw new Error(data.error || "操作失败");
+      return data;
+    },
+    async login(u, p) {
+      const d = await this.call("login", { username: u, password: p });
+      return { token: d.token, user: d.user };
+    },
+    async list() { const d = await this.call("list"); return { records: d.records, summary: d.summary }; },
+    async submit(rec) { const d = await this.call("submit", { record: rec }); return d.id; },
+    async decide(id, kind) { const d = await this.call(kind, { id }); return d.status; },
+    async logout() { try { await this.call("logout"); } catch (e) {} }
+  };
+
+  const backend = ApiBackend;
+
+  /* ========================= 汇总 / 渲染 ========================= */
+  function summarize(records) {
+    const s = { payable: 0, receivable: 0, net: 0, openPay: 0, openRec: 0, pending: 0, projects: 0 };
+    const projects = new Set();
+    records.forEach((r) => {
+      if (r.status === "取消") return;
+      projects.add(r.projectName || r.id);
+      const amt = Number(r.amount) || 0;
+      const open = r.status === "已结清" ? 0 : Math.max(0, amt - (Number(r.settled) || 0));
+      if (r.direction === "应付给中介") { s.payable += amt; s.openPay += open; }
+      else if (r.direction === "应收自中介") { s.receivable += amt; s.openRec += open; }
+      if (r.status === "待确认") s.pending += 1;
+    });
+    s.net = s.receivable - s.payable;
+    s.projects = projects.size;
+    return s;
+  }
+  function statusTag(st) {
+    if (st === "已结清") return "tag-ok";
+    if (st === "取消") return "tag-cancel";
+    return "tag-pending";
+  }
+  function dirTag(d) { return d === "应付给中介" ? "tag-out" : "tag-in"; }
+  function statusText(r) {
+    if (r.status === "待确认" && r.source === SOURCE_WEB) return "待 HARTHELM 确认";
+    return r.status;
+  }
+
+  function renderTable(records, opts) {
+    opts = opts || {};
+    if (!records.length) return '<div class="empty">暂无记录。可通过「提交对账」新增。</div>';
+    const showActions = !!opts.actions;
+    let html = "<table><thead><tr><th>项目名称</th><th>执行时间</th><th>方向</th><th>金额</th><th>状态</th><th>备注</th>";
+    if (showActions) html += "<th>操作</th>";
+    html += "</tr></thead><tbody>";
+    records.forEach((r) => {
+      html += "<tr>";
+      html += "<td><strong>" + esc(r.projectName || "—") + "</strong><br><span style='color:var(--muted);font-size:11px'>" + esc(r.id) + (r.caseId ? " · " + esc(r.caseId) : "") + "</span></td>";
+      html += "<td>" + (r.execStart || r.execEnd ? esc(r.execStart || "—") + "<br>至 " + esc(r.execEnd || "—") : "—") + "</td>";
+      html += '<td><span class="tag ' + dirTag(r.direction) + '">' + esc(r.direction) + "</span></td>";
+      html += "<td>" + esc(r.currency) + " " + money(r.amount) + "<br><span style='color:var(--muted);font-size:11px'>基数 " + money(r.base) + " · " + esc(r.rate) + "%</span></td>";
+      html += '<td><span class="tag ' + statusTag(r.status) + '">' + esc(statusText(r)) + "</span>" + (r.confirmedAt ? "<br><span style='color:var(--muted);font-size:11px'>确认 " + esc(r.confirmedAt) + "</span>" : "") + "</td>";
+      html += "<td style='max-width:160px'>" + esc(r.note || "—") + "</td>";
+      if (showActions) {
+        html += '<td class="row-actions">';
+        if (r.canDecide) {
+          html += '<button type="button" class="btn btn-sm" data-confirm="' + esc(r.id) + '">确认</button>';
+          html += '<button type="button" class="btn btn-ghost btn-sm" data-cancel="' + esc(r.id) + '">取消</button>';
+        } else if (r.status === "待确认") {
+          html += "<span style='color:var(--muted);font-size:12px'>等待 HARTHELM</span>";
+        } else {
+          html += "<span style='color:var(--muted);font-size:12px'>—</span>";
+        }
+        html += "</td>";
+      }
+      html += "</tr>";
+    });
+    return html + "</tbody></table>";
+  }
+
+  /* ========================= 状态 / 页面 ========================= */
+  let session = null;          // { token, user, mode }
+  let records = [];
+  let summary = summarize([]);
+  let currentPage = "dashboard";
+
+  function getSaved() {
+    try { const s = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null"); return s && s.mode === MODE ? s : null; } catch (e) { return null; }
+  }
+  function setSaved(s) { if (s) sessionStorage.setItem(SESSION_KEY, JSON.stringify(s)); else sessionStorage.removeItem(SESSION_KEY); }
+
+  async function reload(quiet) {
+    try {
+      const d = await backend.list();
+      records = d.records || [];
+      summary = d.summary || summarize(records);
+      render();
+      if (!quiet) toast("已刷新");
+    } catch (e) {
+      if (session) toast(e.message);
+    }
+  }
+
+  function showPage(name) {
+    currentPage = name;
+    ["dashboard", "projects", "submit", "confirm", "query"].forEach((p) => {
+      document.getElementById("page-" + p).classList.toggle("hidden", p !== name);
+    });
+    document.querySelectorAll(".nav-item").forEach((btn) => btn.classList.toggle("active", btn.getAttribute("data-page") === name));
+    const titles = { dashboard: "对账中心", projects: "项目列表", submit: "提交对账", confirm: "待确认", query: "查询汇总" };
+    document.getElementById("page-title").textContent = titles[name] || name;
+    document.querySelector(".crumbs").textContent = "业务管理 / " + (titles[name] || name);
+    render();
+  }
+
+  function render() {
+    if (!session) return;
+    const sum = summary;
+    document.getElementById("stat-projects").textContent = sum.projects;
+    document.getElementById("stat-payable").textContent = money(sum.payable);
+    document.getElementById("stat-receivable").textContent = money(sum.receivable);
+    const netEl = document.getElementById("stat-net");
+    netEl.textContent = money(sum.net);
+    netEl.className = "value " + (sum.net >= 0 ? "pos" : "neg");
+    document.getElementById("stat-pending").textContent = sum.pending;
+
+    const recent = records.slice().sort((a, b) => String(b.updatedAt || b.submittedAt || "").localeCompare(String(a.updatedAt || a.submittedAt || ""))).slice(0, 8);
+    document.getElementById("recent-table").innerHTML = renderTable(recent);
+    document.getElementById("projects-table").innerHTML = renderTable(records);
+    document.getElementById("confirm-table").innerHTML = renderTable(records.filter((r) => r.status === "待确认"), { actions: true });
+
+    const filter = document.getElementById("q-filter").value;
+    const filtered = filter ? records.filter((r) => r.status === filter) : records;
+    document.getElementById("q-payable").textContent = money(sum.payable);
+    document.getElementById("q-receivable").textContent = money(sum.receivable);
+    const qn = document.getElementById("q-net");
+    qn.textContent = money(sum.net);
+    qn.className = "value " + (sum.net >= 0 ? "pos" : "neg");
+    document.getElementById("q-open-pay").textContent = money(sum.openPay);
+    document.getElementById("q-open-rec").textContent = money(sum.openRec);
+    document.getElementById("query-table").innerHTML = renderTable(filtered, { actions: true });
+
+    document.querySelectorAll("[data-confirm]").forEach((btn) => { btn.onclick = () => decide(btn.getAttribute("data-confirm"), "confirm", btn); });
+    document.querySelectorAll("[data-cancel]").forEach((btn) => { btn.onclick = () => decide(btn.getAttribute("data-cancel"), "cancel", btn); });
+  }
+
+  async function decide(id, kind, btn) {
+    if (kind === "cancel" && !confirm("确定取消该笔对账？")) return;
+    if (btn) btn.disabled = true;
+    try {
+      const st = await backend.decide(id, kind);
+      toast((kind === "confirm" ? "已确认：" : "已取消：") + id + " → " + st);
+      await reload(true);
+    } catch (e) {
+      toast(e.message);
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  async function enterApp(s) {
+    session = s;
+    setSaved(s);
+    document.getElementById("login-view").classList.add("hidden");
+    document.getElementById("app-view").classList.remove("hidden");
+    document.getElementById("sid-user").textContent = s.user.displayName || s.user.agentName;
+    document.getElementById("sid-agent").textContent = s.user.agentId + " · " + s.user.agentName;
+    showPage("dashboard");
+    await reload(true);
+  }
+
+  function forceLogout(msg) {
+    session = null;
+    setSaved(null);
+    records = [];
+    document.getElementById("app-view").classList.add("hidden");
+    document.getElementById("login-view").classList.remove("hidden");
+    document.getElementById("password").value = "";
+    document.getElementById("login-error").textContent = msg || "";
+  }
+
+  /* ========================= 事件 ========================= */
+  document.getElementById("btn-login").onclick = async function () {
+    const btn = this;
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value;
+    if (!u || !p) { document.getElementById("login-error").textContent = "请输入账号和密码"; return; }
+    btn.disabled = true;
+    document.getElementById("login-error").textContent = "";
+    try {
+      const r = await backend.login(u, p);
+      document.getElementById("password").value = "";
+      await enterApp({ token: r.token, user: r.user, mode: MODE });
+    } catch (e) {
+      document.getElementById("login-error").textContent = e.message;
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  document.getElementById("password").addEventListener("keydown", (e) => { if (e.key === "Enter") document.getElementById("btn-login").click(); });
+  document.getElementById("btn-logout").onclick = async () => { await backend.logout(); forceLogout(""); };
+  document.querySelectorAll(".nav-item").forEach((btn) => { btn.onclick = () => showPage(btn.getAttribute("data-page")); });
+  document.querySelectorAll("[data-goto]").forEach((btn) => btn.addEventListener("click", () => showPage(btn.getAttribute("data-goto"))));
+
+  document.getElementById("btn-calc").onclick = function () {
+    const base = Number(document.getElementById("f-base").value) || 0;
+    const rate = Number(document.getElementById("f-rate").value) || 0;
+    document.getElementById("f-amount").value = (Math.round(base * rate) / 100).toFixed(2);
+  };
+
+  document.getElementById("form-submit").onsubmit = async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const projectName = document.getElementById("f-project").value.trim();
+    const execStart = document.getElementById("f-start").value;
+    const execEnd = document.getElementById("f-end").value;
+    if (!projectName || !execStart || !execEnd) { toast("请填写项目名称与合同执行时间"); return; }
+    if (execEnd < execStart) { toast("结束日不能早于开始日"); return; }
+    const rec = {
+      projectName,
+      caseId: document.getElementById("f-case").value.trim(),
+      clientId: document.getElementById("f-client").value.trim(),
+      execStart, execEnd,
+      direction: document.getElementById("f-dir").value,
+      base: Number(document.getElementById("f-base").value) || 0,
+      rate: Number(document.getElementById("f-rate").value) || 0,
+      amount: Number(document.getElementById("f-amount").value) || 0,
+      currency: document.getElementById("f-currency").value,
+      note: document.getElementById("f-note").value.trim()
+    };
+    const sb = form.querySelector('button[type="submit"]');
+    if (sb) sb.disabled = true;
+    try {
+      const id = await backend.submit(rec);
+      toast("已提交：" + id + "（待 HARTHELM 确认）");
+      form.reset();
+      await reload(true);
+      showPage("confirm");
+    } catch (err) {
+      toast(err.message);
+    } finally {
+      if (sb) sb.disabled = false;
+    }
+  };
+
+  document.getElementById("q-filter").onchange = render;
+  document.getElementById("btn-refresh-query").onclick = () => reload(false);
+
+  function tick() {
+    const d = new Date();
+    document.getElementById("clock").textContent = d.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false }) + " Asia/Shanghai";
+  }
+  setInterval(tick, 1000);
+  tick();
+
+  const banner = document.getElementById("mode-banner");
+  const note = document.getElementById("mode-note");
+  if (API_READY) {
+    banner.textContent = "仅限 HARTHELM 授权合作中介账号";
+    note.textContent = "仅显示本账号所属中介的记录；本页不做合同签署与收款。";
+  } else {
+    banner.textContent = "对账服务暂未开通";
+    banner.classList.add("off");
+    document.getElementById("btn-login").disabled = true;
+  }
+
+  const saved = getSaved();
+  if (saved && API_READY) enterApp(saved);
+})();
+</script>
+</body>
+</html>
