@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<title>管理后台 · HARTHELM</title>
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="top"><img src="/assets/logo-horizontal-reversed.svg" alt="HARTHELM" class="logo"><span class="tag">公司管理后台 1.0 · 内部</span></header>
+<main id="main">
+<section class="card login" id="gate">
+<h1>公司管理后台</h1>
+<p class="muted">仅限 HARTHELM 内部授权人员。</p>
+<p class="err hidden" id="err" role="alert"></p>
+<form id="f" autocomplete="off">
+<label>访问密码<input id="pw" type="password" required maxlength="256" autocomplete="current-password"></label>
+<button type="submit" id="go">进入后台</button>
+</form>
+<p class="muted small">数据为加密快照，只在本机浏览器解开，密码不发送到任何服务器。</p>
+</section>
+<div id="app" class="hidden"></div>
+</main>
+<footer><p>© 2026 HARTHELM · 内部资料，请勿转发或截图外传</p></footer>
+<script src="app.js"></script>
+</body>
+</html>
