@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>HARTHELM｜家舵 · 续签风险自助摸底 · L-SIM-001</title>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="description" content="HARTHELM 潜客续签风险自助摸底（邀请制）。自评生成参考摘要，不承诺获批，签约前不收证件。"/>
+<style>
+:root{
+  --navy:#1F2A44;--gold:#B08D57;--ivory:#F5F1E8;--line:#e2dccd;
+  --muted:#6b6f7a;--ok:#2f6b4f;--warn:#9a6b2f;--bad:#8b3a3a;
+  --card:#fff;--soft:#faf7f0;--sum:#f7f0e2;--sumline:#e5d7b8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ivory);color:var(--navy);
+  font-family:-apple-system,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;line-height:1.55}
+.hidden{display:none!important}
+.devbar{background:#8b3a3a;color:#fff;text-align:center;padding:8px 12px;font-size:13px;letter-spacing:.04em;font-weight:600}
+.invite{background:var(--gold);color:#fff;text-align:center;padding:7px 12px;font-size:12px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:10px}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:22px;letter-spacing:.12em;font-weight:600}
+.brand span{color:var(--gold);font-family:-apple-system,"PingFang SC",sans-serif;letter-spacing:.08em;margin-left:6px;font-size:18px}
+.meta{display:flex;gap:14px;align-items:center;color:var(--muted);font-size:13px;flex-wrap:wrap}
+.wrap{padding:24px 28px 20px;max-width:960px;margin:0 auto}
+.hero{margin-bottom:18px}
+.hero h1{margin:0 0 8px;font-size:26px}
+.tag{display:inline-block;background:var(--gold);color:#fff;padding:3px 10px;border-radius:8px;font-size:12px;margin-right:6px}
+.disclaimer{color:var(--muted);font-size:12px}
+.banner{background:#fff8e8;border:1px solid var(--sumline);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:16px;color:var(--navy)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.card .hd{background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:600}
+.card .bd{padding:16px 18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.field .hint{font-weight:400;color:var(--muted);font-size:12px}
+.field input[type=text],.field input[type=password],.field input[type=month],.field select,.field textarea{
+  width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:14px;
+  background:#fff;color:var(--navy);font-family:inherit}
+.field textarea{min-height:64px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid rgba(176,141,87,.45);border-color:var(--gold)}
+.readonly{background:var(--soft)!important;color:var(--muted)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.row2{grid-template-columns:1fr}.wrap{padding:18px 14px}.top{padding:12px 14px}}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1px solid var(--line);
+  border-radius:999px;background:var(--soft);font-size:13px;cursor:pointer;font-weight:400}
+.seg input{accent-color:var(--navy)}
+.mat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.mat-grid{grid-template-columns:1fr}}
+.mat-col h3{margin:0 0 10px;font-size:14px}
+.mat-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0ebe0;font-size:13px}
+.mat-row:last-child{border-bottom:0}
+.mat-row select{width:auto;min-width:88px;padding:5px 8px;font-size:13px}
+.btn{display:inline-block;border:1px solid var(--gold);background:var(--navy);color:#fff;padding:10px 18px;
+  border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600}
+.btn:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn-ghost{background:#fff;color:var(--navy)}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.err{color:var(--bad);font-size:13px;margin-top:8px;min-height:1.2em}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:720px){.grid3{grid-template-columns:1fr}}
+.metric{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;min-height:140px}
+.metric .label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.metric .big{font-size:32px;font-weight:700;color:var(--gold);margin:6px 0}
+.metric .sub{font-size:12px;color:var(--muted)}
+.ring{width:64px;height:64px;border-radius:50%;border:6px solid var(--line);border-top-color:var(--gold);
+  margin:8px auto;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--navy)}
+.summary{background:var(--sum);border:1px solid var(--sumline);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.summary h3{margin:0 0 8px;font-size:14px}
+.summary ul{margin:0;padding-left:18px;font-size:13px}
+.gap-list{margin:0;padding:0;list-style:none}
+.gap-list li{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:13px}
+.gap-list li b{display:block;margin-bottom:2px}
+.pill{border-radius:999px;padding:2px 10px;font-size:12px;display:inline-block}
+.pill-ok{background:#e4efe8;color:var(--ok)}
+.pill-miss{background:#f3e4e4;color:var(--bad)}
+.pill-unk{background:#e8e4da;color:#666}
+.pill-risk-low{background:#e4efe8;color:var(--ok)}
+.pill-risk-mid{background:#f7ecd8;color:var(--warn)}
+.pill-risk-high{background:#f3e4e4;color:var(--bad)}
+.cta{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.cta h3{margin:0 0 8px;font-size:15px}
+.cta p{margin:0 0 10px;font-size:13px;color:var(--muted)}
+.copybox{background:#1F2A44;color:#f5f1e8;border-radius:10px;padding:12px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12px;white-space:pre-wrap;word-break:break-word;max-height:220px;overflow:auto;margin:10px 0}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;
+  padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+.toast.show{opacity:1}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:14px 28px 24px;
+  color:var(--muted);font-size:12px;border-top:1px solid var(--line);background:#fff;flex-wrap:wrap}
+.slogan{letter-spacing:.18em;color:var(--navy);margin-bottom:4px}
+.login-box{max-width:420px;margin:40px auto}
+.gate-note{font-size:12px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div id="devBar" class="devbar hidden">本地预览 · DEV 旁路 · 非生产 — 验收真门请将 DEV_BYPASS 设为 false</div>
+<div class="invite">邀请制摸底入口 · 请勿转发密码 · 签约前不收证件 · 不承诺获批</div>
+<header class="top">
+  <div class="brand">HARTHELM<span>｜家舵</span></div>
+  <div class="meta">
+    <span>档案编号 <b id="hdrCase">L-SIM-001</b></span>
+    <span id="hdrPhase">潜客自助摸底</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== SCREEN: LOGIN ===== -->
+  <section id="screenLogin" class="login-box">
+    <div class="hero">
+      <h1>续签风险自助摸底</h1>
+      <div><span class="tag">潜客入口</span><span class="disclaimer">≠ 签约客户 Quiet Harbor · 结果由自评生成</span></div>
+    </div>
+    <div class="banner">本页为顾问邀请制摸底入口，请勿转发密码。浏览器端校验仅防君子，不构成银行级鉴权。</div>
+    <div class="card">
+      <div class="hd">打开入口</div>
+      <div class="bd">
+        <div class="field">
+          <label>档案编号</label>
+          <input type="text" id="loginCase" value="L-SIM-001" readonly class="readonly" autocomplete="username"/>
+        </div>
+        <div class="field">
+          <label>访问密码 <span class="hint">（顾问私发）</span></label>
+          <input type="password" id="loginPw" autocomplete="current-password" placeholder="请输入访问密码"/>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn" id="btnLogin">进入自评</button>
+          <button type="button" class="btn btn-ghost hidden" id="btnDevEnter">DEV 旁路进入</button>
+        </div>
+        <div class="err" id="loginErr" aria-live="polite"></div>
+        <p class="gate-note">密码由顾问私发。公开页面不含明文密码；校验采用 salted PBKDF2-SHA256（P2）。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: FORM ===== -->
+  <section id="screenForm" class="hidden">
+    <div class="hero">
+      <h1>自评表单</h1>
+      <div><span class="tag">L-SIM-001</span><span class="disclaimer">本页为续签风险自助摸底，结果由您的自评生成，仅供规划参考；<b>不构成审批结果或获批承诺</b>；签约前不收证件。</span></div>
+    </div>
+    <form id="intakeForm" novalidate>
+      <div class="card">
+        <div class="hd">基本信息</div>
+        <div class="bd">
+          <div class="row2">
+            <div class="field">
+              <label>档案编号</label>
+              <input type="text" id="fCase" value="L-SIM-001" readonly class="readonly"/>
+            </div>
+            <div class="field">
+              <label>称呼</label>
+              <input type="text" id="fName" value="Kevin（模拟潜客）" required maxlength="40"/>
+            </div>
+          </div>
+          <div class="field">
+            <label>联系方式 <span class="hint">（微信或手机，二选一必填）</span></label>
+            <input type="text" id="fContact" value="微信：ht_sim_001" required maxlength="60" placeholder="微信 ID 或手机号"/>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label>签证类别 / 阶段</label>
+              <select id="fStage" required>
+                <option value="">请选择</option>
+                <option value="高才通 A">高才通 A</option>
+                <option value="高才通 B" selected>高才通 B</option>
+                <option value="高才通 C">高才通 C</option>
+                <option value="一续已过·准备二续">一续已过·准备二续</option>
+                <option value="其他／待澄清">其他／待澄清</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>届满月 <span class="hint">（年-月）</span></label>
+              <input type="month" id="fExpiry" value="2028-09" required/>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label>受雇 / 自雇</label>
+              <div class="seg" id="segEmp">
+                <label><input type="radio" name="emp" value="受雇"> 受雇</label>
+                <label><input type="radio" name="emp" value="自雇／有公司" checked> 自雇／有公司</label>
+                <label><input type="radio" name="emp" value="待定"> 待定</label>
+              </div>
+            </div>
+            <div class="field">
+              <label>是否已有港公司</label>
+              <div class="seg">
+                <label><input type="radio" name="hkco" value="是" checked> 是</label>
+                <label><input type="radio" name="hkco" value="否"> 否</label>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label>来源通道 <span class="hint">（可改）</span></label>
+            <input type="text" id="fSrc" value="全流程模拟·L-SIM-001" maxlength="80"/>
+          </div>
+          <div class="field">
+            <label>备注 <span class="hint">（可选 · 脱敏 · 禁贴证件号）</span></label>
+            <textarea id="fNote" maxlength="200" placeholder="可选补充（勿填证件号）">一续已过；二续届满约 2028-09；有港公司（模拟）</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd">材料自评（类级 · 齐／缺／未知 · 不上传文件）</div>
+        <div class="bd">
+          <p class="disclaimer" style="margin:0 0 12px">以下仅勾选准备状态，<b>不收证件、无文件上传</b>。命名为「类」级，便于顾问澄清。</p>
+          <div class="mat-grid">
+            <div class="mat-col" id="matPersonal">
+              <h3>个人列</h3>
+            </div>
+            <div class="mat-col" id="matCompany">
+              <h3>公司列 <span class="hint" id="coHint">（有公司时填写）</span></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="btn" id="btnSubmit">生成摸底摘要</button>
+        <button type="button" class="btn btn-ghost" id="btnBackLogin">返回入口</button>
+      </div>
+      <div class="err" id="formErr" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <!-- ===== SCREEN: RESULT ===== -->
+  <section id="screenResult" class="hidden">
+    <div class="hero">
+      <h1>摸底摘要（示意）</h1>
+      <div><span class="tag">自评驱动</span><span class="disclaimer">本页为续签风险自助摸底，结果由您的自评生成，仅供规划参考；<b>不构成审批结果或获批承诺</b>；签约前不收证件。</span></div>
+    </div>
+
+    <div class="grid3" id="metrics">
+      <div class="metric">
+        <div class="label">1. 进度示意</div>
+        <div class="ring" id="mProgress">—</div>
+        <div class="sub" id="mProgressSub">自评完成度</div>
+      </div>
+      <div class="metric">
+        <div class="label">2. 材料缺口数</div>
+        <div class="big" id="mGaps">0</div>
+        <div class="sub">自评「缺」计数（示意）</div>
+      </div>
+      <div class="metric">
+        <div class="label">3. 计划启动窗</div>
+        <div class="big" id="mWindow" style="font-size:22px">—</div>
+        <div class="sub" id="mWindowSub">由届满月推 120／90／60 示意</div>
+      </div>
+    </div>
+
+    <div class="summary">
+      <h3>自评回显</h3>
+      <ul id="echoList"></ul>
+      <p style="margin:10px 0 0;font-size:13px">风险档（示意，非获批预测）：
+        <span class="pill" id="riskPill">—</span>
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="hd">港新政策周更（公开条）</div>
+      <div class="bd" style="font-size:13px;color:var(--muted)">
+        本槽仅放已批对外口径。试点页示意：续签材料节奏以顾问澄清为准；自助摸底不替代正式诊断。
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="hd">材料缺口列表（由「缺」驱动）</div>
+      <div class="bd">
+        <ul class="gap-list" id="gapList"></ul>
+        <p id="gapEmpty" class="disclaimer hidden">当前自评无「缺」项；「未知」项建议与顾问澄清后再定。</p>
+      </div>
+    </div>
+
+    <div class="cta">
+      <h3>下一步</h3>
+      <p><b>主 CTA：</b>预约顾问澄清（留资已在本表单；顾问将按线索跟进）。</p>
+      <p><b>次 CTA：</b>了解入门产品「续签风险诊断 + 方案书」HKD 1,000（正式签约时可抵扣）——<b>不强制先付费才能看本结果</b>。</p>
+      <div class="btn-row">
+        <button type="button" class="btn" id="btnCopy">一键复制 leads 摘要</button>
+        <button type="button" class="btn btn-ghost" id="btnEdit">返回修改自评</button>
+      </div>
+      <div class="copybox" id="copyPreview" aria-live="polite"></div>
+      <p class="disclaimer">复制后由顾问／John 粘贴进 Drive「潜客 leads」Sheet（方案 B）。本页不直写 Sheet。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div>
+    <div class="slogan">为家掌舵，为业远行</div>
+    HARTHELM｜家舵 · 潜客续签风险自助摸底<br/>
+    累计接触与服务个案 1000 余个（不以获批计）
+  </div>
+  <div style="text-align:right">不承诺获批 · 签约前不收证件<br/>邀请制 · 请勿转发密码</div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =========================================================
+   * P2 密码门（salted PBKDF2-SHA256）
+   * Kevin 定密后由 John 注入下列四值；公开/本地 HTML 无明文密码。
+   * 禁止把真实密码明文写入本文件。
+   * ========================================================= */
+  var AUTH = {
+    ALGO: 'pbkdf2-sha256',
+    ITERATIONS: 100000,
+    SALT_HEX: 'd88d1fbcc85f78ad61bea0cb132bc481',
+    HASH_HEX: '142276ba4583399857a3ae457aeb857816aa6c08f640ff910c95af95776d2309',
+    /* 兼容设计稿命名的槽位别名（同值） */
+    get PASSWORD_SALT() { return this.SALT_HEX; },
+    get PASSWORD_HASH() { return this.HASH_HEX; }
+  };
+
+  /* 本地预览旁路：验收真门时改为 false，并用顾问私发真密测试 */
+  var DEV_BYPASS = false;
+
+  var CASE_ID = 'L-SIM-001';
+  var PUBLIC_URL = 'https://harthelm.com/dashboard/intake/L-SIM-001/';
+
+  var PERSONAL_ITEMS = [
+    { id: 'id_proof', label: '身份证明类' },
+    { id: 'addr_proof', label: '住址证明类' },
+    { id: 'emp_proof', label: '受雇／收入证明类' },
+    { id: 'tax_proof', label: '税务／强积金类' },
+    { id: 'stay_proof', label: '在港停留记录类' }
+  ];
+  var COMPANY_ITEMS = [
+    { id: 'co_reg', label: '公司注册类' },
+    { id: 'co_ar', label: '公司年审类' },
+    { id: 'co_fin', label: '公司财务／审计类' },
+    { id: 'co_bank', label: '公司银行流水类' },
+    { id: 'co_ops', label: '业务实质证明类' }
+  ];
+
+  /* 预填示意（可改） */
+  var PREFILL = {
+    personal: { id_proof: '齐', addr_proof: '缺', emp_proof: '未知', tax_proof: '未知', stay_proof: '齐' },
+    company:  { co_reg: '齐', co_ar: '缺', co_fin: '缺', co_bank: '未知', co_ops: '未知' }
+  };
+
+  var lastPayload = null;
+
+  function $(id) { return document.getElementById(id); }
+
+  function showToast(msg) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function () { t.classList.remove('show'); }, 2200);
+  }
+
+  function hexToBytes(hex) {
+    var clean = String(hex).replace(/\s+/g, '').toLowerCase();
+    if (clean.length % 2 !== 0) throw new Error('bad hex');
+    var out = new Uint8Array(clean.length / 2);
+    for (var i = 0; i < out.length; i++) {
+      out[i] = parseInt(clean.substr(i * 2, 2), 16);
+    }
+    return out;
+  }
+
+  function bytesToHex(buf) {
+    var arr = new Uint8Array(buf);
+    var s = '';
+    for (var i = 0; i < arr.length; i++) {
+      s += arr[i].toString(16).padStart(2, '0');
+    }
+    return s;
+  }
+
+  function timingSafeEqualHex(a, b) {
+    var x = String(a).toLowerCase();
+    var y = String(b).toLowerCase();
+    if (x.length !== y.length) return false;
+    var diff = 0;
+    for (var i = 0; i < x.length; i++) {
+      diff |= x.charCodeAt(i) ^ y.charCodeAt(i);
+    }
+    return diff === 0;
+  }
+
+  async function deriveHashHex(password) {
+    var enc = new TextEncoder();
+    var keyMaterial = await crypto.subtle.importKey(
+      'raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']
+    );
+    var bits = await crypto.subtle.deriveBits(
+      {
+        name: 'PBKDF2',
+        hash: 'SHA-256',
+        salt: hexToBytes(AUTH.SALT_HEX),
+        iterations: AUTH.ITERATIONS
+      },
+      keyMaterial,
+      256
+    );
+    return bytesToHex(bits);
+  }
+
+  async function verifyPassword(password) {
+    if (!password) return false;
+    if (!AUTH.HASH_HEX || AUTH.HASH_HEX.indexOf('〈') !== -1) return false;
+    if (!crypto || !crypto.subtle) {
+      throw new Error('NO_SUBTLE');
+    }
+    var got = await deriveHashHex(password);
+    return timingSafeEqualHex(got, AUTH.HASH_HEX);
+  }
+
+  function applyDevUi() {
+    if (DEV_BYPASS) {
+      $('devBar').classList.remove('hidden');
+      $('btnDevEnter').classList.remove('hidden');
+    } else {
+      $('devBar').classList.add('hidden');
+      $('btnDevEnter').classList.add('hidden');
+    }
+  }
+
+  function showScreen(name) {
+    $('screenLogin').classList.toggle('hidden', name !== 'login');
+    $('screenForm').classList.toggle('hidden', name !== 'form');
+    $('screenResult').classList.toggle('hidden', name !== 'result');
+    window.scrollTo(0, 0);
+  }
+
+  function buildMatSelects() {
+    var pHost = $('matPersonal');
+    var cHost = $('matCompany');
+    // keep h3
+    pHost.querySelectorAll('.mat-row').forEach(function (n) { n.remove(); });
+    cHost.querySelectorAll('.mat-row').forEach(function (n) { n.remove(); });
+
+    PERSONAL_ITEMS.forEach(function (it) {
+      pHost.appendChild(matRow('p_' + it.id, it.label, PREFILL.personal[it.id] || '未知'));
+    });
+    COMPANY_ITEMS.forEach(function (it) {
+      cHost.appendChild(matRow('c_' + it.id, it.label, PREFILL.company[it.id] || '未知'));
+    });
+    toggleCompanyEnabled();
+  }
+
+  function matRow(fieldId, label, defVal) {
+    var row = document.createElement('div');
+    row.className = 'mat-row';
+    var span = document.createElement('span');
+    span.textContent = label;
+    var sel = document.createElement('select');
+    sel.id = fieldId;
+    sel.setAttribute('data-label', label);
+    ;['齐', '缺', '未知'].forEach(function (v) {
+      var o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      if (v === defVal) o.selected = true;
+      sel.appendChild(o);
+    });
+    row.appendChild(span);
+    row.appendChild(sel);
+    return row;
+  }
+
+  function hasHkCompany() {
+    var el = document.querySelector('input[name="hkco"]:checked');
+    return el && el.value === '是';
+  }
+
+  function toggleCompanyEnabled() {
+    var on = hasHkCompany();
+    $('coHint').textContent = on ? '（有公司时填写）' : '（无公司 · 已灰掉）';
+    COMPANY_ITEMS.forEach(function (it) {
+      var sel = $('c_' + it.id);
+      if (!sel) return;
+      sel.disabled = !on;
+      sel.parentElement.style.opacity = on ? '1' : '.45';
+    });
+  }
+
+  document.querySelectorAll('input[name="hkco"]').forEach(function (r) {
+    r.addEventListener('change', toggleCompanyEnabled);
+  });
+
+  async function onLogin() {
+    $('loginErr').textContent = '';
+    var pw = $('loginPw').value;
+    var btn = $('btnLogin');
+    btn.disabled = true;
+    try {
+      if (DEV_BYPASS) {
+        showScreen('form');
+        return;
+      }
+      var ok = await verifyPassword(pw);
+      if (!ok) {
+        $('loginErr').textContent = '密码错误';
+        return;
+      }
+      showScreen('form');
+    } catch (e) {
+      if (e && e.message === 'NO_SUBTLE') {
+        $('loginErr').textContent = '密码错误'; // 与错密同文案；请改用 localhost 静态服验收真门（file:// 可能无 Web Crypto）
+      } else {
+        $('loginErr').textContent = '密码错误';
+      }
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function collectForm() {
+    var emp = (document.querySelector('input[name="emp"]:checked') || {}).value || '';
+    var hkco = (document.querySelector('input[name="hkco"]:checked') || {}).value || '';
+    var personal = PERSONAL_ITEMS.map(function (it) {
+      var sel = $('p_' + it.id);
+      return { id: it.id, label: it.label, status: sel ? sel.value : '未知', side: '个人' };
+    });
+    var company = [];
+    if (hkco === '是') {
+      company = COMPANY_ITEMS.map(function (it) {
+        var sel = $('c_' + it.id);
+        return { id: it.id, label: it.label, status: sel ? sel.value : '未知', side: '公司' };
+      });
+    }
+    var all = personal.concat(company);
+    var missing = all.filter(function (x) { return x.status === '缺'; });
+    var unknown = all.filter(function (x) { return x.status === '未知'; });
+    var known = all.filter(function (x) { return x.status === '齐' || x.status === '缺'; });
+    var progress = all.length ? Math.round((known.length / all.length) * 100) : 0;
+
+    var risk = '低';
+    if (missing.length >= 3 || (missing.length >= 2 && unknown.length >= 2)) risk = '高';
+    else if (missing.length >= 1 || unknown.length >= 2) risk = '中';
+
+    var expiry = $('fExpiry').value; // YYYY-MM
+    var windowInfo = computeWindow(expiry);
+
+    var now = new Date();
+    var ts = formatMacau(now);
+
+    return {
+      caseId: CASE_ID,
+      submittedAt: ts,
+      name: ($('fName').value || '').trim(),
+      contact: ($('fContact').value || '').trim(),
+      stage: $('fStage').value,
+      expiry: expiry,
+      emp: emp,
+      hkco: hkco,
+      src: ($('fSrc').value || '').trim(),
+      note: ($('fNote').value || '').trim(),
+      personal: personal,
+      company: company,
+      missing: missing,
+      unknown: unknown,
+      progress: progress,
+      risk: risk,
+      windowInfo: windowInfo,
+      url: PUBLIC_URL
+    };
+  }
+
+  function computeWindow(expiryYm) {
+    if (!expiryYm || !/^\d{4}-\d{2}$/.test(expiryYm)) {
+      return { label: '待定', sub: '请填写届满月' };
+    }
+    var parts = expiryYm.split('-');
+    var end = new Date(Number(parts[0]), Number(parts[1]) - 1, 1);
+    // treat as month-end approx: last day
+    end = new Date(Number(parts[0]), Number(parts[1]), 0);
+    var now = new Date();
+    var days = Math.round((end - now) / 86400000);
+    var label, sub;
+    if (days > 120) {
+      label = '≥120 天';
+      sub = '可先澄清材料节奏（示意）';
+    } else if (days > 90) {
+      label = '约 90–120 天';
+      sub = '建议进入系统准备窗（示意）';
+    } else if (days > 60) {
+      label = '约 60–90 天';
+      sub = '建议加快缺口补齐（示意）';
+    } else if (days > 0) {
+      label = '<60 天';
+      sub = '启动窗较紧，尽快顾问澄清（示意）';
+    } else {
+      label = '已过届满月';
+      sub = '请顾问个案澄清（示意·非逾期必拒）';
+    }
+    return { label: label, sub: sub, days: days };
+  }
+
+  function formatMacau(d) {
+    try {
+      return new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Asia/Macau',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      }).format(d) + ' Asia/Macau';
+    } catch (e) {
+      return d.toISOString() + ' (fallback)';
+    }
+  }
+
+  function renderResult(p) {
+    lastPayload = p;
+    $('mProgress').textContent = p.progress + '%';
+    $('mProgressSub').textContent = '已知状态 ' + (p.personal.length + p.company.length - p.unknown.length) +
+      ' / ' + (p.personal.length + p.company.length);
+    $('mGaps').textContent = String(p.missing.length);
+    $('mWindow').textContent = p.windowInfo.label;
+    $('mWindowSub').textContent = p.windowInfo.sub;
+
+    var riskEl = $('riskPill');
+    riskEl.textContent = p.risk;
+    riskEl.className = 'pill ' + (
+      p.risk === '高' ? 'pill-risk-high' : p.risk === '中' ? 'pill-risk-mid' : 'pill-risk-low'
+    );
+
+    var echo = $('echoList');
+    echo.innerHTML = '';
+    [
+      '称呼：' + p.name,
+      '阶段：' + p.stage + '｜届满月：' + p.expiry,
+      '受雇/自雇：' + p.emp + '｜港公司：' + p.hkco,
+      '来源：' + (p.src || '—'),
+      '缺口：' + p.missing.length + '｜未知：' + p.unknown.length
+    ].forEach(function (t) {
+      var li = document.createElement('li');
+      li.textContent = t;
+      echo.appendChild(li);
+    });
+
+    var gl = $('gapList');
+    gl.innerHTML = '';
+    if (!p.missing.length) {
+      $('gapEmpty').classList.remove('hidden');
+    } else {
+      $('gapEmpty').classList.add('hidden');
+      p.missing.forEach(function (m) {
+        var li = document.createElement('li');
+        li.innerHTML = '<b>' + escapeHtml(m.label) +
+          ' <span class="pill pill-miss">缺</span></b>侧栏：' +
+          escapeHtml(m.side) + ' · 建议与顾问澄清补齐节奏（示意，非正式审核）。';
+        gl.appendChild(li);
+      });
+    }
+
+    $('copyPreview').textContent = buildCopyText(p);
+    showScreen('result');
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+
+  function gapSummary(p) {
+    if (!p.missing.length) return '缺 0';
+    return '缺 ' + p.missing.length + '：' + p.missing.map(function (m) { return m.label; }).join('、');
+  }
+
+  function buildCopyText(p) {
+    var lines = [
+      '【潜客自助诊断摘要】',
+      '档案编号：' + p.caseId,
+      '提交时间：' + p.submittedAt,
+      '称呼：' + p.name,
+      '联系方式：' + p.contact,
+      '阶段：' + p.stage + '｜届满月：' + p.expiry + '｜受雇/自雇：' + p.emp + '｜港公司：' + p.hkco,
+      '缺口摘要：' + gapSummary(p),
+      '未知项：' + (p.unknown.length ? p.unknown.map(function (u) { return u.label; }).join('、') : '无'),
+      '风险档（示意）：' + p.risk,
+      '来源通道：' + (p.src || ''),
+      '来源 URL：' + p.url,
+      '备注（脱敏）：' + (p.note || ''),
+      '跟进状态：已提交自助诊断',
+      '是否转付费诊断：否',
+      '（无证件号／无上传）',
+      '',
+      '--- JSON ---',
+      JSON.stringify({
+        caseId: p.caseId,
+        submittedAt: p.submittedAt,
+        name: p.name,
+        contact: p.contact,
+        stage: p.stage,
+        expiry: p.expiry,
+        emp: p.emp,
+        hkco: p.hkco,
+        src: p.src,
+        note: p.note,
+        missing: p.missing.map(function (m) { return m.label; }),
+        unknown: p.unknown.map(function (u) { return u.label; }),
+        risk: p.risk,
+        progress: p.progress,
+        window: p.windowInfo.label,
+        url: p.url,
+        followUp: '已提交自助诊断'
+      }, null, 2)
+    ];
+    return lines.join('\n');
+  }
+
+  async function copySummary() {
+    if (!lastPayload) return;
+    var text = buildCopyText(lastPayload);
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      showToast('已复制 leads 摘要');
+    } catch (e) {
+      showToast('复制失败，请手动全选下方文本');
+    }
+  }
+
+  /* events */
+  $('btnLogin').addEventListener('click', onLogin);
+  $('loginPw').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') onLogin();
+  });
+  $('btnDevEnter').addEventListener('click', function () {
+    if (!DEV_BYPASS) return;
+    $('loginErr').textContent = '';
+    showScreen('form');
+  });
+  $('btnBackLogin').addEventListener('click', function () {
+    showScreen('login');
+  });
+  $('btnEdit').addEventListener('click', function () {
+    showScreen('form');
+  });
+  $('btnCopy').addEventListener('click', copySummary);
+
+  $('intakeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    $('formErr').textContent = '';
+    var name = ($('fName').value || '').trim();
+    var contact = ($('fContact').value || '').trim();
+    var stage = $('fStage').value;
+    var expiry = $('fExpiry').value;
+    if (!name || !contact || !stage || !expiry) {
+      $('formErr').textContent = '请完整填写称呼、联系方式、阶段与届满月。';
+      return;
+    }
+    // soft block obvious ID-like patterns in note/contact
+    var blob = contact + ' ' + ($('fNote').value || '');
+    if (/(护照|身份证|通行证)\s*[号码号:]?\s*\d{6,}/.test(blob) || /\b[A-Z]\d{7,9}\b/.test(blob)) {
+      $('formErr').textContent = '请勿填写证件号。本页不收证件。';
+      return;
+    }
+    var payload = collectForm();
+    renderResult(payload);
+  });
+
+  /* init */
+  applyDevUi();
+  buildMatSelects();
+  showScreen('login');
+
+  /* 自检钩子（node / 控制台）：window.__L_SIM_001_SELFTEST() */
+  window.__L_SIM_001_SELFTEST = async function () {
+    var report = {
+      caseId: CASE_ID,
+      DEV_BYPASS: DEV_BYPASS,
+      AUTH: {
+        ALGO: AUTH.ALGO,
+        ITERATIONS: AUTH.ITERATIONS,
+        SALT_HEX: AUTH.SALT_HEX,
+        HASH_HEX: AUTH.HASH_HEX,
+        PASSWORD_SALT: AUTH.PASSWORD_SALT,
+        PASSWORD_HASH: AUTH.PASSWORD_HASH
+      },
+      hasPlainPasswordLiteral: /password\s*===\s*['"][^'"]+['"]/i.test(document.documentElement.innerHTML) === false
+        ? 'no-eq-literal-scan-skipped'
+        : 'see-scan',
+      sample: null,
+      copyNonEmpty: false,
+      gapCount: null
+    };
+    // simulate collect with current prefills (form must be built)
+    showScreen('form');
+    var p = collectForm();
+    report.sample = {
+      missing: p.missing.map(function (m) { return m.label; }),
+      risk: p.risk,
+      progress: p.progress
+    };
+    report.gapCount = p.missing.length;
+    var text = buildCopyText(p);
+    report.copyNonEmpty = text.length > 80 && text.indexOf('L-SIM-001') !== -1;
+    report.copyKeys = [
+      '档案编号', '提交时间', '称呼', '联系方式', '阶段', '届满月',
+      '受雇/自雇', '港公司', '缺口摘要', '风险档', '来源通道', '来源 URL', '跟进状态'
+    ];
+    return report;
+  };
+})();
+</script>
+</body>
+</html>
