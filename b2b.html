@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HARTHELM - 渠道合作 (B2B)</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='96' fill='%23ffffff'/%3E%3Cg stroke='%231b2634' stroke-width='11' stroke-linecap='round'%3E%3Cline x1='100' y1='14' x2='100' y2='186'/%3E%3Cline x1='14' y1='100' x2='186' y2='100'/%3E%3Cline x1='39.2' y1='39.2' x2='160.8' y2='160.8'/%3E%3Cline x1='160.8' y1='39.2' x2='39.2' y2='160.8'/%3E%3C/g%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%231b2634' stroke-width='13'/%3E%3Ccircle cx='100' cy='100' r='44' fill='%23ffffff' stroke='%23a6844e' stroke-width='5'/%3E%3Cpath d='M100 72 L73 94 V122 H92 V109 A8 8 0 0 1 108 109 V122 H127 V94 Z' fill='%23a6844e'/%3E%3C/svg%3E">
+    <title>渠道合作 - HARTHELM</title>
     <style>
+        /* --- 品牌全局变量 --- */
         :root {
             --navy: #141c2b;
             --navy-light: #1e293b;
@@ -15,65 +15,101 @@
             --text-muted: #94a3b8;
             --font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
+
+        /* --- 基础重置 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); background-color: var(--navy); color: var(--text-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--navy);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
         a { text-decoration: none; color: inherit; }
 
-        /* 统一顶部导航栏 */
+        /* --- 顶部导航 (独立页) --- */
         header {
             padding: 20px 5%;
             background: rgba(20, 28, 43, 0.95);
-            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky; top: 0; z-index: 100;
         }
-        .logo-text { font-size: 20px; letter-spacing: 4px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .logo-text img { height: 30px; }
-        .nav-links { display: flex; gap: 30px; font-size: 14px; color: var(--text-muted); align-items: center; }
-        .nav-links a { padding: 6px 0; border-bottom: 2px solid transparent; transition: all 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+        .logo { font-size: 20px; letter-spacing: 4px; font-weight: 600; }
+        .back-home { font-size: 14px; color: var(--text-muted); transition: color 0.3s; }
+        .back-home:hover { color: var(--gold); }
 
-        /* 页面主体区块 */
-        .page-section { padding: 70px 5% 100px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.5s ease; }
-        .section-subtitle { text-align: center; font-size: 22px; margin-bottom: 35px; font-weight: 400; color: var(--text-main); }
-        .section-subtitle::after { content: ''; display: block; width: 40px; height: 2px; background: var(--gold); margin: 12px auto 0; }
-
-        /* Hero 区 */
-        .hero-b2b { text-align: center; max-width: 800px; margin: 0 auto 60px; }
-        .hero-b2b h1 { font-size: 32px; margin-bottom: 20px; color: var(--gold); font-weight: 500; letter-spacing: 1px; }
-        .hero-b2b p { font-size: 16px; color: var(--text-muted); }
-
-        /* 痛点与解法区块 */
-        .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 70px; }
-        .pain-card {
-            background: linear-gradient(135deg, var(--navy-light) 0%, rgba(30, 41, 59, 0.4) 100%);
-            border-left: 4px solid var(--gold);
-            padding: 30px;
-            border-radius: 4px;
+        /* --- B2B 主体内容 --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 5% 100px; }
+        
+        .hero-b2b { text-align: center; max-width: 800px; margin: 0 auto 70px; }
+        .hero-b2b h1 { 
+            font-size: 36px; 
+            margin-bottom: 20px; 
+            color: var(--gold); 
+            font-weight: 400;
+            line-height: 1.4;
         }
-        .pain-card .question { font-size: 18px; color: var(--text-main); font-weight: 600; margin-bottom: 12px; }
-        .pain-card .answer { font-size: 15px; color: var(--gold); }
+        .hero-b2b p { font-size: 18px; color: var(--text-muted); }
 
-        /* 合作优势（五大承诺）网格 */
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .feature-card { background: var(--navy-light); padding: 35px 30px; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
-        .feature-card:hover { border-color: rgba(184, 155, 114, 0.4); transform: translateY(-3px); }
-        .feature-card h3 { color: var(--gold); font-size: 18px; margin-bottom: 15px; font-weight: 500; }
-        .feature-card p { font-size: 14px; color: var(--text-muted); }
+        .section-title { text-align: center; font-size: 28px; margin-bottom: 50px; font-weight: 400; }
+        .section-title::after { content: ''; display: block; width: 40px; height: 2px; background: var(--gold); margin: 15px auto 0; }
 
-        /* 按钮 */
-        .btn { padding: 14px 36px; font-size: 15px; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; border-radius: 2px; display: inline-block; text-align: center; font-weight: 500; }
-        .btn-primary { background-color: var(--gold); color: var(--navy); border: 1px solid var(--gold); }
-        .btn-primary:hover { background-color: var(--gold-hover); border-color: var(--gold-hover); transform: translateY(-2px); }
+        /* 优势卡片网格 */
+        .feature-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 60px; 
+        }
+        .feature-card { 
+            background: var(--navy-light); 
+            padding: 40px 30px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            border-color: rgba(184, 155, 114, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .feature-card h3 { color: var(--gold); font-size: 20px; margin-bottom: 15px; font-weight: 500; }
+        .feature-card p { font-size: 15px; color: var(--text-muted); line-height: 1.8; }
 
-        /* 底部 */
-        footer { background: #0b111a; padding: 40px 5% 30px; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        /* 底部合作按钮区 */
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .cta-section p { color: var(--text-muted); margin-bottom: 30px; font-size: 16px; }
+        .btn { 
+            padding: 15px 45px; 
+            font-size: 16px; 
+            letter-spacing: 1px;
+            cursor: pointer; 
+            transition: all 0.3s; 
+            border-radius: 2px; 
+            display: inline-block; 
+            text-align: center;
+        }
+        .btn-primary { 
+            background-color: var(--gold); 
+            color: var(--navy); 
+            border: 1px solid var(--gold); 
+            font-weight: 600;
+        }
+        .btn-primary:hover { 
+            background-color: var(--gold-hover); 
+            border-color: var(--gold-hover); 
+            transform: translateY(-2px); 
+        }
 
-        /* 悬浮 WhatsApp */
+        /* --- 悬浮 WhatsApp 按钮 --- */
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white;
             padding: 15px 25px; border-radius: 50px; display: flex; align-items: center; gap: 10px;
@@ -81,17 +117,73 @@
         }
         .whatsapp-float:hover { transform: scale(1.05); color: white; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 响应式 */
         @media (max-width: 768px) {
-            header { flex-direction: column; gap: 15px; }
-            .nav-links { gap: 18px; flex-wrap: wrap; justify-content: center; }
-            .hero-b2b h1 { font-size: 24px; }
+            .hero-b2b h1 { font-size: 26px; }
+            .hero-b2b p { font-size: 15px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .feature-card { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 顶部导航栏（全站互通） -->
+    <!-- 顶部导航 -->
     <header>
-        <a href="index.html" class="logo-text">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg stroke='%23ffffff' stroke-width='16' stroke-linecap='round'%3E%3Cline x1='100' y1='14' x2='100' y2='186'/%3E%3Cline x1='14' y1='100' x2='186' y2='100'/%3E%3Cline x1='39.2' y1='39.2' x2='160.8' y2='160.8'/%3E%3Cline x1='160.8' y1='39.2' x2='39.2' y2='160.8'/%3E%3C/g%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%23ffffff' stroke-width='18'/%3E%3Cg stroke='%231b2634' stroke-width='11' stroke-linecap='round'%3E%3Cline x1='100' y1='14' x2='100' y2='186'/%3E%3Cline x1='14' y1='100' x2='186' y2='100'/%3E%3Cline x1='39.2' y1='39.2' x2='160.8' y2='160.8'/%3E%3Cline x1='160.8' y1='39.2' x2='39.2' y2='160.8'/%3E%3C/g%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%231b26
+        <div class="logo">HARTHELM</div>
+        <a href="index.html" class="back-home">← 返回首页</a>
+    </header>
+
+    <!-- B2B 主体内容 -->
+    <div class="container">
+        
+        <div class="hero-b2b">
+            <h1>致教育留学机构：<br>做您学生毕业后最安心的服务后台</h1>
+            <p>一次转介，全链条承接。从身份续签到公司落地，交由专业团队护航。</p>
+        </div>
+
+        <h2 class="section-title">为什么与 HARTHELM 合作</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>一次转介，全链条承接</h3>
+                <p>续签、公司注册、办公室租赁、记账年审由同一团队无缝衔接。减少中介多方协调的沟通成本与落地风险。</p>
+            </div>
+            <div class="feature-card">
+                <h3>尊重渠道归属</h3>
+                <p>转介客户以对账记录为准。我们承诺原则上不越过合作中介，直接向学生客户进行业务推广。</p>
+            </div>
+            <div class="feature-card">
+                <h3>双向对账，清晰透明</h3>
+                <p>提供渠道专属对账前台（账号制）。业务进度、关键节点与分佣明细随时可查，保障双方权益。</p>
+            </div>
+            <div class="feature-card">
+                <h3>分佣安排，逐案沟通</h3>
+                <p>分佣比例与结算方式以双方签署的书面合作协议为准，所有结算均经系统对账确认，清晰无误。</p>
+            </div>
+            <div class="feature-card">
+                <h3>个人资料审慎处理</h3>
+                <p>严格遵守香港《个人资料（私隐）条例》。客户资料仅作委托事项之用，绝不滥用或外泄。</p>
+            </div>
+            <div class="feature-card">
+                <h3>专人对接跟进</h3>
+                <p>渠道合作经理一对一跟进。遇到复杂的身份或经营个案，我们会提前与您沟通评估结果。</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <p>欢迎教育留学机构约谈合作</p>
+            <a href="https://wa.me/85252612799" class="btn btn-primary" target="_blank">联系合作洽询 (WhatsApp)</a>
+            <p style="margin-top: 20px; font-size: 14px;">或发送邮件至：office@harthelm.com</p>
+        </div>
+
+    </div>
+
+    <!-- 悬浮 WhatsApp -->
+    <a href="https://wa.me/85252612799" class="whatsapp-float" target="_blank">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span>Chat</span>
+    </a>
+
+</body>
+</html>
