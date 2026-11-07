@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HARTHELM - 服务场景说明</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='96' fill='%23ffffff'/%3E%3Cg stroke='%231b2634' stroke-width='11' stroke-linecap='round'%3E%3Cline x1='100' y1='14' x2='100' y2='186'/%3E%3Cline x1='14' y1='100' x2='186' y2='100'/%3E%3Cline x1='39.2' y1='39.2' x2='160.8' y2='160.8'/%3E%3Cline x1='160.8' y1='39.2' x2='39.2' y2='160.8'/%3E%3C/g%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%231b2634' stroke-width='13'/%3E%3Ccircle cx='100' cy='100' r='44' fill='%23ffffff' stroke='%23a6844e' stroke-width='5'/%3E%3Cpath d='M100 72 L73 94 V122 H92 V109 A8 8 0 0 1 108 109 V122 H127 V94 Z' fill='%23a6844e'/%3E%3C/svg%3E">
+    <title>服务场景说明 - HARTHELM</title>
     <style>
+        /* --- 品牌全局变量 --- */
         :root {
             --navy: #141c2b;
             --navy-light: #1e293b;
@@ -15,27 +15,253 @@
             --text-muted: #94a3b8;
             --font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
+
+        /* --- 基础重置 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); background-color: var(--navy); color: var(--text-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--navy);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
         a { text-decoration: none; color: inherit; }
 
-        /* 统一顶部导航栏 */
+        /* --- 顶部导航 (独立页) --- */
         header {
             padding: 20px 5%;
             background: rgba(20, 28, 43, 0.95);
-            backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky; top: 0; z-index: 100;
         }
-        .logo-text { font-size: 20px; letter-spacing: 4px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .logo-text img { height: 30px; }
-        .nav-links { display: flex; gap: 30px; font-size: 14px; color: var(--text-muted); align-items: center; }
-        .nav-links a { padding: 6px 0; border-bottom: 2px solid transparent; transition: all 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+        .logo { font-size: 20px; letter-spacing: 4px; font-weight: 600; }
+        .back-home { font-size: 14px; color: var(--text-muted); transition: color 0.3s; }
+        .back-home:hover { color: var(--gold); }
 
-        /* 页面主体区块 */
-        .page-
+        /* --- 案例主体内容 --- */
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 5% 100px; }
+        
+        .page-header { text-align: center; margin-bottom: 50px; }
+        .page-header h1 { font-size: 32px; font-weight: 400; margin-bottom: 15px; }
+        .page-header p { font-size: 16px; color: var(--text-muted); }
+
+        /* 顶部合规声明横幅 (极为重要，不可删除) */
+        .compliance-banner {
+            background: rgba(184, 155, 114, 0.1); 
+            border: 1px solid var(--gold);
+            padding: 20px; 
+            text-align: center; 
+            font-size: 14px; 
+            color: var(--gold);
+            margin-bottom: 60px; 
+            border-radius: 4px;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+        .compliance-banner strong { color: var(--text-main); }
+
+        /* 案例卡片列表 */
+        .case-list { display: flex; flex-direction: column; gap: 40px; }
+        
+        .case-card {
+            background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+            border-left: 4px solid var(--gold); 
+            padding: 40px; 
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .case-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .case-tag {
+            display: inline-block;
+            background: rgba(184, 155, 114, 0.15);
+            color: var(--gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(184, 155, 114, 0.3);
+        }
+
+        .case-card h3 { 
+            font-size: 22px; 
+            margin-bottom: 20px; 
+            color: var(--text-main); 
+            font-weight: 500;
+        }
+        
+        .case-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .case-info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .case-label {
+            color: var(--gold);
+            font-weight: 500;
+            min-width: 80px;
+            font-size: 15px;
+        }
+        
+        .case-text {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* 底部 CTA */
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+        }
+        .btn { 
+            padding: 15px 45px; 
+            font-size: 16px; 
+            letter-spacing: 1px;
+            cursor: pointer; 
+            transition: all 0.3s; 
+            border-radius: 2px; 
+            display: inline-block; 
+            text-align: center;
+        }
+        .btn-primary { 
+            background-color: var(--gold); 
+            color: var(--navy); 
+            border: 1px solid var(--gold); 
+            font-weight: 600;
+        }
+        .btn-primary:hover { 
+            background-color: var(--gold-hover); 
+            border-color: var(--gold-hover); 
+            transform: translateY(-2px); 
+        }
+
+        /* --- 悬浮 WhatsApp 按钮 --- */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white;
+            padding: 15px 25px; border-radius: 50px; display: flex; align-items: center; gap: 10px;
+            font-weight: bold; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); z-index: 1000; transition: transform 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.05); color: white; }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .case-card { padding: 25px 20px; }
+            .case-info-row { flex-direction: column; gap: 5px; }
+            .page-header h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <header>
+        <div class="logo">HARTHELM</div>
+        <a href="index.html" class="back-home">← 返回首页</a>
+    </header>
+
+    <!-- 案例主体内容 -->
+    <div class="container">
+        
+        <div class="page-header">
+            <h1>服务场景说明</h1>
+            <p>探索我们如何协助不同类型的客户解决身份与落地难题</p>
+        </div>
+
+        <!-- 合规声明（基于内部法规与工作规范） -->
+        <div class="compliance-banner">
+            <strong>【合规声明】</strong><br>
+            以上为过往服务场景脱敏描述，不构成获批承诺；个案以入境处及相关政策要求为准。<br>
+            累计接触与服务个案 1000 余个（不以获批计）。
+        </div>
+
+        <div class="case-list">
+            
+            <!-- 场景 A -->
+            <div class="case-card">
+                <span class="case-tag">高才通 / 优才</span>
+                <h3>自雇创业路径续签规划</h3>
+                <div class="case-info">
+                    <div class="case-info-row">
+                        <div class="case-label">客户背景</div>
+                        <div class="case-text">客户在港暂无雇主，但具备一定资金实力与真实业务构想，面临首次续签的时间压力。</div>
+                    </div>
+                    <div class="case-info-row">
+                        <div class="case-label">服务动作</div>
+                        <div class="case-text">协助完成香港公司注册与商业登记，提供符合要求的实体办公室及正式租约（厘印）；深度梳理真实运营流水与业务单据，为客户规划自雇续签的合规路径。</div>
+                    </div>
+                    <div class="case-info-row">
+                        <div class="case-label">最终交付</div>
+                        <div class="case-text">成功建立真实可核验的经营实体，整理出全套自雇续签材料清单，并由团队逐项核对后协助递交。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 场景 B -->
+            <div class="case-card">
+                <span class="case-tag">IANG 毕业生</span>
+                <h3>留港空窗期身份合规衔接</h3>
+                <div class="case-info">
+                    <div class="case-info-row">
+                        <div class="case-label">客户背景</div>
+                        <div class="case-text">应届毕业生，暂未匹配到合适雇主，面临签证到期后的空窗期风险。</div>
+                    </div>
+                    <div class="case-info-row">
+                        <div class="case-label">服务动作</div>
+                        <div class="case-text">针对空窗期提供备用公司架构与运营支持，协助对接本地财税服务，确保学生在求职期间的在港身份得到合规衔接。</div>
+                    </div>
+                    <div class="case-info-row">
+                        <div class="case-label">最终交付</div>
+                        <div class="case-text">协助客户完成公司注册与经营场地落地，平稳度过空窗期，为后续转工签或自雇续签打下基础。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 场景 C -->
+            <div class="case-card">
+                <span class="case-tag">企业落地 / 实体运营</span>
+                <h3>获批优才赴港落地与长期续签</h3>
+                <div class="case-info">
+                    <div class="case-info-row">
+                        <div class="case-label">客户背景</div>
+                        <div class="case-text">已获批优才，需准备赴港运营及后续长达 7 年的续签材料规划。</div>
+                    </div>
+                    <div class="case-info-row">
+                        <div class="case-label">服务动作</div>
+                        <div class="case-text">协助安排实体办公工位、办理商业登记，提供日常记账与年审支持，提供全周期的合规咨询。</div>
+                    </div>
+                    <div class="case-info-row">
+                        <div class="case-label">最终交付</div>
+                        <div class="case-text">完成香港实地办公空间落地，建立规范的财务与税务记录，为后续 7 年转永居做好长期合规铺垫。</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cta-section">
+            <a href="https://wa.me/85252612799" class="btn btn-primary" target="_blank">咨询我的专属续签方案</a>
+        </div>
+
+    </div>
+
+    <!-- 悬浮 WhatsApp -->
+    <a href="https://wa.me/85252612799" class="whatsapp-float" target="_blank">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span>Chat</span>
+    </a>
+
+</body>
+</html>
