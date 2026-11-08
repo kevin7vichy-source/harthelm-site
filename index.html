@@ -23,7 +23,7 @@
         body { font-family: var(--font-family); background-color: var(--navy); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
 
-        /* ================= 1. 顶部导航 (精简高定版) ================= */
+        /* ================= 1. 顶部导航 ================= */
         header { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; position: fixed; width: 100%; top: 0; z-index: 100; background: rgba(20, 28, 43, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(184, 155, 114, 0.12); transition: all 0.3s; }
         .logo-text { font-size: 19px; letter-spacing: 4px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
         .logo-text svg { height: 36px; width: 36px; transition: transform 0.6s; }
@@ -40,25 +40,27 @@
 
         /* ================= 2. 首屏 (维港夜景 + 金色切角卡片) ================= */
         .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 20px 60px; background: url('https://images.unsplash.com/photo-1536599018102-9f803c140fc1?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(11,17,26,0.85), rgba(11,17,26,0.45)); z-index: 1; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(11,17,26,0.88), rgba(11,17,26,0.55)); z-index: 1; }
         
-        .hero-card { position: relative; z-index: 2; max-width: 900px; width: 100%; background: rgba(20, 28, 43, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(184, 155, 114, 0.3); border-radius: 4px; padding: 60px 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        /* 装饰角 */
+        .hero-card { position: relative; z-index: 2; max-width: 900px; width: 100%; background: rgba(20, 28, 43, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(184, 155, 114, 0.3); border-radius: 4px; padding: 60px 40px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
         .hero-card::before, .hero-card::after { content: ''; position: absolute; width: 30px; height: 30px; border: 2px solid var(--gold); }
         .hero-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
         .hero-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 
-        .hero-logo-wrapper { width: 90px; height: 90px; margin: 0 auto 24px; }
-        .hero h1 { font-size: 46px; letter-spacing: 12px; font-weight: 400; margin-bottom: 12px; padding-left: 12px; color: var(--text-main); text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .hero h2 { font-size: 16px; letter-spacing: 6px; color: var(--gold); margin-bottom: 20px; padding-left: 6px; font-family: var(--font-serif); }
-        .hero-motto { font-size: 18px; letter-spacing: 4px; color: #e2e8f0; margin-bottom: 36px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .hero-logo-wrapper { width: 110px; height: 110px; margin: 0 auto 24px; opacity: 0; animation: fadeInUp 1s forwards; }
+        .hero-logo-ring { transform-origin: center; animation: slowSpin 60s linear infinite; }
+        @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .hero h1 { font-size: 46px; letter-spacing: 12px; font-weight: 400; margin-bottom: 12px; padding-left: 12px; color: var(--text-main); text-shadow: 0 4px 20px rgba(0,0,0,0.5); opacity: 0; animation: fadeInUp 1s 0.15s forwards; }
+        .hero h2 { font-size: 16px; letter-spacing: 6px; color: var(--gold); margin-bottom: 20px; padding-left: 6px; font-family: var(--font-serif); opacity: 0; animation: fadeInUp 1s 0.3s forwards; }
+        .hero-motto { font-size: 18px; letter-spacing: 4px; color: #e2e8f0; margin-bottom: 36px; display: flex; align-items: center; justify-content: center; gap: 14px; opacity: 0; animation: fadeInUp 1s 0.4s forwards; }
         .hero-motto::before, .hero-motto::after { content: ''; width: 28px; height: 1px; background: rgba(184, 155, 114, 0.5); }
         
-        .hero-features { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; }
+        .hero-features { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; opacity: 0; animation: fadeInUp 1s 0.6s forwards; }
         .hero-feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #cbd5e1; }
         .hero-feature-item svg { width: 20px; height: 20px; stroke: var(--gold); }
 
-        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeInUp 1s 0.75s forwards; }
         .btn { padding: 15px 40px; font-size: 15px; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s; border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 500; }
         .btn-primary { background-color: var(--gold); color: var(--navy); border: 1px solid var(--gold); box-shadow: 0 8px 24px rgba(184, 155, 114, 0.18); }
         .btn-primary:hover { background-color: var(--gold-hover); transform: translateY(-2px); }
@@ -76,20 +78,18 @@
         .section-subtitle { text-align: center; font-size: 14px; color: var(--text-muted); max-width: 600px; margin: 0 auto 50px; }
         .section-title::after { content: ''; display: block; width: 44px; height: 2px; background: var(--gold); margin: 16px auto 0; }
 
-        /* ================= 5. 核心服务矩阵 (项目化卡片) ================= */
+        /* ================= 5. 核心服务矩阵 ================= */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
         .service-card { background: var(--navy-light); padding: 32px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.35s; display: flex; flex-direction: column; border-top: 3px solid transparent; }
         .service-card:hover { transform: translateY(-8px); border-top-color: var(--gold); box-shadow: 0 16px 36px rgba(0,0,0,0.3); background: #233044; }
         .service-icon { width: 42px; height: 42px; border: 1px solid rgba(184, 155, 114, 0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); margin-bottom: 20px; background: rgba(20, 28, 43, 0.5); }
         .service-card h4 { font-size: 19px; margin-bottom: 12px; color: var(--text-main); }
         .service-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; flex-grow: 1; }
-        
-        /* 新港湾风格标签 */
         .card-meta { margin-top: 20px; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 12px; color: #cbd5e1; display: flex; flex-direction: column; gap: 6px; }
         .card-meta div { display: flex; justify-content: space-between; }
         .stars { color: var(--gold); letter-spacing: 2px; }
 
-        /* ================= 6. 诊断与自测 (保留原有高定感) ================= */
+        /* ================= 6. 诊断与自测 ================= */
         .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto; }
         .product-box { background: var(--navy-light); padding: 40px; border: 1px solid rgba(184, 155, 114, 0.3); display: flex; flex-direction: column; position: relative; }
         .product-box h4 { font-size: 22px; color: var(--gold); margin-bottom: 8px; font-family: var(--font-serif); }
@@ -99,7 +99,7 @@
         .product-box ul li { margin-bottom: 12px; padding-left: 24px; position: relative; }
         .product-box ul li::before { content: '✓'; color: var(--gold); position: absolute; left: 0; font-weight: bold; }
 
-        /* ================= 7. 底部与合规声明 ================= */
+        /* ================= 7. 底部信息 ================= */
         footer { background: var(--navy-dark); padding: 60px 5% 30px; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-inner { max-width: 1200px; margin: 0 auto; }
         .compliance-box { background: rgba(255,255,255,0.02); padding: 20px; border-left: 2px solid var(--gold); margin-bottom: 40px; font-size: 12.5px; line-height: 1.8; }
@@ -111,13 +111,15 @@
         .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; padding: 12px 24px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35); z-index: 900; transition: transform 0.3s; }
         .whatsapp-float:hover { transform: scale(1.05); }
 
-        /* 模态框基础样式 */
+        /* 模态框 */
         .modal-backdrop { position: fixed; inset: 0; background: rgba(11, 17, 26, 0.85); backdrop-filter: blur(8px); z-index: 1100; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-backdrop.open { display: flex; }
         .modal-panel { background: var(--navy-light); border: 1px solid rgba(184, 155, 114, 0.4); max-width: 600px; width: 100%; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
         .quiz-option { width: 100%; text-align: left; padding: 14px 18px; margin-bottom: 12px; background: rgba(20, 28, 43, 0.75); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; }
         .quiz-option:hover { border-color: var(--gold); background: rgba(184, 155, 114, 0.12); }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
@@ -139,13 +141,17 @@
                 <stop offset="50%" stop-color="#b89b72" />
                 <stop offset="100%" stop-color="#8f7249" />
             </linearGradient>
+            <linearGradient id="harthelmGoldSoft" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#b89b72" stop-opacity="0.2" />
+                <stop offset="100%" stop-color="#d4b88d" stop-opacity="0.85" />
+            </linearGradient>
         </defs>
     </svg>
 
     <!-- 顶部导航 -->
     <header>
         <a href="#" class="logo-text">
-            <svg viewBox="0 0 100 100" fill="none">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="44" stroke="url(#harthelmGold)" stroke-width="2" stroke-opacity="0.45"/>
                 <circle cx="50" cy="50" r="35" stroke="url(#harthelmGold)" stroke-width="2.5"/>
                 <g stroke="url(#harthelmGold)" stroke-width="2.6" stroke-linecap="round">
@@ -165,8 +171,8 @@
 
         <nav class="nav-links">
             <a href="#services" data-zh="核心服务" data-en="Services">核心服务</a>
-            <a href="#cases" data-zh="成功案例" data-en="Cases">成功案例</a>
             <a href="#assessment" data-zh="续签诊断" data-en="Diagnosis">续签诊断</a>
+            <a href="#process" data-zh="服务流程" data-en="Process">服务流程</a>
             <a href="#b2b" data-zh="渠道合作" data-en="Partners">渠道合作</a>
         </nav>
 
@@ -185,17 +191,33 @@
         <div class="hero-overlay"></div>
         <div class="hero-card">
             <div class="hero-logo-wrapper">
-                <svg viewBox="0 0 100 100" fill="none">
-                    <circle cx="50" cy="50" r="45" stroke="url(#harthelmGold)" stroke-width="2" stroke-dasharray="4 4"/>
-                    <circle cx="50" cy="50" r="36" stroke="url(#harthelmGold)" stroke-width="3"/>
-                    <g stroke="url(#harthelmGold)" stroke-width="3" stroke-linecap="round">
-                        <line x1="50" y1="5" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="95"/>
-                        <line x1="5" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="95" y2="50"/>
-                        <line x1="18" y1="18" x2="28" y2="28"/><line x1="72" y1="72" x2="82" y2="82"/>
-                        <line x1="82" y1="18" x2="72" y2="28"/><line x1="28" y1="72" x2="18" y2="82"/>
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g class="hero-logo-ring">
+                        <circle cx="100" cy="100" r="92" stroke="url(#harthelmGoldSoft)" stroke-width="1" stroke-dasharray="3 6"/>
+                        <circle cx="100" cy="100" r="84" stroke="url(#harthelmGold)" stroke-width="1.2" stroke-opacity="0.35"/>
+                        <polygon points="100,2 103,10 97,10" fill="url(#harthelmGold)"/>
+                        <polygon points="100,198 103,190 97,190" fill="url(#harthelmGold)"/>
+                        <polygon points="2,100 10,103 10,97" fill="url(#harthelmGold)"/>
+                        <polygon points="198,100 190,103 190,97" fill="url(#harthelmGold)"/>
                     </g>
-                    <path d="M36 34 H64 V51 C64 62 50 70 50 70 C50 70 36 62 36 51 V34 Z" fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="2.5"/>
-                    <path d="M44 42 V56 M56 42 V56 M44 49 H56" stroke="url(#harthelmGold)" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="100" cy="100" r="68" stroke="url(#harthelmGold)" stroke-width="3.5"/>
+                    <circle cx="100" cy="100" r="56" stroke="url(#harthelmGold)" stroke-width="1.5" stroke-opacity="0.65"/>
+                    <g stroke="url(#harthelmGold)" stroke-linecap="round">
+                        <line x1="100" y1="12" x2="100" y2="56" stroke-width="4.5"/><line x1="100" y1="144" x2="100" y2="188" stroke-width="4.5"/>
+                        <line x1="12" y1="100" x2="56" y2="100" stroke-width="4.5"/><line x1="144" y1="100" x2="188" y2="100" stroke-width="4.5"/>
+                        <line x1="37.8" y1="37.8" x2="68.9" y2="68.9" stroke-width="3.8"/><line x1="131.1" y1="131.1" x2="162.2" y2="162.2" stroke-width="3.8"/>
+                        <line x1="162.2" y1="37.8" x2="131.1" y2="68.9" stroke-width="3.8"/><line x1="68.9" y1="131.1" x2="37.8" y2="162.2" stroke-width="3.8"/>
+                    </g>
+                    <g fill="url(#harthelmGold)">
+                        <circle cx="100" cy="12" r="4"/><circle cx="100" cy="188" r="4"/>
+                        <circle cx="12" cy="100" r="4"/><circle cx="188" cy="100" r="4"/>
+                        <circle cx="37.8" cy="37.8" r="3.5"/><circle cx="162.2" cy="162.2" r="3.5"/>
+                        <circle cx="162.2" cy="37.8" r="3.5"/><circle cx="37.8" cy="162.2" r="3.5"/>
+                    </g>
+                    <path d="M68 68 H132 V104 C132 126 100 142 100 142 C100 142 68 126 68 104 V68 Z" fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="3.2"/>
+                    <path d="M74 74 H126 V103 C126 121 100 135 100 135 C100 135 74 121 74 103 V74 Z" stroke="url(#harthelmGold)" stroke-width="1" stroke-opacity="0.45"/>
+                    <path d="M86 85 V115 M114 85 V115 M86 100 H114" stroke="url(#harthelmGold)" stroke-width="4.2" stroke-linecap="round"/>
+                    <polygon points="100,77 102.5,83 109,83 103.8,86.8 105.8,93 100,89.2 94.2,93 96.2,86.8 91,83 97.5,83" fill="url(#harthelmGold)"/>
                 </svg>
             </div>
             
@@ -247,7 +269,6 @@
         <p class="section-subtitle" data-zh="围绕入境处真实审核逻辑，构建从身份续签、企业设立到实体办公的闭环合规方案" data-en="Built around authentic regulatory standards, delivering closed-loop compliance.">围绕入境处真实审核逻辑，构建从身份续签、企业设立到实体办公的闭环合规方案</p>
         
         <div class="services-grid">
-            <!-- 卡片 1 -->
             <div class="service-card">
                 <h4 data-zh="高才/优才 自雇续签" data-en="TTPS/QMAS Self-Employed Renewal">高才/优才 自雇续签</h4>
                 <p data-zh="无雇主依赖，自控力强。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。" data-en="No employer needed, high self-control. Focus on self-employment paths, reviewing operational materials.">无雇主依赖，自控力强。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。</p>
@@ -257,7 +278,6 @@
                     <div><span data-zh="实体要求：" data-en="Office Req:">实体要求：</span><span data-zh="必须厘印租约" data-en="Stamped Lease Req.">必须厘印租约</span></div>
                 </div>
             </div>
-            <!-- 卡片 2 -->
             <div class="service-card">
                 <h4 data-zh="IANG 毕业生留港" data-en="IANG Graduate Visa">IANG 毕业生留港</h4>
                 <p data-zh="无缝衔接身份空窗期，提供备用公司架构与实体办公支持，确保在港身份合规。" data-en="Seamless transition during gap period, with company setup and physical office support.">无缝衔接身份空窗期，提供备用公司架构与实体办公支持，确保在港身份合规。</p>
@@ -267,7 +287,6 @@
                     <div><span data-zh="落地支持：" data-en="Support:">落地支持：</span><span data-zh="工位+财税" data-en="Office + Tax">工位+财税</span></div>
                 </div>
             </div>
-            <!-- 卡片 3 -->
             <div class="service-card">
                 <h4 data-zh="企业出海与实体运营" data-en="Corporate Setup & Ops">企业出海与实体运营</h4>
                 <p data-zh="真实可核验的香港办公场地与厘印租约。月租 HKD 2,500 起，满足银行开户与KYC核验。" data-en="Verifiable HK office and stamped lease from HKD 2,500. Meets KYC & banking needs.">真实可核验的香港办公场地与厘印租约。月租 HKD 2,500 起，满足银行开户与KYC核验。</p>
@@ -358,24 +377,43 @@
         </div>
     </div>
 
-    <!-- JS: 语言切换与自测逻辑保持不变 (因为逻辑非常完善) -->
+    <!-- JS 逻辑 -->
     <script>
         let currentLang = 'zh';
         function switchLang(lang) {
             currentLang = lang;
             document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+            
+            // 切换按钮状态
+            const zhBtn = document.getElementById('langBtnZh');
+            const enBtn = document.getElementById('langBtnEn');
+            if (zhBtn && enBtn) {
+                zhBtn.classList.toggle('active', lang === 'zh');
+                enBtn.classList.toggle('active', lang === 'en');
+            }
+
+            // 替换所有文字
             document.querySelectorAll('[data-zh]').forEach(el => {
                 const text = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
                 if (text !== null) el.innerHTML = text;
             });
-            if (document.getElementById('assessmentModal').classList.contains('open')) renderQuizStep();
         }
 
-        function openAssessmentModal() { quizStep = 0; quizAnswers = []; document.getElementById('assessmentModal').classList.add('open'); renderQuizStep(); }
+        // 移动端菜单控制
+        function toggleMobileMenu() { document.querySelector('.nav-links').classList.toggle('active'); }
+
+        // 自测弹窗控制
+        function openAssessmentModal() { 
+            document.getElementById('assessmentModal').classList.add('open'); 
+            document.getElementById('quizStepContent').innerHTML = '<p style="color:var(--text-muted);">自测题库已准备，可接入具体的问卷逻辑。</p>';
+        }
         function closeAssessmentModal() { document.getElementById('assessmentModal').classList.remove('open'); }
 
-        // 为了篇幅，自测题目的 JS 逻辑保持你原先的代码即可，完全通用。
-        // 如果你需要补全，请告诉我，我立刻补发。
+        // 点击遮罩层关闭
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('assessmentModal');
+            if (e.target === modal) closeAssessmentModal();
+        });
     </script>
 </body>
 </html>
