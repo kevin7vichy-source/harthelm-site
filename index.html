@@ -4,757 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HARTHELM - 为家掌舵，为业远行 | WHERE FAMILY FINDS ITS DIRECTION</title>
-    <!-- 引入 Tailwind CSS 以增强响应式布局与模态框细节，同时完整保留您的原生 CSS 变量与样式架构 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* --- 全局变量：提取自 Logo 的深海军蓝与暖金色 --- */
         :root {
             --navy: #141c2b;
             --navy-light: #1e293b;
             --navy-dark: #0b111a;
             --gold: #b89b72;
             --gold-hover: #d4b88d;
-            --gold-dim: rgba(184, 155, 114, 0.25);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            --font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --font-serif: Georgia, "Times New Roman", serif;
         }
 
-        /* --- 基础重置 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body {
-            font-family: var(--font-family);
-            background-color: var(--navy);
-            color: var(--text-main);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
+        body { font-family: var(--font-family); background-color: var(--navy); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
 
-        /* --- 导航栏 --- */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 5%;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-            background: rgba(20, 28, 43, 0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(184, 155, 114, 0.12);
-            transition: all 0.3s ease;
-        }
-        .logo-text {
-            font-size: 19px;
-            letter-spacing: 4px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-main);
-        }
-        .logo-text svg {
-            height: 36px;
-            width: 36px;
-            flex-shrink: 0;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .logo-text:hover svg {
-            transform: rotate(22.5deg);
-        }
-        .logo-sub {
-            display: block;
-            font-size: 9px;
-            letter-spacing: 2px;
-            color: var(--gold);
-            font-weight: 400;
-            margin-top: -2px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 36px;
-            font-size: 14px;
-            color: var(--text-muted);
-            align-items: center;
-        }
-        .nav-links a {
-            position: relative;
-            padding: 4px 0;
-            transition: color 0.3s;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: width 0.3s ease;
-        }
+        /* ================= 1. 顶部导航 (精简高定版) ================= */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; position: fixed; width: 100%; top: 0; z-index: 100; background: rgba(20, 28, 43, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(184, 155, 114, 0.12); transition: all 0.3s; }
+        .logo-text { font-size: 19px; letter-spacing: 4px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+        .logo-text svg { height: 36px; width: 36px; transition: transform 0.6s; }
+        .logo-text:hover svg { transform: rotate(22.5deg); }
+        .logo-sub { display: block; font-size: 9px; letter-spacing: 2px; color: var(--gold); font-weight: 400; margin-top: -2px; }
+        .nav-links { display: flex; gap: 36px; font-size: 14px; color: var(--text-muted); align-items: center; }
+        .nav-links a { position: relative; padding: 4px 0; transition: color 0.3s; }
         .nav-links a:hover { color: var(--gold); }
-        .nav-links a:hover::after { width: 100%; }
+        .header-right { display: flex; align-items: center; gap: 18px; }
+        .lang-switch { font-size: 13px; display: flex; gap: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 2px; background: rgba(255,255,255,0.02); }
+        .lang-switch button { cursor: pointer; background: none; border: none; color: inherit; font-size: 12px; }
+        .lang-switch button.active { color: var(--gold); font-weight: 600; }
+        .mobile-menu-btn { display: none; background: transparent; border: 1px solid rgba(184, 155, 114, 0.35); color: var(--gold); padding: 6px 10px; cursor: pointer; }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-        .lang-switch {
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 5px 12px;
-            border-radius: 2px;
-            background: rgba(255,255,255,0.02);
-        }
-        .lang-switch button {
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: inherit;
-            font-size: 12px;
-            letter-spacing: 1px;
-            transition: color 0.2s;
-        }
-        .lang-switch button:hover,
-        .lang-switch button.active {
-            color: var(--gold);
-            font-weight: 600;
-        }
-        .mobile-menu-btn {
-            display: none;
-            background: transparent;
-            border: 1px solid rgba(184, 155, 114, 0.35);
-            color: var(--gold);
-            padding: 6px 10px;
-            border-radius: 2px;
-            cursor: pointer;
-        }
+        /* ================= 2. 首屏 (维港夜景 + 金色切角卡片) ================= */
+        .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 20px 60px; background: url('https://images.unsplash.com/photo-1536599018102-9f803c140fc1?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(11,17,26,0.85), rgba(11,17,26,0.45)); z-index: 1; }
+        
+        .hero-card { position: relative; z-index: 2; max-width: 900px; width: 100%; background: rgba(20, 28, 43, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(184, 155, 114, 0.3); border-radius: 4px; padding: 60px 40px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        /* 装饰角 */
+        .hero-card::before, .hero-card::after { content: ''; position: absolute; width: 30px; height: 30px; border: 2px solid var(--gold); }
+        .hero-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .hero-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 
-        /* --- 首屏 Hero Section --- */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 110px 20px 70px;
-            background:
-                radial-gradient(circle at 50% 38%, rgba(184, 155, 114, 0.10) 0%, transparent 45%),
-                radial-gradient(circle at center, var(--navy-light) 0%, var(--navy) 72%);
-            position: relative;
-            overflow: hidden;
-        }
-        /* 背景细微经纬网格与航海刻度装饰 */
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(184, 155, 114, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(184, 155, 114, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
-            pointer-events: none;
-        }
+        .hero-logo-wrapper { width: 90px; height: 90px; margin: 0 auto 24px; }
+        .hero h1 { font-size: 46px; letter-spacing: 12px; font-weight: 400; margin-bottom: 12px; padding-left: 12px; color: var(--text-main); text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .hero h2 { font-size: 16px; letter-spacing: 6px; color: var(--gold); margin-bottom: 20px; padding-left: 6px; font-family: var(--font-serif); }
+        .hero-motto { font-size: 18px; letter-spacing: 4px; color: #e2e8f0; margin-bottom: 36px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+        .hero-motto::before, .hero-motto::after { content: ''; width: 28px; height: 1px; background: rgba(184, 155, 114, 0.5); }
+        
+        .hero-features { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; }
+        .hero-feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #cbd5e1; }
+        .hero-feature-item svg { width: 20px; height: 20px; stroke: var(--gold); }
 
-        .hero-logo-wrapper {
-            width: 136px;
-            height: 136px;
-            margin-bottom: 28px;
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .hero-logo-wrapper svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45));
-        }
-        .hero-logo-ring {
-            transform-origin: center;
-            animation: slowSpin 60s linear infinite;
-        }
-        @keyframes slowSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 15px 40px; font-size: 15px; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s; border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 500; }
+        .btn-primary { background-color: var(--gold); color: var(--navy); border: 1px solid var(--gold); box-shadow: 0 8px 24px rgba(184, 155, 114, 0.18); }
+        .btn-primary:hover { background-color: var(--gold-hover); transform: translateY(-2px); }
+        .btn-secondary { background-color: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 
-        .hero h1 {
-            font-size: 48px;
-            letter-spacing: 12px;
-            font-weight: 400;
-            margin-bottom: 12px;
-            opacity: 0;
-            animation: fadeInUp 1s 0.15s forwards;
-            padding-left: 12px; /* 平衡字间距视觉中心 */
-        }
-        .hero h2 {
-            font-size: 15px;
-            letter-spacing: 6px;
-            color: var(--gold);
-            font-weight: 400;
-            margin-bottom: 14px;
-            opacity: 0;
-            animation: fadeInUp 1s 0.3s forwards;
-            padding-left: 6px;
-        }
-        .hero-motto {
-            font-size: 18px;
-            letter-spacing: 4px;
-            color: #e2e8f0;
-            font-weight: 300;
-            margin-bottom: 32px;
-            opacity: 0;
-            animation: fadeInUp 1s 0.4s forwards;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .hero-motto::before,
-        .hero-motto::after {
-            content: '';
-            width: 28px;
-            height: 1px;
-            background: rgba(184, 155, 114, 0.5);
-        }
-        .hero p {
-            font-size: 16px;
-            max-width: 720px;
-            color: var(--text-muted);
-            margin-bottom: 48px;
-            line-height: 1.85;
-            opacity: 0;
-            animation: fadeInUp 1s 0.55s forwards;
-        }
+        /* ================= 3. 信任数据条 ================= */
+        .trust-bar { background-color: var(--navy-dark); padding: 40px 5%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .trust-item h3 { color: var(--gold); font-size: 38px; font-weight: 600; font-family: var(--font-serif); margin-bottom: 4px; }
+        .trust-item p { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; }
 
-        /* --- 按钮系统 --- */
-        .btn-group {
-            display: flex;
-            gap: 20px;
-            opacity: 0;
-            animation: fadeInUp 1s 0.75s forwards;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn {
-            padding: 15px 40px;
-            font-size: 15px;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-radius: 2px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: 500;
-        }
-        .btn-primary {
-            background-color: var(--gold);
-            color: var(--navy);
-            border: 1px solid var(--gold);
-            box-shadow: 0 8px 24px rgba(184, 155, 114, 0.18);
-        }
-        .btn-primary:hover {
-            background-color: var(--gold-hover);
-            border-color: var(--gold-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(184, 155, 114, 0.28);
-        }
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.02);
-            color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .btn-secondary:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background-color: rgba(184, 155, 114, 0.06);
-            transform: translateY(-2px);
-        }
+        /* ================= 4. 通用区块 ================= */
+        .section { padding: 100px 5%; max-width: 1300px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 28px; letter-spacing: 3px; margin-bottom: 16px; font-weight: 400; color: var(--text-main); }
+        .section-subtitle { text-align: center; font-size: 14px; color: var(--text-muted); max-width: 600px; margin: 0 auto 50px; }
+        .section-title::after { content: ''; display: block; width: 44px; height: 2px; background: var(--gold); margin: 16px auto 0; }
 
-        /* --- 信任数据条 --- */
-        .trust-bar {
-            background-color: rgba(0,0,0,0.24);
-            padding: 48px 5%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .trust-item {
-            position: relative;
-            padding: 0 15px;
-        }
-        .trust-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 15%;
-            height: 70%;
-            width: 1px;
-            background: rgba(184, 155, 114, 0.18);
-        }
-        .trust-item h3 {
-            color: var(--gold);
-            font-size: 36px;
-            font-weight: 400;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-        .trust-item p {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
+        /* ================= 5. 核心服务矩阵 (项目化卡片) ================= */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .service-card { background: var(--navy-light); padding: 32px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.35s; display: flex; flex-direction: column; border-top: 3px solid transparent; }
+        .service-card:hover { transform: translateY(-8px); border-top-color: var(--gold); box-shadow: 0 16px 36px rgba(0,0,0,0.3); background: #233044; }
+        .service-icon { width: 42px; height: 42px; border: 1px solid rgba(184, 155, 114, 0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); margin-bottom: 20px; background: rgba(20, 28, 43, 0.5); }
+        .service-card h4 { font-size: 19px; margin-bottom: 12px; color: var(--text-main); }
+        .service-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; flex-grow: 1; }
+        
+        /* 新港湾风格标签 */
+        .card-meta { margin-top: 20px; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 12px; color: #cbd5e1; display: flex; flex-direction: column; gap: 6px; }
+        .card-meta div { display: flex; justify-content: space-between; }
+        .stars { color: var(--gold); letter-spacing: 2px; }
 
-        /* --- 通用区块与标题 --- */
-        .section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
-        .section-full { padding: 100px 5%; }
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            letter-spacing: 3px;
-            margin-bottom: 16px;
-            font-weight: 400;
-            position: relative;
-        }
-        .section-subtitle {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-muted);
-            max-width: 620px;
-            margin: 0 auto 60px;
-        }
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 44px;
-            height: 2px;
-            background: var(--gold);
-            margin: 18px auto 0;
-        }
+        /* ================= 6. 诊断与自测 (保留原有高定感) ================= */
+        .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto; }
+        .product-box { background: var(--navy-light); padding: 40px; border: 1px solid rgba(184, 155, 114, 0.3); display: flex; flex-direction: column; position: relative; }
+        .product-box h4 { font-size: 22px; color: var(--gold); margin-bottom: 8px; font-family: var(--font-serif); }
+        .product-box .price { font-size: 32px; font-weight: 600; margin-bottom: 24px; color: var(--text-main); }
+        .product-box .price span { font-size: 14px; color: var(--text-muted); font-weight: 400; }
+        .product-box ul { list-style: none; margin-bottom: 30px; color: var(--text-muted); font-size: 14px; flex-grow: 1; }
+        .product-box ul li { margin-bottom: 12px; padding-left: 24px; position: relative; }
+        .product-box ul li::before { content: '✓'; color: var(--gold); position: absolute; left: 0; font-weight: bold; }
 
-        /* --- 核心服务 --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-        }
-        .service-card {
-            background: linear-gradient(180deg, var(--navy-light) 0%, rgba(30, 41, 59, 0.65) 100%);
-            padding: 42px 32px;
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all 0.35s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 0;
-            background: var(--gold);
-            transition: height 0.35s ease;
-        }
-        .service-card:hover {
-            border-color: rgba(184, 155, 114, 0.55);
-            transform: translateY(-6px);
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
-        }
-        .service-card:hover::before {
-            height: 100%;
-        }
-        .service-icon {
-            width: 44px;
-            height: 44px;
-            border: 1px solid rgba(184, 155, 114, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold);
-            margin-bottom: 24px;
-            background: rgba(20, 28, 43, 0.5);
-        }
-        .service-card h4 {
-            font-size: 19px;
-            margin-bottom: 14px;
-            color: var(--text-main);
-            letter-spacing: 1px;
-        }
-        .service-card p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.75;
-            flex-grow: 1;
-        }
-        .service-tag {
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 12px;
-            color: var(--gold);
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        /* ================= 7. 底部与合规声明 ================= */
+        footer { background: var(--navy-dark); padding: 60px 5% 30px; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .compliance-box { background: rgba(255,255,255,0.02); padding: 20px; border-left: 2px solid var(--gold); margin-bottom: 40px; font-size: 12.5px; line-height: 1.8; }
+        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
+        .footer-col h5 { color: var(--text-main); margin-bottom: 16px; font-size: 15px; }
+        .footer-col p { margin-bottom: 6px; }
 
-        /* --- 产品与转化区 (诊断+自测) --- */
-        .products-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            max-width: 1180px;
-            margin: 0 auto;
-        }
-        .product-box {
-            background: linear-gradient(145deg, var(--navy-light), var(--navy));
-            padding: 50px 44px;
-            border: 1px solid rgba(184, 155, 114, 0.35);
-            text-align: center;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .product-box:hover {
-            transform: translateY(-4px);
-            border-color: var(--gold);
-        }
-        .product-badge {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            font-size: 11px;
-            padding: 4px 10px;
-            background: rgba(184, 155, 114, 0.15);
-            color: var(--gold);
-            border: 1px solid rgba(184, 155, 114, 0.35);
-            letter-spacing: 1px;
-        }
-        .product-box h4 {
-            font-size: 22px;
-            color: var(--gold);
-            margin-bottom: 12px;
-            letter-spacing: 1.5px;
-        }
-        .product-box .price {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 28px;
-        }
-        .product-box .price span {
-            font-size: 15px;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-        .product-box ul {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 36px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-        .product-box ul li {
-            margin-bottom: 14px;
-            padding-left: 26px;
-            position: relative;
-            line-height: 1.6;
-        }
-        .product-box ul li::before {
-            content: '✓';
-            color: var(--gold);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
+        /* 悬浮 WhatsApp */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; padding: 12px 24px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35); z-index: 900; transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.05); }
 
-        /* --- 服务流程 (#process) --- */
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            position: relative;
-        }
-        .process-step {
-            background: rgba(30, 41, 59, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 36px 28px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .process-step:hover {
-            border-color: rgba(184, 155, 114, 0.45);
-            background: rgba(30, 41, 59, 0.8);
-        }
-        .step-num {
-            font-size: 32px;
-            font-weight: 300;
-            color: var(--gold);
-            opacity: 0.85;
-            margin-bottom: 16px;
-            font-family: Georgia, serif;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .step-num::after {
-            content: '';
-            height: 1px;
-            flex-grow: 1;
-            margin-left: 16px;
-            background: linear-gradient(90deg, rgba(184,155,114,0.4), transparent);
-        }
-        .process-step h4 {
-            font-size: 17px;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-        .process-step p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
+        /* 模态框基础样式 */
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(11, 17, 26, 0.85); backdrop-filter: blur(8px); z-index: 1100; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-backdrop.open { display: flex; }
+        .modal-panel { background: var(--navy-light); border: 1px solid rgba(184, 155, 114, 0.4); max-width: 600px; width: 100%; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+        .quiz-option { width: 100%; text-align: left; padding: 14px 18px; margin-bottom: 12px; background: rgba(20, 28, 43, 0.75); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; }
+        .quiz-option:hover { border-color: var(--gold); background: rgba(184, 155, 114, 0.12); }
 
-        /* --- 渠道合作 (#b2b) --- */
-        .b2b-container {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(20, 28, 43, 0.95) 100%);
-            border: 1px solid rgba(184, 155, 114, 0.3);
-            padding: 60px 50px;
-            display: grid;
-            grid-template-columns: 1.3fr 1fr;
-            gap: 48px;
-            align-items: center;
-        }
-        .b2b-tag {
-            display: inline-block;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: var(--gold);
-            border: 1px solid rgba(184, 155, 114, 0.4);
-            padding: 4px 12px;
-            margin-bottom: 18px;
-        }
-        .b2b-content h3 {
-            font-size: 26px;
-            font-weight: 400;
-            margin-bottom: 16px;
-            letter-spacing: 1.5px;
-        }
-        .b2b-content p {
-            color: var(--text-muted);
-            font-size: 14.5px;
-            margin-bottom: 28px;
-            line-height: 1.8;
-        }
-        .b2b-highlights {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .b2b-item {
-            background: rgba(20, 28, 43, 0.65);
-            border-left: 2px solid var(--gold);
-            padding: 14px 18px;
-        }
-        .b2b-item h5 {
-            font-size: 14px;
-            color: var(--text-main);
-            margin-bottom: 4px;
-        }
-        .b2b-item span {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* --- 底部 --- */
-        footer {
-            background: var(--navy-dark);
-            padding: 70px 5% 35px;
-            font-size: 13px;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .footer-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        .footer-col h5 {
-            color: var(--text-main);
-            margin-bottom: 18px;
-            font-size: 15px;
-            letter-spacing: 1.5px;
-        }
-        .footer-col p {
-            margin-bottom: 8px;
-            line-height: 1.7;
-        }
-        .compliance-box {
-            background: rgba(255,255,255,0.02);
-            padding: 22px 26px;
-            border-left: 2px solid var(--gold);
-            font-size: 12.5px;
-            margin-bottom: 40px;
-            line-height: 1.85;
-        }
-
-        /* --- 悬浮 WhatsApp 按钮 --- */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25D366;
-            color: white;
-            padding: 14px 24px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
-            z-index: 900;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45);
-            color: white;
-        }
-
-        /* --- 模态框 (在线自测 & 隐私/免责声明) --- */
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(11, 17, 26, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-backdrop.open {
-            display: flex;
-        }
-        .modal-panel {
-            background: var(--navy-light);
-            border: 1px solid rgba(184, 155, 114, 0.4);
-            max-width: 640px;
-            width: 100%;
-            padding: 40px;
-            position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
-            animation: fadeInUp 0.35s ease forwards;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 22px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-close:hover { color: var(--gold); }
-        .quiz-option {
-            width: 100%;
-            text-align: left;
-            padding: 14px 18px;
-            margin-bottom: 12px;
-            background: rgba(20, 28, 43, 0.75);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-main);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .quiz-option:hover, .quiz-option.selected {
-            border-color: var(--gold);
-            background: rgba(184, 155, 114, 0.12);
-            color: var(--gold-hover);
-        }
-
-        /* --- 动画 --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(26px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 响应式 --- */
-        @media (max-width: 992px) {
-            .process-grid { grid-template-columns: repeat(2, 1fr); }
-            .b2b-container { grid-template-columns: 1fr; padding: 40px 30px; }
-        }
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(20, 28, 43, 0.98);
-                flex-direction: column;
-                padding: 24px;
-                gap: 20px;
-                border-bottom: 1px solid rgba(184, 155, 114, 0.2);
-            }
-            .nav-links.mobile-open { display: flex; }
+            .nav-links { display: none; }
             .mobile-menu-btn { display: inline-flex; }
-            .hero h1 { font-size: 32px; letter-spacing: 6px; padding-left: 6px; }
-            .hero h2 { font-size: 12px; letter-spacing: 3px; }
-            .hero-motto { font-size: 15px; letter-spacing: 2px; }
+            .hero h1 { font-size: 32px; }
+            .hero-card { padding: 40px 20px; }
             .trust-bar { grid-template-columns: 1fr; gap: 30px; }
-            .trust-item:not(:last-child)::after { display: none; }
             .products-grid { grid-template-columns: 1fr; }
-            .process-grid { grid-template-columns: 1fr; }
-            .b2b-highlights { grid-template-columns: 1fr; }
-            .btn-group { flex-direction: column; width: 100%; max-width: 320px; }
-            .product-box { padding: 38px 26px; }
-            .modal-panel { padding: 28px 22px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SVG 符号定义库：复用 HARTHELM 品牌船舵罗盘徽标 -->
+    <!-- SVG 符号定义库 -->
     <svg width="0" height="0" style="position:absolute">
         <defs>
             <linearGradient id="harthelmGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -762,33 +139,21 @@
                 <stop offset="50%" stop-color="#b89b72" />
                 <stop offset="100%" stop-color="#8f7249" />
             </linearGradient>
-            <linearGradient id="harthelmGoldSoft" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b89b72" stop-opacity="0.2" />
-                <stop offset="100%" stop-color="#d4b88d" stop-opacity="0.85" />
-            </linearGradient>
         </defs>
     </svg>
 
     <!-- 顶部导航 -->
     <header>
-        <a href="#" class="logo-text" aria-label="HARTHELM Home">
-            <!-- HARTHELM 品牌定制 SVG 徽标（导航栏精简高辨识度版） -->
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 外层八角领航边框 -->
+        <a href="#" class="logo-text">
+            <svg viewBox="0 0 100 100" fill="none">
                 <circle cx="50" cy="50" r="44" stroke="url(#harthelmGold)" stroke-width="2" stroke-opacity="0.45"/>
                 <circle cx="50" cy="50" r="35" stroke="url(#harthelmGold)" stroke-width="2.5"/>
-                <!-- 船舵 8 根舵柄 (Helm Spokes) -->
                 <g stroke="url(#harthelmGold)" stroke-width="2.6" stroke-linecap="round">
-                    <line x1="50" y1="4" x2="50" y2="20"/>
-                    <line x1="50" y1="80" x2="50" y2="96"/>
-                    <line x1="4" y1="50" x2="20" y2="50"/>
-                    <line x1="80" y1="50" x2="96" y2="50"/>
-                    <line x1="17.5" y1="17.5" x2="28.8" y2="28.8"/>
-                    <line x1="71.2" y1="71.2" x2="82.5" y2="82.5"/>
-                    <line x1="82.5" y1="17.5" x2="71.2" y2="28.8"/>
-                    <line x1="28.8" y1="71.2" x2="17.5" y2="82.5"/>
+                    <line x1="50" y1="4" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="96"/>
+                    <line x1="4" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="96" y2="50"/>
+                    <line x1="17.5" y1="17.5" x2="28.8" y2="28.8"/><line x1="71.2" y1="71.2" x2="82.5" y2="82.5"/>
+                    <line x1="82.5" y1="17.5" x2="71.2" y2="28.8"/><line x1="28.8" y1="71.2" x2="17.5" y2="82.5"/>
                 </g>
-                <!-- 中心家族盾徽与 H 字航标 -->
                 <path d="M35 33 H65 V52 C65 63 50 71 50 71 C50 71 35 63 35 52 V33 Z" fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="2.4"/>
                 <path d="M43 41 V57 M57 41 V57 M43 49 H57" stroke="url(#harthelmGold)" stroke-width="2.8" stroke-linecap="round"/>
             </svg>
@@ -798,569 +163,140 @@
             </div>
         </a>
 
-        <nav class="nav-links" id="navLinks">
-            <a href="#services" data-zh="核心服务" data-en="Services" onclick="closeMobileMenu()">核心服务</a>
-            <a href="#assessment" data-zh="续签诊断" data-en="Diagnosis" onclick="closeMobileMenu()">续签诊断</a>
-            <a href="#process" data-zh="服务流程" data-en="Process" onclick="closeMobileMenu()">服务流程</a>
-            <a href="#b2b" data-zh="渠道合作" data-en="Partners" onclick="closeMobileMenu()">渠道合作</a>
+        <nav class="nav-links">
+            <a href="#services" data-zh="核心服务" data-en="Services">核心服务</a>
+            <a href="#cases" data-zh="成功案例" data-en="Cases">成功案例</a>
+            <a href="#assessment" data-zh="续签诊断" data-en="Diagnosis">续签诊断</a>
+            <a href="#b2b" data-zh="渠道合作" data-en="Partners">渠道合作</a>
         </nav>
 
         <div class="header-right">
-            <div class="lang-switch" role="group" aria-label="Language switcher">
+            <div class="lang-switch">
                 <button type="button" id="langBtnZh" class="active" onclick="switchLang('zh')">简</button>
                 <span>/</span>
                 <button type="button" id="langBtnEn" onclick="switchLang('en')">EN</button>
             </div>
-            <button type="button" class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Menu">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
+            <button type="button" class="mobile-menu-btn">☰</button>
         </div>
     </header>
 
     <!-- 首屏 Hero Section -->
     <section class="hero">
-        <!-- HARTHELM 旗舰级矢量徽标（取代原破损的 via.placeholder.com 占位图） -->
-        <div class="hero-logo-wrapper" role="img" aria-label="HARTHELM Emblem - Ship's Helm and Family Shield">
-            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- 外层旋转罗盘刻度环 -->
-                <g class="hero-logo-ring">
-                    <circle cx="100" cy="100" r="92" stroke="url(#harthelmGoldSoft)" stroke-width="1" stroke-dasharray="3 6"/>
-                    <circle cx="100" cy="100" r="84" stroke="url(#harthelmGold)" stroke-width="1.2" stroke-opacity="0.35"/>
-                    <!-- 四方罗盘星点 -->
-                    <polygon points="100,2 103,10 97,10" fill="url(#harthelmGold)"/>
-                    <polygon points="100,198 103,190 97,190" fill="url(#harthelmGold)"/>
-                    <polygon points="2,100 10,103 10,97" fill="url(#harthelmGold)"/>
-                    <polygon points="198,100 190,103 190,97" fill="url(#harthelmGold)"/>
-                </g>
+        <div class="hero-overlay"></div>
+        <div class="hero-card">
+            <div class="hero-logo-wrapper">
+                <svg viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" stroke="url(#harthelmGold)" stroke-width="2" stroke-dasharray="4 4"/>
+                    <circle cx="50" cy="50" r="36" stroke="url(#harthelmGold)" stroke-width="3"/>
+                    <g stroke="url(#harthelmGold)" stroke-width="3" stroke-linecap="round">
+                        <line x1="50" y1="5" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="95"/>
+                        <line x1="5" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="95" y2="50"/>
+                        <line x1="18" y1="18" x2="28" y2="28"/><line x1="72" y1="72" x2="82" y2="82"/>
+                        <line x1="82" y1="18" x2="72" y2="28"/><line x1="28" y1="72" x2="18" y2="82"/>
+                    </g>
+                    <path d="M36 34 H64 V51 C64 62 50 70 50 70 C50 70 36 62 36 51 V34 Z" fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="2.5"/>
+                    <path d="M44 42 V56 M56 42 V56 M44 49 H56" stroke="url(#harthelmGold)" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+            
+            <h1>HARTHELM</h1>
+            <h2>WHERE FAMILY FINDS ITS DIRECTION</h2>
+            <div class="hero-motto" data-zh="为家掌舵 · 为业远行" data-en="STEERING FAMILY · ADVANCING ENTERPRISE">为家掌舵 · 为业远行</div>
+            
+            <div class="hero-features">
+                <div class="hero-feature-item">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span data-zh="全周期合规护航" data-en="Full-cycle Compliance">全周期合规护航</span>
+                </div>
+                <div class="hero-feature-item">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                    <span data-zh="真实实体运营" data-en="Physical Operations">真实实体运营</span>
+                </div>
+                <div class="hero-feature-item">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span data-zh="1000+ 个案实操" data-en="1000+ Cases Handled">1000+ 个案实操</span>
+                </div>
+            </div>
 
-                <!-- 船舵主体双环 (Helm Wheel Rings) -->
-                <circle cx="100" cy="100" r="68" stroke="url(#harthelmGold)" stroke-width="3.5"/>
-                <circle cx="100" cy="100" r="56" stroke="url(#harthelmGold)" stroke-width="1.5" stroke-opacity="0.65"/>
-
-                <!-- 八方领航舵柄 (8 Helm Handles) -->
-                <g stroke="url(#harthelmGold)" stroke-linecap="round">
-                    <!-- 垂直与水平主轴 -->
-                    <line x1="100" y1="12" x2="100" y2="56" stroke-width="4.5"/>
-                    <line x1="100" y1="144" x2="100" y2="188" stroke-width="4.5"/>
-                    <line x1="12" y1="100" x2="56" y2="100" stroke-width="4.5"/>
-                    <line x1="144" y1="100" x2="188" y2="100" stroke-width="4.5"/>
-                    <!-- 45度斜轴 -->
-                    <line x1="37.8" y1="37.8" x2="68.9" y2="68.9" stroke-width="3.8"/>
-                    <line x1="131.1" y1="131.1" x2="162.2" y2="162.2" stroke-width="3.8"/>
-                    <line x1="162.2" y1="37.8" x2="131.1" y2="68.9" stroke-width="3.8"/>
-                    <line x1="68.9" y1="131.1" x2="37.8" y2="162.2" stroke-width="3.8"/>
-                </g>
-
-                <!-- 舵柄顶端金属冠珠 -->
-                <g fill="url(#harthelmGold)">
-                    <circle cx="100" cy="12" r="4"/>
-                    <circle cx="100" cy="188" r="4"/>
-                    <circle cx="12" cy="100" r="4"/>
-                    <circle cx="188" cy="100" r="4"/>
-                    <circle cx="37.8" cy="37.8" r="3.5"/>
-                    <circle cx="162.2" cy="162.2" r="3.5"/>
-                    <circle cx="162.2" cy="37.8" r="3.5"/>
-                    <circle cx="37.8" cy="162.2" r="3.5"/>
-                </g>
-
-                <!-- 中央家族盾徽 (Hart & Helm Crest) -->
-                <path d="M68 68 H132 V104 C132 126 100 142 100 142 C100 142 68 126 68 104 V68 Z"
-                      fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="3.2"/>
-                <path d="M74 74 H126 V103 C126 121 100 135 100 135 C100 135 74 121 74 103 V74 Z"
-                      stroke="url(#harthelmGold)" stroke-width="1" stroke-opacity="0.45"/>
-
-                <!-- 盾徽核心 H 与北极星芒组合 -->
-                <path d="M86 85 V115 M114 85 V115 M86 100 H114" stroke="url(#harthelmGold)" stroke-width="4.2" stroke-linecap="round"/>
-                <polygon points="100,77 102.5,83 109,83 103.8,86.8 105.8,93 100,89.2 94.2,93 96.2,86.8 91,83 97.5,83" fill="url(#harthelmGold)"/>
-            </svg>
-        </div>
-
-        <h1>HARTHELM</h1>
-        <h2>WHERE FAMILY FINDS ITS DIRECTION</h2>
-        <div class="hero-motto" data-zh="为家掌舵 · 为业远行" data-en="STEERING FAMILY · ADVANCING ENTERPRISE">为家掌舵 · 为业远行</div>
-        <p data-zh="立足香港与新加坡，专注身份续签、企业落地与实体运营。为高才通、优才及 IANG 人士，提供全周期的合规护航。"
-           data-en="Based in Hong Kong and Singapore, specializing in visa renewal, company setup, and physical operations. Full-cycle compliance support for TTPS, QMAS, and IANG talents.">
-           立足香港与新加坡，专注身份续签、企业落地与实体运营。为高才通、优才及 IANG 人士，提供全周期的合规护航。
-        </p>
-        <div class="btn-group">
-            <a href="https://wa.me/85252612799" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-zh="WhatsApp 免费咨询" data-en="WhatsApp Consultation">WhatsApp 免费咨询</a>
-            <a href="#assessment" class="btn btn-secondary" data-zh="测一测续签准备度" data-en="Free Assessment">测一测续签准备度</a>
+            <div class="btn-group">
+                <a href="https://wa.me/85252612799" target="_blank" class="btn btn-primary" data-zh="WhatsApp 免费咨询" data-en="WhatsApp Consultation">WhatsApp 免费咨询</a>
+                <a href="#assessment" class="btn btn-secondary" data-zh="测一测续签准备度" data-en="Free Assessment">测一测续签准备度</a>
+            </div>
         </div>
     </section>
 
-    <!-- 信任数据 -->
+    <!-- 信任数据条 -->
     <div class="trust-bar">
         <div class="trust-item">
-            <h3 data-zh="13 年" data-en="13 Years">13 年</h3>
-            <p data-zh="行业深耕" data-en="Years Experience">行业深耕</p>
+            <h3 data-zh="13 <span style='font-size:18px;'>年</span>" data-en="13 <span style='font-size:18px;'>Years</span>">13 <span style="font-size:18px;">年</span></h3>
+            <p data-zh="行业深耕经验" data-en="Industry Experience">行业深耕经验</p>
         </div>
         <div class="trust-item">
             <h3>200+</h3>
-            <p data-zh="香港实体工位" data-en="Physical Workstations">香港实体工位</p>
+            <p data-zh="香港实体工位" data-en="HK Physical Workstations">香港实体工位</p>
         </div>
         <div class="trust-item">
             <h3>1000+</h3>
-            <p data-zh="累计接触与服务个案（不以获批计）" data-en="Cases Handled (Not based on approvals)">累计接触与服务个案（不以获批计）</p>
+            <p data-zh="累计服务个案（不以获批计）" data-en="Cases Handled (Not based on approvals)">累计服务个案（不以获批计）</p>
         </div>
     </div>
 
-    <!-- 核心服务 -->
+    <!-- 核心服务 (新港湾项目卡片化风格) -->
     <section id="services" class="section">
-        <h3 class="section-title" data-zh="核心服务矩阵" data-en="Core Services">核心服务矩阵</h3>
-        <p class="section-subtitle"
-           data-zh="围绕入境处真实审核逻辑，构建从身份规划、公司设立到实体办公的闭环合规方案"
-           data-en="Built around authentic regulatory standards, delivering closed-loop compliance from visa renewal to physical office operations">
-           围绕入境处真实审核逻辑，构建从身份规划、公司设立到实体办公的闭环合规方案
-        </p>
+        <h3 class="section-title" data-zh="热门身份规划通道" data-en="Featured Visa Pathways">热门身份规划通道</h3>
+        <p class="section-subtitle" data-zh="围绕入境处真实审核逻辑，构建从身份续签、企业设立到实体办公的闭环合规方案" data-en="Built around authentic regulatory standards, delivering closed-loop compliance.">围绕入境处真实审核逻辑，构建从身份续签、企业设立到实体办公的闭环合规方案</p>
+        
         <div class="services-grid">
+            <!-- 卡片 1 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                </div>
-                <h4 data-zh="香港身份续签" data-en="Visa Renewal">香港身份续签</h4>
-                <p data-zh="涵盖高才通、优才、IANG 续签。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。" data-en="Renewals for TTPS, QMAS, and IANG. Focus on self-employment paths, reviewing operational materials.">涵盖高才通、优才、IANG 续签。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。</p>
-                <div class="service-tag">
-                    <span data-zh="TTPS / QMAS / IANG" data-en="TTPS / QMAS / IANG">TTPS / QMAS / IANG</span>
-                    <span>→</span>
+                <h4 data-zh="高才/优才 自雇续签" data-en="TTPS/QMAS Self-Employed Renewal">高才/优才 自雇续签</h4>
+                <p data-zh="无雇主依赖，自控力强。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。" data-en="No employer needed, high self-control. Focus on self-employment paths, reviewing operational materials.">无雇主依赖，自控力强。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。</p>
+                <div class="card-meta">
+                    <div><span data-zh="推荐指数：" data-en="Rating:">推荐指数：</span><span class="stars">⭐⭐⭐⭐⭐</span></div>
+                    <div><span data-zh="规划周期：" data-en="Timeline:">规划周期：</span><span data-zh="3-6 个月" data-en="3-6 months">3-6 个月</span></div>
+                    <div><span data-zh="实体要求：" data-en="Office Req:">实体要求：</span><span data-zh="必须厘印租约" data-en="Stamped Lease Req.">必须厘印租约</span></div>
                 </div>
             </div>
-
+            <!-- 卡片 2 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                    </svg>
-                </div>
-                <h4 data-zh="公司注册与运营" data-en="Company Setup">公司注册与运营</h4>
-                <p data-zh="香港公司注册、商业登记、公司秘书（第三方办理）及年审记账等合规运营支持。" data-en="HK company incorporation, business registration, and annual compliance support.">香港公司注册、商业登记、公司秘书（第三方办理）及年审记账等合规运营支持。</p>
-                <div class="service-tag">
-                    <span data-zh="全周期企业合规" data-en="Corporate Compliance">全周期企业合规</span>
-                    <span>→</span>
+                <h4 data-zh="IANG 毕业生留港" data-en="IANG Graduate Visa">IANG 毕业生留港</h4>
+                <p data-zh="无缝衔接身份空窗期，提供备用公司架构与实体办公支持，确保在港身份合规。" data-en="Seamless transition during gap period, with company setup and physical office support.">无缝衔接身份空窗期，提供备用公司架构与实体办公支持，确保在港身份合规。</p>
+                <div class="card-meta">
+                    <div><span data-zh="推荐指数：" data-en="Rating:">推荐指数：</span><span class="stars">⭐⭐⭐⭐⭐</span></div>
+                    <div><span data-zh="规划周期：" data-en="Timeline:">规划周期：</span><span data-zh="1-2 个月" data-en="1-2 months">1-2 个月</span></div>
+                    <div><span data-zh="落地支持：" data-en="Support:">落地支持：</span><span data-zh="工位+财税" data-en="Office + Tax">工位+财税</span></div>
                 </div>
             </div>
-
+            <!-- 卡片 3 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v.01M9 12v.01M9 15v.01M9 18v.01"/>
-                    </svg>
-                </div>
-                <h4 data-zh="实体办公室租赁" data-en="Physical Office">实体办公室租赁</h4>
-                <p data-zh="真实可核验的经营地址与正式租约，协助加盖厘印（印花）。月租 HKD 2,500 起。" data-en="Real verifiable business addresses with formal leases. Starting from HKD 2,500/month.">真实可核验的经营地址与正式租约，协助加盖厘印（印花）。月租 HKD 2,500 起。</p>
-                <div class="service-tag">
-                    <span data-zh="独立厘印租约 · 实体工位" data-en="Stamped Lease · Workstations">独立厘印租约 · 实体工位</span>
-                    <span>→</span>
-                </div>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                </div>
-                <h4 data-zh="新加坡 EP 辅助" data-en="Singapore EP">新加坡 EP 辅助</h4>
-                <p data-zh="依托自有新加坡公司资源，按个案评估 EP 申请支持，适合具有新加坡发展规划的客户。" data-en="Evaluated on a case-by-case basis utilizing our Singapore resources.">依托自有新加坡公司资源，按个案评估 EP 申请支持，适合具有新加坡发展规划的客户。</p>
-                <div class="service-tag">
-                    <span data-zh="双城联动规划" data-en="HK-SG Dual Hub">双城联动规划</span>
-                    <span>→</span>
+                <h4 data-zh="企业出海与实体运营" data-en="Corporate Setup & Ops">企业出海与实体运营</h4>
+                <p data-zh="真实可核验的香港办公场地与厘印租约。月租 HKD 2,500 起，满足银行开户与KYC核验。" data-en="Verifiable HK office and stamped lease from HKD 2,500. Meets KYC & banking needs.">真实可核验的香港办公场地与厘印租约。月租 HKD 2,500 起，满足银行开户与KYC核验。</p>
+                <div class="card-meta">
+                    <div><span data-zh="推荐指数：" data-en="Rating:">推荐指数：</span><span class="stars">⭐⭐⭐⭐⭐</span></div>
+                    <div><span data-zh="交付周期：" data-en="Timeline:">交付周期：</span><span data-zh="1-2 周" data-en="1-2 weeks">1-2 周</span></div>
+                    <div><span data-zh="含全套：" data-en="Includes:">含全套：</span><span data-zh="公司+办公室" data-en="Company + Office">公司+办公室</span></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 诊断与自测 -->
-    <section id="assessment" class="section-full" style="background-color: rgba(0,0,0,0.16); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);">
+    <section id="assessment" class="section" style="background-color: rgba(0,0,0,0.16);">
         <h3 class="section-title" data-zh="明确你的续签路径" data-en="Clarify Your Path">明确你的续签路径</h3>
-        <p class="section-subtitle"
-           data-zh="拒绝模板化套用，基于您真实的在港时间线、雇佣或自雇状况提供可执行的合规建议"
-           data-en="Tailored, actionable compliance guidance based on your actual timeline and business substance in Hong Kong">
-           拒绝模板化套用，基于您真实的在港时间线、雇佣或自雇状况提供可执行的合规建议
-        </p>
+        <p class="section-subtitle" data-zh="拒绝模板化套用，基于您真实的在港时间线提供可执行的合规建议" data-en="Tailored, actionable compliance guidance based on your actual timeline.">拒绝模板化套用，基于您真实的在港时间线提供可执行的合规建议</p>
+        
         <div class="products-grid">
-            <!-- 左侧：诊断 -->
             <div class="product-box">
-                <div>
-                    <span class="product-badge" data-zh="1V1 顾问深度梳理" data-en="1-on-1 Deep Dive">1V1 顾问深度梳理</span>
-                    <h4 data-zh="续签风险诊断" data-en="Renewal Risk Diagnosis">续签风险诊断</h4>
-                    <div class="price">HKD 1,000 <span data-zh="(签约抵扣)" data-en="(Deductible)">(签约抵扣)</span></div>
-                    <ul>
-                        <li data-zh="背景深度评估" data-en="In-depth background evaluation">背景深度评估</li>
-                        <li data-zh="自雇/受雇路径规划" data-en="Path planning">自雇/受雇路径规划</li>
-                        <li data-zh="材料清单逐项核对" data-en="Checklist review">材料清单逐项核对</li>
-                        <li data-zh="潜在风险点排雷" data-en="Risk mitigation">潜在风险点排雷</li>
-                    </ul>
-                </div>
-                <a href="https://wa.me/85252612799" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%;" data-zh="预约诊断服务" data-en="Book Diagnosis">预约诊断服务</a>
+                <span style="position: absolute; top: 18px; right: 18px; font-size: 11px; padding: 4px 10px; background: rgba(184, 155, 114, 0.15); color: var(--gold); border: 1px solid rgba(184, 155, 114, 0.35);" data-zh="1V1 顾问深度梳理" data-en="1-on-1 Deep Dive">1V1 顾问深度梳理</span>
+                <h4 data-zh="续签风险诊断" data-en="Renewal Risk Diagnosis">续签风险诊断</h4>
+                <div class="price">HKD 1,000 <span data-zh="(签约抵扣)" data-en="(Deductible)">(签约抵扣)</span></div>
+                <ul>
+                    <li data-zh="背景深度评估与路径规划" data-en="Background evaluation & path planning">背景深度评估与路径规划</li>
+                    <li data-zh="材料清单逐项核对" data-en="Checklist review">材料清单逐项核对</li>
+                    <li data-zh="潜在风险点排雷" data-en="Risk mitigation">潜在风险点排雷</li>
+                </ul>
+                <a href="https://wa.me/85252612799" target="_blank" class="btn btn-primary" data-zh="预约诊断服务" data-en="Book Diagnosis">预约诊断服务</a>
             </div>
 
-            <!-- 右侧：自测 -->
             <div class="product-box" style="border-color: rgba(255,255,255,0.12);">
-                <div>
-                    <span class="product-badge" style="color: var(--text-muted); border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.03);" data-zh="即时生成报告" data-en="Instant Report">即时生成报告</span>
-                    <h4 data-zh="在线自测包" data-en="Free Self-Assessment">在线自测包</h4>
-                    <div class="price" style="color: var(--text-main);">Free</div>
-                    <ul>
-                        <li data-zh="3 分钟快速评估" data-en="3-minute quick evaluation">3 分钟快速评估</li>
-                        <li data-zh="生成初步材料核对清单" data-en="Generate preliminary checklist">生成初步材料核对清单</li>
-                        <li data-zh="了解自身准备度的盲区" data-en="Identify blind spots">了解自身准备度的盲区</li>
-                        <li data-zh="覆盖办公地址、强积金及业务实质核验" data-en="Covers office lease, MPF, and business substance">覆盖办公地址、强积金及业务实质核验</li>
-                    </ul>
-                </div>
-                <button type="button" onclick="openAssessmentModal()" class="btn btn-secondary" style="width: 100%; border-color: var(--gold); color: var(--gold);" data-zh="立即开始测评" data-en="Start Assessment">立即开始测评</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 服务流程 (#process) -->
-    <section id="process" class="section">
-        <h3 class="section-title" data-zh="标准服务流程" data-en="Service Process">标准服务流程</h3>
-        <p class="section-subtitle"
-           data-zh="以合规与证据链闭环为核心，陪伴您的家庭与企业在港稳健扎根"
-           data-en="Centered on regulatory compliance and verifiable documentation at every milestone">
-           以合规与证据链闭环为核心，陪伴您的家庭与企业在港稳健扎根
-        </p>
-        <div class="process-grid">
-            <div class="process-step">
-                <div class="step-num">01</div>
-                <h4 data-zh="现状诊断与盘点" data-en="Case Diagnosis">现状诊断与盘点</h4>
-                <p data-zh="梳理获批时间线、在港居留记录及现有业务资源，识别续签证据链缺口。" data-en="Review visa timeline, residency records, and existing business resources to identify documentation gaps.">梳理获批时间线、在港居留记录及现有业务资源，识别续签证据链缺口。</p>
-            </div>
-            <div class="process-step">
-                <div class="step-num">02</div>
-                <h4 data-zh="架构与办公落地" data-en="Entity & Office Setup">架构与办公落地</h4>
-                <p data-zh="完成香港公司设立/接管、实体工位入驻、正式租约签署及加盖印花税（厘印）。" data-en="Complete HK company setup, physical workstation onboarding, formal lease signing, and stamp duty.">完成香港公司设立/接管、实体工位入驻、正式租约签署及加盖印花税（厘印）。</p>
-            </div>
-            <div class="process-step">
-                <div class="step-num">03</div>
-                <h4 data-zh="合规运营与留痕" data-en="Ongoing Compliance">合规运营与留痕</h4>
-                <p data-zh="建立强积金（MPF）供款、薪资派发、业务合同归档及日常财务记账合规留痕。" data-en="Establish MPF contributions, payroll records, business contracts, and accounting trails.">建立强积金（MPF）供款、薪资派发、业务合同归档及日常财务记账合规留痕。</p>
-            </div>
-            <div class="process-step">
-                <div class="step-num">04</div>
-                <h4 data-zh="材料梳理与递交" data-en="Renewal Submission">材料梳理与递交</h4>
-                <p data-zh="按入境处最新指引逐项核验申请表、商业证明及解释信，协助跟进补件与续签流程。" data-en="Verify forms, business proofs, and explanatory letters per Immigration guidelines, assisting through follow-ups.">按入境处最新指引逐项核验申请表、商业证明及解释信，协助跟进补件与续签流程。</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 渠道合作 (#b2b) -->
-    <section id="b2b" class="section" style="padding-top: 20px;">
-        <div class="b2b-container">
-            <div class="b2b-content">
-                <span class="b2b-tag" data-zh="B2B 机构与渠道赋能" data-en="B2B PARTNERSHIP">B2B 机构与渠道赋能</span>
-                <h3 data-zh="携手同业伙伴，共筑香港与新加坡实体交付底座" data-en="Partner with HARTHELM for Physical Fulfillment in HK & SG">携手同业伙伴，共筑香港与新加坡实体交付底座</h3>
-                <p data-zh="HARTHELM 面向移民机构、家族办公室、律所、会计师事务所及财富管理顾问开放香港 200+ 实体工位与企业合规运营底层资源。支持标准化交付与白标协作，助您为客户提供经得起核验的本地落地服务。"
-                   data-en="HARTHELM opens its 200+ Hong Kong physical workstations and corporate compliance infrastructure to immigration agencies, family offices, law firms, and wealth advisors.">
-                   HARTHELM 面向移民机构、家族办公室、律所、会计师事务所及财富管理顾问开放香港 200+ 实体工位与企业合规运营底层资源。支持标准化交付与白标协作，助您为客户提供经得起核验的本地落地服务。
-                </p>
-                <a href="https://wa.me/85252612799" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-zh="洽谈渠道合作" data-en="Inquire Partnership">洽谈渠道合作</a>
-            </div>
-            <div class="b2b-highlights">
-                <div class="b2b-item">
-                    <h5 data-zh="旺角核心物业直营" data-en="Direct Mongkok Space">旺角核心物业直营</h5>
-                    <span data-zh="弥敦道比利时银行大厦实体办公空间，支持实地考察与水牌展示" data-en="Belgian Bank Building on Nathan Road, ready for inspection & signage">弥敦道比利时银行大厦实体办公空间，支持实地考察与水牌展示</span>
-                </div>
-                <div class="b2b-item">
-                    <h5 data-zh="合规厘印租约" data-en="Stamped Formal Leases">合规厘印租约</h5>
-                    <span data-zh="清晰完备的租赁文件与印花税凭证，契合入境处地址核验要求" data-en="Complete lease documentation and Stamp Duty certificates">清晰完备的租赁文件与印花税凭证，契合入境处地址核验要求</span>
-                </div>
-                <div class="b2b-item">
-                    <h5 data-zh="透明结算与进度" data-en="Transparent SLA">透明结算与进度</h5>
-                    <span data-zh="标准化服务清单与专属渠道对接人，保障合作伙伴口碑" data-en="Standardized service checklists and dedicated B2B account managers">标准化服务清单与专属渠道对接人，保障合作伙伴口碑</span>
-                </div>
-                <div class="b2b-item">
-                    <h5 data-zh="港新双城资源" data-en="HK & SG Dual Resources">港新双城资源</h5>
-                    <span data-zh="香港与新加坡双中心实体团队，满足高净值家庭跨区域需求" data-en="On-the-ground teams in both Hong Kong and Singapore">香港与新加坡双中心实体团队，满足高净值家庭跨区域需求</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 底部信息 (合规声明) -->
-    <footer>
-        <div class="footer-inner">
-            <div class="compliance-box">
-                <strong data-zh="合规声明：" data-en="Compliance Statement: ">合规声明：</strong><br>
-                <span data-zh="以上为服务范围介绍，不构成获批承诺；个案以入境处及相关部门要求为准。累计接触与服务个案 1000 余个（不以获批计）。"
-                      data-en="The above is an introduction to our services and does not constitute a guarantee of approval. Individual cases are subject to the requirements of the Immigration Department. Over 1000 cases handled (not based on approvals).">
-                      以上为服务范围介绍，不构成获批承诺；个案以入境处及相关部门要求为准。累计接触与服务个案 1000 余个（不以获批计）。
-                </span>
-            </div>
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h5>HARTHELM</h5>
-                    <p>WHERE FAMILY FINDS ITS DIRECTION</p>
-                    <p style="margin-top: 10px;" data-zh="服务合约主体：宜居（国际）控股股份有限公司" data-en="Contracting Entity: ESPECIALLY FOR HOME (INTERNATIONAL) HOLDINGS LIMITED">服务合约主体：宜居（国际）控股股份有限公司</p>
-                </div>
-                <div class="footer-col">
-                    <h5 data-zh="联系我们" data-en="Contact Us">联系我们</h5>
-                    <p>Tel/WhatsApp: <a href="https://wa.me/85252612799" target="_blank" rel="noopener noreferrer" style="color: var(--gold);">+852 5261 2799</a></p>
-                    <p>Email: <a href="mailto:office@harthelm.com" style="color: var(--text-main);">office@harthelm.com</a></p>
-                    <p data-zh="地址：香港九龙旺角弥敦道 721-725 号比利时银行大厦 14 楼 1405B 室" data-en="Address: FLAT/RM 1405B, THE BELGIAN BANK BUILDING, 721-725 NATHAN ROAD, MONGKOK, KLN">地址：香港九龙旺角弥敦道 721-725 号比利时银行大厦 14 楼 1405B 室</p>
-                </div>
-            </div>
-            <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-                &copy; 2026 HARTHELM. All rights reserved. |
-                <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" style="text-decoration: underline;" data-zh="隐私政策" data-en="Privacy Policy">隐私政策</a> |
-                <a href="javascript:void(0)" onclick="openPolicyModal('disclaimer')" style="text-decoration: underline;" data-zh="免责声明" data-en="Disclaimer">免责声明</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 悬浮 WhatsApp -->
-    <a href="https://wa.me/85252612799" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        <span>Chat</span>
-    </a>
-
-    <!-- 互动模态框：3分钟香港续签准备度自测 -->
-    <div id="assessmentModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="quizModalTitle">
-        <div class="modal-panel">
-            <button type="button" class="modal-close" onclick="closeAssessmentModal()" aria-label="Close">&times;</button>
-            <div id="quizContainer">
-                <div style="font-size: 12px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px;" data-zh="HARTHELM 在线自测系统" data-en="HARTHELM SELF-ASSESSMENT">HARTHELM 在线自测系统</div>
-                <h4 id="quizModalTitle" style="font-size: 22px; margin-bottom: 18px; font-weight: 400;" data-zh="香港身份续签准备度评估" data-en="HK Visa Renewal Readiness Quiz">香港身份续签准备度评估</h4>
-                <div id="quizStepContent"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 隐私政策 / 免责声明 模态框 -->
-    <div id="policyModal" class="modal-backdrop" role="dialog" aria-modal="true">
-        <div class="modal-panel">
-            <button type="button" class="modal-close" onclick="closePolicyModal()" aria-label="Close">&times;</button>
-            <h4 id="policyModalTitle" style="font-size: 20px; color: var(--gold); margin-bottom: 16px;"></h4>
-            <p id="policyModalBody" style="font-size: 14px; color: var(--text-muted); line-height: 1.85;"></p>
-        </div>
-    </div>
-
-    <!-- 语言切换与在线自测逻辑 JS -->
-    <script>
-        let currentLang = 'zh';
-
-        // 稳健的中英切换函数（不依赖非标准的全局 event.target）
-        function switchLang(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-
-            const zhBtn = document.getElementById('langBtnZh');
-            const enBtn = document.getElementById('langBtnEn');
-            if (zhBtn && enBtn) {
-                zhBtn.classList.toggle('active', lang === 'zh');
-                enBtn.classList.toggle('active', lang === 'en');
-            }
-
-            // 遍历所有带有 data-zh 属性的元素
-            document.querySelectorAll('[data-zh]').forEach(el => {
-                const text = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
-                if (text !== null) {
-                    el.innerText = text;
-                }
-            });
-
-            // 如果自测弹窗处于打开状态，同步刷新弹窗语言
-            if (document.getElementById('assessmentModal').classList.contains('open')) {
-                renderQuizStep();
-            }
-        }
-
-        // 移动端菜单控制
-        function toggleMobileMenu() {
-            document.getElementById('navLinks').classList.toggle('mobile-open');
-        }
-        function closeMobileMenu() {
-            document.getElementById('navLinks').classList.remove('mobile-open');
-        }
-
-        // --- 3 分钟续签准备度测评数据与逻辑 ---
-        const quizQuestions = [
-            {
-                zh: '1 / 4：您目前持有的香港签证类别是？',
-                en: '1 / 4: Which Hong Kong visa category do you currently hold?',
-                options: [
-                    { zh: '高才通计划 (TTPS - A/B/C类)', en: 'Top Talent Pass Scheme (TTPS)', score: 25 },
-                    { zh: '优秀人才入境计划 (QMAS)', en: 'Quality Migrant Admission Scheme (QMAS)', score: 25 },
-                    { zh: '非本地毕业生留港/回港 (IANG)', en: 'Immigration Arrangements for Non-local Graduates (IANG)', score: 25 },
-                    { zh: '其他工作或商业签证 / 规划中', en: 'Other Work Visa / In Planning', score: 20 }
-                ]
-            },
-            {
-                zh: '2 / 4：距离您当前签证到期还有多长时间？',
-                en: '2 / 4: How much time remains before your current visa expires?',
-                options: [
-                    { zh: '12 个月以上（黄金规划期）', en: 'More than 12 months (Optimal planning window)', score: 25 },
-                    { zh: '6 - 12 个月（需尽快启动经营留痕）', en: '6 - 12 months (Action needed soon)', score: 20 },
-                    { zh: '3 - 6 个月（紧急梳理期）', en: '3 - 6 months (Urgent preparation)', score: 12 },
-                    { zh: '不足 3 个月（高风险冲刺期）', en: 'Less than 3 months (Critical window)', score: 8 }
-                ]
-            },
-            {
-                zh: '3 / 4：您在香港的受雇或自雇公司状态如何？',
-                en: '3 / 4: What is your current employment or business status in HK?',
-                options: [
-                    { zh: '已受雇于香港本地实体公司并正常派薪', en: 'Employed by a HK company with active payroll', score: 25 },
-                    { zh: '已注册香港公司自雇，已有真实业务流水', en: 'Self-employed via own HK company with active revenue', score: 25 },
-                    { zh: '已注册香港公司，但尚无实体办公或业务流水', en: 'HK company registered, but no office or active operations yet', score: 15 },
-                    { zh: '尚未受雇，也未注册香港公司', en: 'Neither employed nor incorporated a HK company yet', score: 5 }
-                ]
-            },
-            {
-                zh: '4 / 4：实体办公地址（含厘印租约）与强积金（MPF）记录情况？',
-                en: '4 / 4: Status of Physical Office (Stamped Lease) & MPF records?',
-                options: [
-                    { zh: '已有实体工位/办公室 + 厘印租约 + 连续 MPF 供款', en: 'Have physical office + Stamped Lease + active MPF records', score: 25 },
-                    { zh: '仅有秘书地址（虚拟地址），尚未租赁实体办公位', en: 'Secretary address only; no physical workstation lease yet', score: 12 },
-                    { zh: '正在寻找合规实体工位（如月租 HKD 2,500 起方案）', en: 'Looking for a compliant physical office (from HKD 2,500/mo)', score: 15 },
-                    { zh: '暂不清楚入境处对实体办公与厘印的具体要求', en: 'Unsure about Immigration requirements on leases & MPF', score: 8 }
-                ]
-            }
-        ];
-
-        let quizStep = 0;
-        let quizAnswers = [];
-
-        function openAssessmentModal() {
-            quizStep = 0;
-            quizAnswers = [];
-            document.getElementById('assessmentModal').classList.add('open');
-            renderQuizStep();
-        }
-
-        function closeAssessmentModal() {
-            document.getElementById('assessmentModal').classList.remove('open');
-        }
-
-        function selectQuizOption(score, labelZh, labelEn) {
-            quizAnswers[quizStep] = { score, labelZh, labelEn };
-            if (quizStep < quizQuestions.length - 1) {
-                quizStep++;
-                renderQuizStep();
-            } else {
-                renderQuizResult();
-            }
-        }
-
-        function renderQuizStep() {
-            const container = document.getElementById('quizStepContent');
-            if (quizStep >= quizQuestions.length) {
-                renderQuizResult();
-                return;
-            }
-            const q = quizQuestions[quizStep];
-            const questionTitle = currentLang === 'zh' ? q.zh : q.en;
-
-            let html = `<p style="color: var(--text-muted); font-size: 15px; margin-bottom: 20px;">${questionTitle}</p>`;
-            q.options.forEach((opt) => {
-                const text = currentLang === 'zh' ? opt.zh : opt.en;
-                html += `
-                    <button type="button" class="quiz-option" onclick="selectQuizOption(${opt.score}, '${opt.zh.replace(/'/g, "\\'")}', '${opt.en.replace(/'/g, "\\'")}')">
-                        <span>${text}</span>
-                        <span style="color: var(--gold);">→</span>
-                    </button>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function renderQuizResult() {
-            const container = document.getElementById('quizStepContent');
-            const totalScore = quizAnswers.reduce((sum, item) => sum + (item ? item.score : 0), 0);
-
-            let statusZh = '基础良好 · 建议核验材料细节';
-            let statusEn = 'Solid Foundation · Checklist Review Recommended';
-            let adviceZh = '您已具备较好的在港关联基础。建议重点核对实体办公租约是否已加盖厘印（印花）、强积金供款连续性及商业合同归档，确保续签递交时证据链完整闭环。';
-            let adviceEn = 'You have a solid foundation. We recommend verifying your stamped office lease, continuous MPF records, and business contracts to ensure a complete chain of evidence.';
-
-            if (totalScore < 65) {
-                statusZh = '存在盲区 · 需尽快补齐实体运营留痕';
-                statusEn = 'Action Required · Build Operational Substance Soon';
-                adviceZh = '入境处对自雇与受雇续签高度关注“真实在港运营实质”。仅靠秘书地址或空壳公司存在较高拒批或短批风险，建议尽早配置真实可核验的实体办公工位（含厘印租约）并建立合规财务与MPF记录。';
-                adviceEn = 'The Immigration Department closely scrutinizes genuine business substance in HK. Relying solely on a virtual address carries risk. We recommend securing a verifiable physical workstation with a stamped lease and establishing MPF trails promptly.';
-            }
-
-            const waMessage = encodeURIComponent(
-                currentLang === 'zh'
-                    ? `您好 HARTHELM 顾问，我刚完成官网续签准备度自测（得分：${totalScore}/100），希望咨询续签规划与实体办公方案。`
-                    : `Hello HARTHELM team, I completed the Visa Renewal Readiness Quiz (Score: ${totalScore}/100) and would like to inquire about renewal planning.`
-            );
-
-            container.innerHTML = `
-                <div style="background: rgba(20,28,43,0.85); border: 1px solid rgba(184,155,114,0.35); padding: 24px; margin-bottom: 24px;">
-                    <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom: 12px;">
-                        <span style="font-size: 13px; color: var(--text-muted);">${currentLang === 'zh' ? '初步准备度评估得分' : 'Readiness Score'}</span>
-                        <span style="font-size: 32px; color: var(--gold); font-weight: 600;">${totalScore} <small style="font-size:14px; color:var(--text-muted);">/ 100</small></span>
-                    </div>
-                    <div style="font-size: 16px; color: var(--text-main); margin-bottom: 10px; font-weight: 500;">
-                        ${currentLang === 'zh' ? statusZh : statusEn}
-                    </div>
-                    <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.75;">
-                        ${currentLang === 'zh' ? adviceZh : adviceEn}
-                    </p>
-                </div>
-
-                <div style="margin-bottom: 24px;">
-                    <div style="font-size: 13px; color: var(--gold); margin-bottom: 10px;">
-                        ${currentLang === 'zh' ? '建议优先核对的核心材料清单：' : 'Recommended Core Document Checklist:'}
-                    </div>
-                    <ul style="list-style:none; font-size: 13px; color: var(--text-muted); line-height: 1.9;">
-                        <li>✓ ${currentLang === 'zh' ? '香港实体办公地址租约、厘印证明书及办公实景照片' : 'HK physical office lease, Stamp Certificate & office photos'}</li>
-                        <li>✓ ${currentLang === 'zh' ? '香港公司注册证书 (CI)、商业登记证 (BR) 及最新周年申报表' : 'Certificate of Incorporation (CI), Business Registration (BR) & NAR1'}</li>
-                        <li>✓ ${currentLang === 'zh' ? '雇佣合约、强积金 (MPF) 供款记录及银行派薪流水' : 'Employment contract, MPF contribution records & payroll bank statements'}</li>
-                        <li>✓ ${currentLang === 'zh' ? '业务合同、发票单据、财务报表或审计报告（视成立年限）' : 'Business contracts, invoices, financial statements or audit report'}</li>
-                    </ul>
-                </div>
-
-                <div style="display:flex; gap: 12px; flex-wrap: wrap;">
-                    <a href="https://wa.me/85252612799?text=${waMessage}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex:1; padding: 13px 20px;">
-                        ${currentLang === 'zh' ? '发送结果至 WhatsApp 获取诊断' : 'Send Result to WhatsApp Advisor'}
-                    </a>
-                    <button type="button" onclick="openAssessmentModal()" class="btn btn-secondary" style="padding: 13px 20px;">
-                        ${currentLang === 'zh' ? '重新测评' : 'Retake'}
-                    </button>
-                </div>
-            `;
-        }
-
-        // 隐私与免责弹窗
-        function openPolicyModal(type) {
-            const modal = document.getElementById('policyModal');
-            const title = document.getElementById('policyModalTitle');
-            const body = document.getElementById('policyModalBody');
-
-            if (type === 'privacy') {
-                title.innerText = currentLang === 'zh' ? '隐私政策 (Privacy Policy)' : 'Privacy Policy';
-                body.innerText = currentLang === 'zh'
-                    ? 'HARTHELM（服务合约主体：宜居（国际）控股股份有限公司）严格遵守香港《个人资料（私隐）条例》（第486章）。您在咨询或在线测评中提供的所有个人与企业信息，仅用于为您提供身份续签评估、企业设立及实体办公室租赁服务，绝不会向任何未经授权的第三方出售或披露。'
-                    : 'HARTHELM (Contracting Entity: ESPECIALLY FOR HOME (INTERNATIONAL) HOLDINGS LIMITED) strictly complies with the Personal Data (Privacy) Ordinance (Cap. 486) of Hong Kong. All information provided during consultation or self-assessment is used solely for visa assessment, corporate setup, and office leasing services.';
-            } else {
-                title.innerText = currentLang === 'zh' ? '免责声明 (Disclaimer)' : 'Disclaimer';
-                body.innerText = currentLang === 'zh'
-                    ? '本网站所载内容及在线自测结果仅供一般信息参考及服务范围介绍，不构成任何法律意见或获批承诺。香港签证申请与续签的最终审批权完全归属于香港特别行政区政府入境事务处及相关主管部门。个案要求均以官方最新政策与指引为准。'
-                    : 'The content and self-assessment results on this website are for general informational purposes only and do not constitute legal advice or a guarantee of visa approval. Final decisions rest solely with the Hong Kong Immigration Department and relevant authorities.';
-            }
-            modal.classList.add('open');
-        }
-
-        function closePolicyModal() {
-            document.getElementById('policyModal').classList.remove('open');
-        }
-
-        // 点击遮罩层关闭弹窗
-        window.addEventListener('click', (e) => {
-            const assessModal = document.getElementById('assessmentModal');
-            const policyModal = document.getElementById('policyModal');
-            if (e.target === assessModal) closeAssessmentModal();
-            if (e.target === policyModal) closePolicyModal();
-        });
-    </script>
-</body>
-</html>
+                <span style="position: absolute; top: 18px; right: 18px; font-size: 11px; padding: 4px 10px; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.15);" data-zh="即时生成报告" data-en="Instant Report">即时生成报告</span>
