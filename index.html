@@ -1,419 +1,323 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-HK">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HARTHELM - 为家掌舵，为业远行 | WHERE FAMILY FINDS ITS DIRECTION</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root {
-            --navy: #141c2b;
-            --navy-light: #1e293b;
-            --navy-dark: #0b111a;
-            --gold: #b89b72;
-            --gold-hover: #d4b88d;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            --font-serif: Georgia, "Times New Roman", serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HARTHELM | 為家掌舵 · 為業遠行 (Where Family Finds Its Direction)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { 
+          brand: { navy: '#141c2b', navy_light: '#1e293b', gold: '#b89b72', gold_light: '#d4b88d', ink: '#f8fafc', muted: '#94a3b8' } 
+        },
+        fontFamily: { 
+          sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+          serif: ['Noto Serif SC', 'serif']
         }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #141c2b; color: #f8fafc; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  
+  /* 首屏动效 */
+  .fade-up { opacity: 0; transform: translateY(30px); animation: fadeInUp 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+  .delay-1 { animation-delay: 0.2s; }
+  .delay-2 { animation-delay: 0.4s; }
+  .delay-3 { animation-delay: 0.6s; }
+  @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: var(--font-family); background-color: var(--navy); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
+  /* 发光时间轴 */
+  .glow-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: linear-gradient(to bottom, transparent, rgba(184, 155, 114, 0.8), transparent); transform: translateX(-50%); z-index: 0; }
+  @media (max-width: 768px) { .glow-line { left: 24px; } }
 
-        /* ================= 1. 顶部导航 ================= */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; position: fixed; width: 100%; top: 0; z-index: 100; background: rgba(20, 28, 43, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(184, 155, 114, 0.12); transition: all 0.3s; }
-        .logo-text { font-size: 19px; letter-spacing: 4px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
-        .logo-text svg { height: 36px; width: 36px; transition: transform 0.6s; }
-        .logo-text:hover svg { transform: rotate(22.5deg); }
-        .logo-sub { display: block; font-size: 9px; letter-spacing: 2px; color: var(--gold); font-weight: 400; margin-top: -2px; }
-        .nav-links { display: flex; gap: 36px; font-size: 14px; color: var(--text-muted); align-items: center; }
-        .nav-links a { position: relative; padding: 4px 0; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--gold); }
-        .header-right { display: flex; align-items: center; gap: 18px; }
-        .lang-switch { font-size: 13px; display: flex; gap: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 2px; background: rgba(255,255,255,0.02); }
-        .lang-switch button { cursor: pointer; background: none; border: none; color: inherit; font-size: 12px; }
-        .lang-switch button.active { color: var(--gold); font-weight: 600; }
-        .mobile-menu-btn { display: none; background: transparent; border: 1px solid rgba(184, 155, 114, 0.35); color: var(--gold); padding: 6px 10px; cursor: pointer; }
+  /* 科技感边框光晕 */
+  .tech-card { position: relative; background: #1e293b; border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s ease; overflow: hidden; }
+  .tech-card:hover { border-color: rgba(184, 155, 114, 0.4); transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+  .tech-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #b89b72; transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .tech-card:hover::before { transform: scaleX(1); }
 
-        /* ================= 2. 首屏 (维港夜景 + 金色切角卡片) ================= */
-        .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 20px 60px; background: url('https://images.unsplash.com/photo-1536599018102-9f803c140fc1?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(11,17,26,0.88), rgba(11,17,26,0.55)); z-index: 1; }
-        
-        .hero-card { position: relative; z-index: 2; max-width: 900px; width: 100%; background: rgba(20, 28, 43, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(184, 155, 114, 0.3); border-radius: 4px; padding: 60px 40px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.6); }
-        .hero-card::before, .hero-card::after { content: ''; position: absolute; width: 30px; height: 30px; border: 2px solid var(--gold); }
-        .hero-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-        .hero-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-        .hero-logo-wrapper { width: 110px; height: 110px; margin: 0 auto 24px; opacity: 0; animation: fadeInUp 1s forwards; }
-        .hero-logo-ring { transform-origin: center; animation: slowSpin 60s linear infinite; }
-        @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .hero h1 { font-size: 46px; letter-spacing: 12px; font-weight: 400; margin-bottom: 12px; padding-left: 12px; color: var(--text-main); text-shadow: 0 4px 20px rgba(0,0,0,0.5); opacity: 0; animation: fadeInUp 1s 0.15s forwards; }
-        .hero h2 { font-size: 16px; letter-spacing: 6px; color: var(--gold); margin-bottom: 20px; padding-left: 6px; font-family: var(--font-serif); opacity: 0; animation: fadeInUp 1s 0.3s forwards; }
-        .hero-motto { font-size: 18px; letter-spacing: 4px; color: #e2e8f0; margin-bottom: 36px; display: flex; align-items: center; justify-content: center; gap: 14px; opacity: 0; animation: fadeInUp 1s 0.4s forwards; }
-        .hero-motto::before, .hero-motto::after { content: ''; width: 28px; height: 1px; background: rgba(184, 155, 114, 0.5); }
-        
-        .hero-features { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; opacity: 0; animation: fadeInUp 1s 0.6s forwards; }
-        .hero-feature-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #cbd5e1; }
-        .hero-feature-item svg { width: 20px; height: 20px; stroke: var(--gold); }
-
-        .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeInUp 1s 0.75s forwards; }
-        .btn { padding: 15px 40px; font-size: 15px; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s; border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 500; }
-        .btn-primary { background-color: var(--gold); color: var(--navy); border: 1px solid var(--gold); box-shadow: 0 8px 24px rgba(184, 155, 114, 0.18); }
-        .btn-primary:hover { background-color: var(--gold-hover); transform: translateY(-2px); }
-        .btn-secondary { background-color: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); }
-        .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-
-        /* ================= 3. 信任数据条 ================= */
-        .trust-bar { background-color: var(--navy-dark); padding: 40px 5%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .trust-item h3 { color: var(--gold); font-size: 38px; font-weight: 600; font-family: var(--font-serif); margin-bottom: 4px; }
-        .trust-item p { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; }
-
-        /* ================= 4. 通用区块 ================= */
-        .section { padding: 100px 5%; max-width: 1300px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: 28px; letter-spacing: 3px; margin-bottom: 16px; font-weight: 400; color: var(--text-main); }
-        .section-subtitle { text-align: center; font-size: 14px; color: var(--text-muted); max-width: 600px; margin: 0 auto 50px; }
-        .section-title::after { content: ''; display: block; width: 44px; height: 2px; background: var(--gold); margin: 16px auto 0; }
-
-        /* ================= 5. 核心服务矩阵 ================= */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .service-card { background: var(--navy-light); padding: 32px; border: 1px solid rgba(255,255,255,0.06); transition: all 0.35s; display: flex; flex-direction: column; border-top: 3px solid transparent; }
-        .service-card:hover { transform: translateY(-8px); border-top-color: var(--gold); box-shadow: 0 16px 36px rgba(0,0,0,0.3); background: #233044; }
-        .service-icon { width: 42px; height: 42px; border: 1px solid rgba(184, 155, 114, 0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); margin-bottom: 20px; background: rgba(20, 28, 43, 0.5); }
-        .service-card h4 { font-size: 19px; margin-bottom: 12px; color: var(--text-main); }
-        .service-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.7; flex-grow: 1; }
-        .card-meta { margin-top: 20px; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 12px; color: #cbd5e1; display: flex; flex-direction: column; gap: 6px; }
-        .card-meta div { display: flex; justify-content: space-between; }
-        .stars { color: var(--gold); letter-spacing: 2px; }
-
-        /* ================= 6. 诊断与自测 ================= */
-        .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto; }
-        .product-box { background: var(--navy-light); padding: 40px; border: 1px solid rgba(184, 155, 114, 0.3); display: flex; flex-direction: column; position: relative; }
-        .product-box h4 { font-size: 22px; color: var(--gold); margin-bottom: 8px; font-family: var(--font-serif); }
-        .product-box .price { font-size: 32px; font-weight: 600; margin-bottom: 24px; color: var(--text-main); }
-        .product-box .price span { font-size: 14px; color: var(--text-muted); font-weight: 400; }
-        .product-box ul { list-style: none; margin-bottom: 30px; color: var(--text-muted); font-size: 14px; flex-grow: 1; }
-        .product-box ul li { margin-bottom: 12px; padding-left: 24px; position: relative; }
-        .product-box ul li::before { content: '✓'; color: var(--gold); position: absolute; left: 0; font-weight: bold; }
-
-        /* ================= 7. 底部信息 ================= */
-        footer { background: var(--navy-dark); padding: 60px 5% 30px; font-size: 13px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-inner { max-width: 1200px; margin: 0 auto; }
-        .compliance-box { background: rgba(255,255,255,0.02); padding: 20px; border-left: 2px solid var(--gold); margin-bottom: 40px; font-size: 12.5px; line-height: 1.8; }
-        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 40px; }
-        .footer-col h5 { color: var(--text-main); margin-bottom: 16px; font-size: 15px; }
-        .footer-col p { margin-bottom: 6px; }
-
-        /* 悬浮 WhatsApp */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; padding: 12px 24px; border-radius: 50px; display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35); z-index: 900; transition: transform 0.3s; }
-        .whatsapp-float:hover { transform: scale(1.05); }
-
-        /* 模态框 */
-        .modal-backdrop { position: fixed; inset: 0; background: rgba(11, 17, 26, 0.85); backdrop-filter: blur(8px); z-index: 1100; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-backdrop.open { display: flex; }
-        .modal-panel { background: var(--navy-light); border: 1px solid rgba(184, 155, 114, 0.4); max-width: 600px; width: 100%; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .modal-close { position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
-        .quiz-option { width: 100%; text-align: left; padding: 14px 18px; margin-bottom: 12px; background: rgba(20, 28, 43, 0.75); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; }
-        .quiz-option:hover { border-color: var(--gold); background: rgba(184, 155, 114, 0.12); }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: inline-flex; }
-            .hero h1 { font-size: 32px; }
-            .hero-card { padding: 40px 20px; }
-            .trust-bar { grid-template-columns: 1fr; gap: 30px; }
-            .products-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  /* 网格背景 */
+  .bg-grid { background-image: linear-gradient(rgba(184, 155, 114, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(184, 155, 114, 0.05) 1px, transparent 1px); background-size: 40px 40px; }
+</style>
 </head>
-<body>
+<body class="font-sans antialiased flex flex-col min-h-screen relative">
 
-    <!-- SVG 符号定义库 -->
-    <svg width="0" height="0" style="position:absolute">
-        <defs>
-            <linearGradient id="harthelmGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#e0c79f" />
-                <stop offset="50%" stop-color="#b89b72" />
-                <stop offset="100%" stop-color="#8f7249" />
-            </linearGradient>
-            <linearGradient id="harthelmGoldSoft" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#b89b72" stop-opacity="0.2" />
-                <stop offset="100%" stop-color="#d4b88d" stop-opacity="0.85" />
-            </linearGradient>
-        </defs>
-    </svg>
+  <!-- ================= 1. 导航栏 ================= -->
+  <header class="fixed w-full top-0 z-50 bg-brand-navy/90 backdrop-blur-md border-b border-white/5 transition-all">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+      <a href="#" class="flex items-center gap-3">
+        <img src="assets/logo-horizontal.svg" alt="HARTHELM" class="h-10" onerror="this.outerHTML='<span class=\'text-xl font-serif text-brand-gold tracking-widest\'>HARTHELM</span>'">
+      </a>
+      <nav class="hidden md:flex items-center gap-10 text-sm tracking-wider text-brand-muted font-medium">
+        <a href="#lifecycle" class="hover:text-brand-gold transition">全週期服務</a>
+        <a href="#cases" class="hover:text-brand-gold transition">管家交付</a>
+        <a href="#tech" class="hover:text-brand-gold transition">數字底座</a>
+        <a href="#about" class="hover:text-brand-gold transition">關於我們</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-4">
+        <div class="flex text-xs border border-white/20 rounded px-2 py-1 gap-2 text-brand-muted">
+          <a href="#" class="text-brand-gold font-bold">繁</a><a href="#">简</a><a href="#">EN</a>
+        </div>
+        <a href="https://wa.me/85252612799" target="_blank" class="px-5 py-2 bg-brand-gold text-brand-navy text-sm font-bold rounded hover:bg-brand-gold_light transition">WhatsApp 諮詢</a>
+      </div>
+    </div>
+  </header>
 
-    <!-- 顶部导航 -->
-    <header>
-        <a href="#" class="logo-text">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="44" stroke="url(#harthelmGold)" stroke-width="2" stroke-opacity="0.45"/>
-                <circle cx="50" cy="50" r="35" stroke="url(#harthelmGold)" stroke-width="2.5"/>
-                <g stroke="url(#harthelmGold)" stroke-width="2.6" stroke-linecap="round">
-                    <line x1="50" y1="4" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="96"/>
-                    <line x1="4" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="96" y2="50"/>
-                    <line x1="17.5" y1="17.5" x2="28.8" y2="28.8"/><line x1="71.2" y1="71.2" x2="82.5" y2="82.5"/>
-                    <line x1="82.5" y1="17.5" x2="71.2" y2="28.8"/><line x1="28.8" y1="71.2" x2="17.5" y2="82.5"/>
-                </g>
-                <path d="M35 33 H65 V52 C65 63 50 71 50 71 C50 71 35 63 35 52 V33 Z" fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="2.4"/>
-                <path d="M43 41 V57 M57 41 V57 M43 49 H57" stroke="url(#harthelmGold)" stroke-width="2.8" stroke-linecap="round"/>
-            </svg>
+  <!-- ================= 2. 首屏 (Hero) ================= -->
+  <section class="relative h-screen min-h-[700px] flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1536599018102-9f803c140fc1?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-fixed">
+    <div class="absolute inset-0 bg-gradient-to-r from-brand-navy via-brand-navy/85 to-brand-navy/40"></div>
+    
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="fade-up">
+        <div class="inline-block px-3 py-1 border border-brand-gold/30 text-brand-gold text-xs tracking-widest uppercase mb-6 rounded-full bg-brand-gold/5 backdrop-blur">
+          Hong Kong & Singapore · Family Office
+        </div>
+        <h1 class="font-serif text-5xl md:text-6xl text-white leading-tight mb-6">
+          為家掌舵<br>
+          <span class="text-brand-gold">為業遠行</span>
+        </h1>
+        <p class="text-brand-muted text-lg max-w-lg leading-relaxed mb-10">
+          立足香港與新加坡，專注身份續簽、企業落地與實體運營。我們以管家式服務與矽谷級數字底座，為高才、優才及 IANG 人士提供全週期合規護航。
+        </p>
+        <div class="flex flex-wrap gap-4 fade-up delay-1">
+          <a href="#tech" class="px-8 py-3.5 bg-brand-gold text-brand-navy font-bold rounded hover:bg-brand-gold_light transition shadow-[0_0_20px_rgba(184,155,114,0.3)]">
+            探索數字化管家服務
+          </a>
+          <a href="#assessment" class="px-8 py-3.5 border border-white/30 text-white font-medium rounded hover:bg-white/10 transition">
+            預約續簽診斷
+          </a>
+        </div>
+      </div>
+      <div class="hidden lg:block fade-up delay-2">
+        <!-- 右侧留白或数据大屏视效 -->
+        <div class="p-8 border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl">
+          <div class="text-brand-gold text-sm mb-2 font-mono">SYS.STATUS: ACTIVE</div>
+          <div class="text-3xl font-serif text-white mb-6">1000+ <span class="text-sm text-brand-muted font-sans">累計服務個案</span></div>
+          <div class="w-full bg-white/10 h-1 rounded-full overflow-hidden">
+            <div class="bg-brand-gold h-full w-[85%]"></div>
+          </div>
+          <p class="text-xs text-brand-muted mt-3">管家式全鏈路交付保障</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. 全周期服务 (Lifecycle) ================= -->
+  <section id="lifecycle" class="py-24 bg-brand-navy relative border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-20">
+        <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">全週期服務 · 長期價值輸出</h2>
+        <p class="text-brand-muted">身份規劃不是一錘子買賣，而是長達 7 年的穩健陪伴與合規留痕。</p>
+      </div>
+
+      <div class="relative">
+        <!-- 发光中轴线 -->
+        <div class="glow-line hidden md:block"></div>
+        
+        <div class="space-y-12 md:space-y-24">
+          <!-- 阶段 1 -->
+          <div class="flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse group">
+            <div class="w-full md:w-[45%] mb-6 md:mb-0 text-center md:text-right md:pr-10">
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">01 · 身份獲批與診斷</h3>
+              <p class="text-sm text-brand-muted">梳理背景優勢，明確高才/優才/IANG 的申請或續簽路徑。</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">1</div>
+            <div class="hidden md:block w-[45%]"></div>
+          </div>
+
+          <!-- 阶段 2 -->
+          <div class="flex flex-col md:flex-row items-center justify-between group">
+            <div class="hidden md:block w-[45%]"></div>
+            <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">2</div>
+            <div class="w-full md:w-[45%] mt-6 md:mt-0 text-center md:text-left md:pl-10">
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">02 · 實體落地與打厘印</h3>
+              <p class="text-sm text-brand-muted">協助註冊香港公司，租賃真實實體辦公室，簽署正式租約並加蓋印花稅（厘印）。</p>
+            </div>
+          </div>
+
+          <!-- 阶段 3 -->
+          <div class="flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse group">
+            <div class="w-full md:w-[45%] mb-6 md:mb-0 text-center md:text-right md:pr-10">
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">03 · 合規運營與留痕</h3>
+              <p class="text-sm text-brand-muted">建立強積金（MPF）、薪資派發、業務合同及審計底稿，滿足入境處實質經營要求。</p>
+            </div>
+            <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">3</div>
+            <div class="hidden md:block w-[45%]"></div>
+          </div>
+
+          <!-- 阶段 4 -->
+          <div class="flex flex-col md:flex-row items-center justify-between group">
+            <div class="hidden md:block w-[45%]"></div>
+            <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">4</div>
+            <div class="w-full md:w-[45%] mt-6 md:mt-0 text-center md:text-left md:pl-10">
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">04 · 續簽節點與永居規劃</h3>
+              <p class="text-sm text-brand-muted">在 T-90/T-60 關鍵節點進行專屬提醒與材料覆核，穩步邁向 7 年永居。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. 数字化科技底座 (Tech Hub) ================= -->
+  <section id="tech" class="py-24 bg-[#0b111a] relative border-y border-white/5 bg-grid">
+    <div class="absolute inset-0 bg-gradient-to-b from-brand-navy via-transparent to-brand-navy opacity-80 pointer-events-none"></div>
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <div class="text-brand-gold text-sm font-mono tracking-widest mb-2">TECHNOLOGY & TOOLS</div>
+        <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">矽谷級數字底座，傳統管家的科技武裝</h2>
+        <p class="text-brand-muted max-w-2xl mx-auto">我們摒棄了傳統中介的混亂郵件與紙本記錄，自主研發了全鏈路數字化運營系統。</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- 工具 1 -->
+        <div class="tech-card rounded-xl p-8">
+          <div class="w-12 h-12 rounded bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <h3 class="text-lg text-white font-bold mb-3">加密客戶專屬看板</h3>
+          <p class="text-sm text-brand-muted leading-relaxed mb-4">
+            客户凭专属密码即可实时查看办理进度，资料在浏览器本地完成 PBKDF2 60万次哈希 + AES-256 解密，杜绝数据泄露。
+          </p>
+          <div class="text-xs text-brand-gold font-mono">> End-to-End Encrypted</div>
+        </div>
+
+        <!-- 工具 2 -->
+        <div class="tech-card rounded-xl p-8">
+          <div class="w-12 h-12 rounded bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          </div>
+          <h3 class="text-lg text-white font-bold mb-3">云端财务审计底稿</h3>
+          <p class="text-sm text-brand-muted leading-relaxed mb-4">
+            自研 GAS 多币种四表联动系统，自动匹配 HSBC 周一汇率，暂记配平机制，一键生成符合审计标准的财务底稿。
+          </p>
+          <div class="text-xs text-brand-gold font-mono">> Real-time Ledger & Audit</div>
+        </div>
+
+        <!-- 工具 3 -->
+        <div class="tech-card rounded-xl p-8">
+          <div class="w-12 h-12 rounded bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-6">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          </div>
+          <h3 class="text-lg text-white font-bold mb-3">AI 数字员工矩阵</h3>
+          <p class="text-sm text-brand-muted leading-relaxed mb-4">
+            13 位具备专业技能的 AI 数字员工（法务、财税、内容等）无缝协同，配合人类专家，为您提供全天候的交付与提醒。
+          </p>
+          <div class="text-xs text-brand-gold font-mono">> AI Multi-Agent System</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. 成功案例与管家交付 (Cases & Process) ================= -->
+  <section id="cases" class="py-24 bg-brand-navy">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div>
+          <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">管家式交付，源於專業與細節</h2>
+          <p class="text-brand-muted">以下是脱敏后的服务场景，每一个细节都经过严格交叉核验。</p>
+        </div>
+        <a href="#" class="text-brand-gold text-sm border-b border-brand-gold pb-1 hover:text-brand-gold_light transition">查看全部服務場景 →</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 案例卡 1 -->
+        <div class="bg-brand-navy_light border border-white/10 rounded-xl p-8 hover:border-brand-gold/50 transition duration-300">
+          <div class="flex justify-between items-start mb-6">
             <div>
-                <span>HARTHELM</span>
-                <span class="logo-sub" data-zh="为家掌舵 · 为业远行" data-en="HONG KONG & SINGAPORE">为家掌舵 · 为业远行</span>
+              <div class="text-xs text-brand-gold mb-2 border border-brand-gold/30 inline-block px-2 py-0.5 rounded">场景 A</div>
+              <h3 class="text-xl font-bold text-white">高才通自雇續簽規劃</h3>
             </div>
-        </a>
-
-        <nav class="nav-links">
-            <a href="#services" data-zh="核心服务" data-en="Services">核心服务</a>
-            <a href="#assessment" data-zh="续签诊断" data-en="Diagnosis">续签诊断</a>
-            <a href="#process" data-zh="服务流程" data-en="Process">服务流程</a>
-            <a href="#b2b" data-zh="渠道合作" data-en="Partners">渠道合作</a>
-        </nav>
-
-        <div class="header-right">
-            <div class="lang-switch">
-                <button type="button" id="langBtnZh" class="active" onclick="switchLang('zh')">简</button>
-                <span>/</span>
-                <button type="button" id="langBtnEn" onclick="switchLang('en')">EN</button>
+            <div class="text-right">
+              <div class="text-xs text-brand-muted">交付周期</div>
+              <div class="text-sm font-bold text-white">3-6 個月</div>
             </div>
-            <button type="button" class="mobile-menu-btn">☰</button>
+          </div>
+          <p class="text-sm text-brand-muted mb-6 leading-relaxed">
+            <strong>客戶背景：</strong>在港無雇主，具備資金實力與業務構想，面臨首次續簽壓力。
+          </p>
+          <div class="bg-[#141c2b] p-4 rounded border-l-2 border-brand-gold">
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <strong class="text-brand-gold">管家交付：</strong>協助完成真實辦公場地租賃及打厘印；深度梳理真實運營流水與業務單據；專屬數字看板實時同步材料進度。
+            </p>
+          </div>
         </div>
-    </header>
 
-    <!-- 首屏 Hero Section -->
-    <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-card">
-            <div class="hero-logo-wrapper">
-                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g class="hero-logo-ring">
-                        <circle cx="100" cy="100" r="92" stroke="url(#harthelmGoldSoft)" stroke-width="1" stroke-dasharray="3 6"/>
-                        <circle cx="100" cy="100" r="84" stroke="url(#harthelmGold)" stroke-width="1.2" stroke-opacity="0.35"/>
-                        <polygon points="100,2 103,10 97,10" fill="url(#harthelmGold)"/>
-                        <polygon points="100,198 103,190 97,190" fill="url(#harthelmGold)"/>
-                        <polygon points="2,100 10,103 10,97" fill="url(#harthelmGold)"/>
-                        <polygon points="198,100 190,103 190,97" fill="url(#harthelmGold)"/>
-                    </g>
-                    <circle cx="100" cy="100" r="68" stroke="url(#harthelmGold)" stroke-width="3.5"/>
-                    <circle cx="100" cy="100" r="56" stroke="url(#harthelmGold)" stroke-width="1.5" stroke-opacity="0.65"/>
-                    <g stroke="url(#harthelmGold)" stroke-linecap="round">
-                        <line x1="100" y1="12" x2="100" y2="56" stroke-width="4.5"/><line x1="100" y1="144" x2="100" y2="188" stroke-width="4.5"/>
-                        <line x1="12" y1="100" x2="56" y2="100" stroke-width="4.5"/><line x1="144" y1="100" x2="188" y2="100" stroke-width="4.5"/>
-                        <line x1="37.8" y1="37.8" x2="68.9" y2="68.9" stroke-width="3.8"/><line x1="131.1" y1="131.1" x2="162.2" y2="162.2" stroke-width="3.8"/>
-                        <line x1="162.2" y1="37.8" x2="131.1" y2="68.9" stroke-width="3.8"/><line x1="68.9" y1="131.1" x2="37.8" y2="162.2" stroke-width="3.8"/>
-                    </g>
-                    <g fill="url(#harthelmGold)">
-                        <circle cx="100" cy="12" r="4"/><circle cx="100" cy="188" r="4"/>
-                        <circle cx="12" cy="100" r="4"/><circle cx="188" cy="100" r="4"/>
-                        <circle cx="37.8" cy="37.8" r="3.5"/><circle cx="162.2" cy="162.2" r="3.5"/>
-                        <circle cx="162.2" cy="37.8" r="3.5"/><circle cx="37.8" cy="162.2" r="3.5"/>
-                    </g>
-                    <path d="M68 68 H132 V104 C132 126 100 142 100 142 C100 142 68 126 68 104 V68 Z" fill="#141c2b" stroke="url(#harthelmGold)" stroke-width="3.2"/>
-                    <path d="M74 74 H126 V103 C126 121 100 135 100 135 C100 135 74 121 74 103 V74 Z" stroke="url(#harthelmGold)" stroke-width="1" stroke-opacity="0.45"/>
-                    <path d="M86 85 V115 M114 85 V115 M86 100 H114" stroke="url(#harthelmGold)" stroke-width="4.2" stroke-linecap="round"/>
-                    <polygon points="100,77 102.5,83 109,83 103.8,86.8 105.8,93 100,89.2 94.2,93 96.2,86.8 91,83 97.5,83" fill="url(#harthelmGold)"/>
-                </svg>
+        <!-- 案例卡 2 -->
+        <div class="bg-brand-navy_light border border-white/10 rounded-xl p-8 hover:border-brand-gold/50 transition duration-300">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <div class="text-xs text-brand-gold mb-2 border border-brand-gold/30 inline-block px-2 py-0.5 rounded">场景 B</div>
+              <h3 class="text-xl font-bold text-white">IANG 畢業生留港銜接</h3>
             </div>
-            
-            <h1>HARTHELM</h1>
-            <h2>WHERE FAMILY FINDS ITS DIRECTION</h2>
-            <div class="hero-motto" data-zh="为家掌舵 · 为业远行" data-en="STEERING FAMILY · ADVANCING ENTERPRISE">为家掌舵 · 为业远行</div>
-            
-            <div class="hero-features">
-                <div class="hero-feature-item">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span data-zh="全周期合规护航" data-en="Full-cycle Compliance">全周期合规护航</span>
-                </div>
-                <div class="hero-feature-item">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
-                    <span data-zh="真实实体运营" data-en="Physical Operations">真实实体运营</span>
-                </div>
-                <div class="hero-feature-item">
-                    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span data-zh="1000+ 个案实操" data-en="1000+ Cases Handled">1000+ 个案实操</span>
-                </div>
+            <div class="text-right">
+              <div class="text-xs text-brand-muted">交付周期</div>
+              <div class="text-sm font-bold text-white">1-2 個月</div>
             </div>
-
-            <div class="btn-group">
-                <a href="https://wa.me/85252612799" target="_blank" class="btn btn-primary" data-zh="WhatsApp 免费咨询" data-en="WhatsApp Consultation">WhatsApp 免费咨询</a>
-                <a href="#assessment" class="btn btn-secondary" data-zh="测一测续签准备度" data-en="Free Assessment">测一测续签准备度</a>
-            </div>
+          </div>
+          <p class="text-sm text-brand-muted mb-6 leading-relaxed">
+            <strong>客戶背景：</strong>應屆畢業生，暫未匹配到合適雇主，面臨簽證空窗期風險。
+          </p>
+          <div class="bg-[#141c2b] p-4 rounded border-l-2 border-brand-gold">
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <strong class="text-brand-gold">管家交付：</strong>針對空窗期提供備用公司架構與運營支持；協助對接本地合規財稅服務；確保在港身份無縫合規銜接。
+            </p>
+          </div>
         </div>
-    </section>
-
-    <!-- 信任数据条 -->
-    <div class="trust-bar">
-        <div class="trust-item">
-            <h3 data-zh="13 <span style='font-size:18px;'>年</span>" data-en="13 <span style='font-size:18px;'>Years</span>">13 <span style="font-size:18px;">年</span></h3>
-            <p data-zh="行业深耕经验" data-en="Industry Experience">行业深耕经验</p>
-        </div>
-        <div class="trust-item">
-            <h3>200+</h3>
-            <p data-zh="香港实体工位" data-en="HK Physical Workstations">香港实体工位</p>
-        </div>
-        <div class="trust-item">
-            <h3>1000+</h3>
-            <p data-zh="累计服务个案（不以获批计）" data-en="Cases Handled (Not based on approvals)">累计服务个案（不以获批计）</p>
-        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- 核心服务 (新港湾项目卡片化风格) -->
-    <section id="services" class="section">
-        <h3 class="section-title" data-zh="热门身份规划通道" data-en="Featured Visa Pathways">热门身份规划通道</h3>
-        <p class="section-subtitle" data-zh="围绕入境处真实审核逻辑，构建从身份续签、企业设立到实体办公的闭环合规方案" data-en="Built around authentic regulatory standards, delivering closed-loop compliance.">围绕入境处真实审核逻辑，构建从身份续签、企业设立到实体办公的闭环合规方案</p>
-        
-        <div class="services-grid">
-            <div class="service-card">
-                <h4 data-zh="高才/优才 自雇续签" data-en="TTPS/QMAS Self-Employed Renewal">高才/优才 自雇续签</h4>
-                <p data-zh="无雇主依赖，自控力强。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。" data-en="No employer needed, high self-control. Focus on self-employment paths, reviewing operational materials.">无雇主依赖，自控力强。重点支持自雇/创业路径，提供经营材料与时间线的深度梳理。</p>
-                <div class="card-meta">
-                    <div><span data-zh="推荐指数：" data-en="Rating:">推荐指数：</span><span class="stars">⭐⭐⭐⭐⭐</span></div>
-                    <div><span data-zh="规划周期：" data-en="Timeline:">规划周期：</span><span data-zh="3-6 个月" data-en="3-6 months">3-6 个月</span></div>
-                    <div><span data-zh="实体要求：" data-en="Office Req:">实体要求：</span><span data-zh="必须厘印租约" data-en="Stamped Lease Req.">必须厘印租约</span></div>
-                </div>
-            </div>
-            <div class="service-card">
-                <h4 data-zh="IANG 毕业生留港" data-en="IANG Graduate Visa">IANG 毕业生留港</h4>
-                <p data-zh="无缝衔接身份空窗期，提供备用公司架构与实体办公支持，确保在港身份合规。" data-en="Seamless transition during gap period, with company setup and physical office support.">无缝衔接身份空窗期，提供备用公司架构与实体办公支持，确保在港身份合规。</p>
-                <div class="card-meta">
-                    <div><span data-zh="推荐指数：" data-en="Rating:">推荐指数：</span><span class="stars">⭐⭐⭐⭐⭐</span></div>
-                    <div><span data-zh="规划周期：" data-en="Timeline:">规划周期：</span><span data-zh="1-2 个月" data-en="1-2 months">1-2 个月</span></div>
-                    <div><span data-zh="落地支持：" data-en="Support:">落地支持：</span><span data-zh="工位+财税" data-en="Office + Tax">工位+财税</span></div>
-                </div>
-            </div>
-            <div class="service-card">
-                <h4 data-zh="企业出海与实体运营" data-en="Corporate Setup & Ops">企业出海与实体运营</h4>
-                <p data-zh="真实可核验的香港办公场地与厘印租约。月租 HKD 2,500 起，满足银行开户与KYC核验。" data-en="Verifiable HK office and stamped lease from HKD 2,500. Meets KYC & banking needs.">真实可核验的香港办公场地与厘印租约。月租 HKD 2,500 起，满足银行开户与KYC核验。</p>
-                <div class="card-meta">
-                    <div><span data-zh="推荐指数：" data-en="Rating:">推荐指数：</span><span class="stars">⭐⭐⭐⭐⭐</span></div>
-                    <div><span data-zh="交付周期：" data-en="Timeline:">交付周期：</span><span data-zh="1-2 周" data-en="1-2 weeks">1-2 周</span></div>
-                    <div><span data-zh="含全套：" data-en="Includes:">含全套：</span><span data-zh="公司+办公室" data-en="Company + Office">公司+办公室</span></div>
-                </div>
-            </div>
+  <!-- ================= 6. 底部 (Footer) ================= -->
+  <footer class="bg-[#0b111a] pt-20 pb-10 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="bg-white/5 border-l-2 border-brand-gold p-6 md:p-8 rounded-r-lg mb-16">
+        <h4 class="text-sm font-bold text-white mb-3">合規聲明</h4>
+        <p class="text-xs text-brand-muted leading-relaxed">
+          以上為服務範圍介紹，不構成獲批承諾；個案以入境處及相關部門要求為準。累計接觸與服務個案 1000 餘個（不以獲批計）。本頁面所展示的數字化系統與工具僅供內部管理及合規交付使用。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+        <div>
+          <div class="text-xl font-serif text-brand-gold tracking-widest mb-4">HARTHELM</div>
+          <p class="text-xs text-brand-muted leading-relaxed">
+            WHERE FAMILY FINDS ITS DIRECTION<br><br>
+            服務合約主體：宜居（國際）控股股份有限公司
+          </p>
         </div>
-    </section>
-
-    <!-- 诊断与自测 -->
-    <section id="assessment" class="section" style="background-color: rgba(0,0,0,0.16);">
-        <h3 class="section-title" data-zh="明确你的续签路径" data-en="Clarify Your Path">明确你的续签路径</h3>
-        <p class="section-subtitle" data-zh="拒绝模板化套用，基于您真实的在港时间线提供可执行的合规建议" data-en="Tailored, actionable compliance guidance based on your actual timeline.">拒绝模板化套用，基于您真实的在港时间线提供可执行的合规建议</p>
-        
-        <div class="products-grid">
-            <div class="product-box">
-                <span style="position: absolute; top: 18px; right: 18px; font-size: 11px; padding: 4px 10px; background: rgba(184, 155, 114, 0.15); color: var(--gold); border: 1px solid rgba(184, 155, 114, 0.35);" data-zh="1V1 顾问深度梳理" data-en="1-on-1 Deep Dive">1V1 顾问深度梳理</span>
-                <h4 data-zh="续签风险诊断" data-en="Renewal Risk Diagnosis">续签风险诊断</h4>
-                <div class="price">HKD 1,000 <span data-zh="(签约抵扣)" data-en="(Deductible)">(签约抵扣)</span></div>
-                <ul>
-                    <li data-zh="背景深度评估与路径规划" data-en="Background evaluation & path planning">背景深度评估与路径规划</li>
-                    <li data-zh="材料清单逐项核对" data-en="Checklist review">材料清单逐项核对</li>
-                    <li data-zh="潜在风险点排雷" data-en="Risk mitigation">潜在风险点排雷</li>
-                </ul>
-                <a href="https://wa.me/85252612799" target="_blank" class="btn btn-primary" data-zh="预约诊断服务" data-en="Book Diagnosis">预约诊断服务</a>
-            </div>
-
-            <div class="product-box" style="border-color: rgba(255,255,255,0.12);">
-                <span style="position: absolute; top: 18px; right: 18px; font-size: 11px; padding: 4px 10px; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.15);" data-zh="即时生成报告" data-en="Instant Report">即时生成报告</span>
-                <h4 data-zh="在线自测包" data-en="Free Self-Assessment">在线自测包</h4>
-                <div class="price" style="color: var(--text-main);">Free</div>
-                <ul>
-                    <li data-zh="3 分钟快速评估" data-en="3-minute quick evaluation">3 分钟快速评估</li>
-                    <li data-zh="生成初步材料核对清单" data-en="Generate preliminary checklist">生成初步材料核对清单</li>
-                    <li data-zh="覆盖办公地址与MPF核验" data-en="Covers office lease and MPF">覆盖办公地址与MPF核验</li>
-                </ul>
-                <button type="button" onclick="openAssessmentModal()" class="btn btn-secondary" style="border-color: var(--gold); color: var(--gold);" data-zh="立即开始测评" data-en="Start Assessment">立即开始测评</button>
-            </div>
+        <div>
+          <h5 class="text-sm font-bold text-white mb-4">聯絡我們</h5>
+          <p class="text-xs text-brand-muted mb-2">Tel/WhatsApp: <a href="https://wa.me/85252612799" class="text-brand-gold">+852 5261 2799</a></p>
+          <p class="text-xs text-brand-muted mb-2">Email: <a href="mailto:office@harthelm.com" class="text-brand-gold">office@harthelm.com</a></p>
+          <p class="text-xs text-brand-muted">地址：香港九龍旺角彌敦道 721-725 號比利時銀行大廈 14 樓 1405B 室</p>
         </div>
-    </section>
-
-    <!-- 底部信息 -->
-    <footer>
-        <div class="footer-inner">
-            <div class="compliance-box">
-                <strong data-zh="合规声明：" data-en="Compliance Statement: ">合规声明：</strong><br>
-                <span data-zh="以上为服务范围介绍，不构成获批承诺；个案以入境处及相关部门要求为准。累计接触与服务个案 1000 余个（不以获批计）。" data-en="The above is an introduction to our services and does not constitute a guarantee of approval. Individual cases are subject to the requirements of the Immigration Department. Over 1000 cases handled (not based on approvals).">以上为服务范围介绍，不构成获批承诺；个案以入境处及相关部门要求为准。累计接触与服务个案 1000 余个（不以获批计）。</span>
-            </div>
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h5>HARTHELM</h5>
-                    <p>WHERE FAMILY FINDS ITS DIRECTION</p>
-                    <p style="margin-top: 10px;" data-zh="服务合约主体：宜居（国际）控股股份有限公司" data-en="Contracting Entity: ESPECIALLY FOR HOME (INTERNATIONAL) HOLDINGS LIMITED">服务合约主体：宜居（国际）控股股份有限公司</p>
-                </div>
-                <div class="footer-col">
-                    <h5 data-zh="联系我们" data-en="Contact Us">联系我们</h5>
-                    <p>Tel/WhatsApp: <a href="https://wa.me/85252612799" target="_blank" style="color: var(--gold);">+852 5261 2799</a></p>
-                    <p>Email: <a href="mailto:office@harthelm.com" style="color: var(--text-main);">office@harthelm.com</a></p>
-                    <p data-zh="地址：香港九龙旺角弥敦道 721-725 号比利时银行大厦 14 楼 1405B 室" data-en="Address: FLAT/RM 1405B, THE BELGIAN BANK BUILDING, 721-725 NATHAN ROAD, MONGKOK, KLN">地址：香港九龙旺角弥敦道 721-725 号比利时银行大厦 14 楼 1405B 室</p>
-                </div>
-            </div>
-            <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-                &copy; 2026 HARTHELM. All rights reserved. | 
-                <a href="javascript:void(0)" style="text-decoration: underline;" data-zh="隐私政策" data-en="Privacy Policy">隐私政策</a> | 
-                <a href="javascript:void(0)" style="text-decoration: underline;" data-zh="免责声明" data-en="Disclaimer">免责声明</a>
-            </div>
+        <div>
+          <h5 class="text-sm font-bold text-white mb-4">快速連結</h5>
+          <ul class="text-xs text-brand-muted space-y-2">
+            <li><a href="#lifecycle" class="hover:text-brand-gold">全週期服務</a></li>
+            <li><a href="#tech" class="hover:text-brand-gold">數字底座</a></li>
+            <li><a href="#" class="hover:text-brand-gold">私隱政策</a></li>
+            <li><a href="#" class="hover:text-brand-gold">免責聲明</a></li>
+          </ul>
         </div>
-    </footer>
+      </div>
 
-    <!-- 悬浮 WhatsApp -->
-    <a href="https://wa.me/85252612799" class="whatsapp-float" target="_blank">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        <span>Chat</span>
-    </a>
-
-    <!-- 模态框：自测 -->
-    <div id="assessmentModal" class="modal-backdrop">
-        <div class="modal-panel">
-            <button type="button" class="modal-close" onclick="closeAssessmentModal()">&times;</button>
-            <div id="quizContainer">
-                <div style="font-size: 12px; color: var(--gold); margin-bottom: 6px;" data-zh="HARTHELM 在线自测系统" data-en="HARTHELM SELF-ASSESSMENT">HARTHELM 在线自测系统</div>
-                <h4 style="font-size: 22px; margin-bottom: 18px;" data-zh="香港身份续签准备度评估" data-en="HK Visa Renewal Readiness Quiz">香港身份续签准备度评估</h4>
-                <div id="quizStepContent"></div>
-            </div>
-        </div>
+      <div class="text-center text-xs text-brand-muted border-t border-white/10 pt-6">
+        &copy; 2026 HARTHELM. All rights reserved.
+      </div>
     </div>
+  </footer>
 
-    <!-- JS 逻辑 -->
-    <script>
-        let currentLang = 'zh';
-        function switchLang(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-            
-            // 切换按钮状态
-            const zhBtn = document.getElementById('langBtnZh');
-            const enBtn = document.getElementById('langBtnEn');
-            if (zhBtn && enBtn) {
-                zhBtn.classList.toggle('active', lang === 'zh');
-                enBtn.classList.toggle('active', lang === 'en');
-            }
+  <!-- 悬浮 WhatsApp -->
+  <a href="https://wa.me/85252612799" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition z-50 flex items-center justify-center" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
 
-            // 替换所有文字
-            document.querySelectorAll('[data-zh]').forEach(el => {
-                const text = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
-                if (text !== null) el.innerHTML = text;
-            });
-        }
-
-        // 移动端菜单控制
-        function toggleMobileMenu() { document.querySelector('.nav-links').classList.toggle('active'); }
-
-        // 自测弹窗控制
-        function openAssessmentModal() { 
-            document.getElementById('assessmentModal').classList.add('open'); 
-            document.getElementById('quizStepContent').innerHTML = '<p style="color:var(--text-muted);">自测题库已准备，可接入具体的问卷逻辑。</p>';
-        }
-        function closeAssessmentModal() { document.getElementById('assessmentModal').classList.remove('open'); }
-
-        // 点击遮罩层关闭
-        window.addEventListener('click', (e) => {
-            const modal = document.getElementById('assessmentModal');
-            if (e.target === modal) closeAssessmentModal();
-        });
-    </script>
 </body>
 </html>
