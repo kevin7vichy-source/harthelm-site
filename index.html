@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-HK" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HARTHELM | 為家掌舵 · 為業遠行 (Where Family Finds Its Direction)</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script>
   tailwind.config = {
     theme: {
@@ -14,8 +14,8 @@
           brand: { navy: '#141c2b', navy_light: '#1e293b', gold: '#b89b72', gold_light: '#d4b88d', ink: '#f8fafc', muted: '#94a3b8' } 
         },
         fontFamily: { 
-          sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
-          serif: ['Noto Serif SC', 'serif']
+          sans: ['Inter', 'Noto Sans TC', 'PingFang HK', 'sans-serif'],
+          serif: ['Noto Serif TC', 'Songti TC', 'serif']
         }
       }
     }
@@ -47,21 +47,24 @@
 </head>
 <body class="font-sans antialiased flex flex-col min-h-screen relative">
 
-  <!-- ================= 1. 导航栏 ================= -->
+  <!-- ================= 1. 導航欄 ================= -->
   <header class="fixed w-full top-0 z-50 bg-brand-navy/90 backdrop-blur-md border-b border-white/5 transition-all">
     <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
       <a href="#" class="flex items-center gap-3">
-        <img src="assets/logo-horizontal.svg" alt="HARTHELM" class="h-10" onerror="this.outerHTML='<span class=\'text-xl font-serif text-brand-gold tracking-widest\'>HARTHELM</span>'">
+        <img src="assets/logo-horizontal-reversed.svg" alt="HARTHELM" class="h-10" onerror="this.outerHTML='<span class=\'text-xl font-serif text-brand-gold tracking-widest\'>HARTHELM</span>'">
       </a>
       <nav class="hidden md:flex items-center gap-10 text-sm tracking-wider text-brand-muted font-medium">
         <a href="#lifecycle" class="hover:text-brand-gold transition">全週期服務</a>
-        <a href="#cases" class="hover:text-brand-gold transition">管家交付</a>
         <a href="#tech" class="hover:text-brand-gold transition">數字底座</a>
+        <a href="#cases" class="hover:text-brand-gold transition">管家交付</a>
+        <a href="#assessment" class="hover:text-brand-gold transition">續簽診斷</a>
         <a href="#about" class="hover:text-brand-gold transition">關於我們</a>
       </nav>
       <div class="hidden md:flex items-center gap-4">
         <div class="flex text-xs border border-white/20 rounded px-2 py-1 gap-2 text-brand-muted">
-          <a href="#" class="text-brand-gold font-bold">繁</a><a href="#">简</a><a href="#">EN</a>
+          <a href="./" class="text-brand-gold font-bold">繁</a>
+          <a href="./zh-hans/" class="hover:text-white transition">简</a>
+          <a href="./en/" class="hover:text-white transition">EN</a>
         </div>
         <a href="https://wa.me/85252612799" target="_blank" class="px-5 py-2 bg-brand-gold text-brand-navy text-sm font-bold rounded hover:bg-brand-gold_light transition">WhatsApp 諮詢</a>
       </div>
@@ -75,7 +78,7 @@
     <div class="relative z-10 w-full max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <div class="fade-up">
         <div class="inline-block px-3 py-1 border border-brand-gold/30 text-brand-gold text-xs tracking-widest uppercase mb-6 rounded-full bg-brand-gold/5 backdrop-blur">
-          Hong Kong & Singapore · Family Office
+          Hong Kong & Singapore · Corporate & Talent Services
         </div>
         <h1 class="font-serif text-5xl md:text-6xl text-white leading-tight mb-6">
           為家掌舵<br>
@@ -94,20 +97,30 @@
         </div>
       </div>
       <div class="hidden lg:block fade-up delay-2">
-        <!-- 右侧留白或数据大屏视效 -->
+        <!-- 右側數據視效卡片 -->
         <div class="p-8 border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl">
           <div class="text-brand-gold text-sm mb-2 font-mono">SYS.STATUS: ACTIVE</div>
-          <div class="text-3xl font-serif text-white mb-6">1000+ <span class="text-sm text-brand-muted font-sans">累計服務個案</span></div>
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <div>
+              <div class="text-3xl font-serif text-white">13<span class="text-brand-gold text-xl">年</span></div>
+              <div class="text-xs text-brand-muted mt-1">香港行業深耕</div>
+            </div>
+            <div>
+              <div class="text-3xl font-serif text-white">200<span class="text-brand-gold text-xl">+</span></div>
+              <div class="text-xs text-brand-muted mt-1">香港實體工位</div>
+            </div>
+          </div>
+          <div class="text-3xl font-serif text-white mb-3">1000+ <span class="text-sm text-brand-muted font-sans">累計接觸與服務個案（不以獲批計）</span></div>
           <div class="w-full bg-white/10 h-1 rounded-full overflow-hidden">
             <div class="bg-brand-gold h-full w-[85%]"></div>
           </div>
-          <p class="text-xs text-brand-muted mt-3">管家式全鏈路交付保障</p>
+          <p class="text-xs text-brand-muted mt-3">管家式全鏈路合規交付保障</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. 全周期服务 (Lifecycle) ================= -->
+  <!-- ================= 3. 全週期服務 (Lifecycle) ================= -->
   <section id="lifecycle" class="py-24 bg-brand-navy relative border-t border-white/5">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-20">
@@ -116,47 +129,47 @@
       </div>
 
       <div class="relative">
-        <!-- 发光中轴线 -->
+        <!-- 發光中軸線 -->
         <div class="glow-line hidden md:block"></div>
         
         <div class="space-y-12 md:space-y-24">
-          <!-- 阶段 1 -->
+          <!-- 階段 1 -->
           <div class="flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse group">
             <div class="w-full md:w-[45%] mb-6 md:mb-0 text-center md:text-right md:pr-10">
               <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">01 · 身份獲批與診斷</h3>
-              <p class="text-sm text-brand-muted">梳理背景優勢，明確高才/優才/IANG 的申請或續簽路徑。</p>
+              <p class="text-sm text-brand-muted">梳理背景優勢，明確高才/優才/IANG 的申請或自僱/受僱續簽路徑，排查潛在風險盲區。</p>
             </div>
             <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">1</div>
             <div class="hidden md:block w-[45%]"></div>
           </div>
 
-          <!-- 阶段 2 -->
+          <!-- 階段 2 -->
           <div class="flex flex-col md:flex-row items-center justify-between group">
             <div class="hidden md:block w-[45%]"></div>
             <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">2</div>
             <div class="w-full md:w-[45%] mt-6 md:mt-0 text-center md:text-left md:pl-10">
               <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">02 · 實體落地與打厘印</h3>
-              <p class="text-sm text-brand-muted">協助註冊香港公司，租賃真實實體辦公室，簽署正式租約並加蓋印花稅（厘印）。</p>
+              <p class="text-sm text-brand-muted">協助註冊香港公司，租賃真實可核驗的實體辦公室（HKD 2,500/月起），簽署正式租約並加蓋印花稅（厘印）。</p>
             </div>
           </div>
 
-          <!-- 阶段 3 -->
+          <!-- 階段 3 -->
           <div class="flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse group">
             <div class="w-full md:w-[45%] mb-6 md:mb-0 text-center md:text-right md:pr-10">
               <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">03 · 合規運營與留痕</h3>
-              <p class="text-sm text-brand-muted">建立強積金（MPF）、薪資派發、業務合同及審計底稿，滿足入境處實質經營要求。</p>
+              <p class="text-sm text-brand-muted">建立強積金（MPF）、薪資派發、真實業務合同及法定審計底稿，滿足入境處對實質經營的核查要求。</p>
             </div>
             <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">3</div>
             <div class="hidden md:block w-[45%]"></div>
           </div>
 
-          <!-- 阶段 4 -->
+          <!-- 階段 4 -->
           <div class="flex flex-col md:flex-row items-center justify-between group">
             <div class="hidden md:block w-[45%]"></div>
             <div class="w-12 h-12 rounded-full bg-brand-navy border-4 border-brand-gold text-brand-gold font-bold flex items-center justify-center relative z-10 shadow-[0_0_15px_rgba(184,155,114,0.5)]">4</div>
             <div class="w-full md:w-[45%] mt-6 md:mt-0 text-center md:text-left md:pl-10">
               <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-gold transition">04 · 續簽節點與永居規劃</h3>
-              <p class="text-sm text-brand-muted">在 T-90/T-60 關鍵節點進行專屬提醒與材料覆核，穩步邁向 7 年永居。</p>
+              <p class="text-sm text-brand-muted">在 T-90 / T-60 關鍵時間節點進行專屬提醒與材料逐項覆核，穩步邁向 7 年轉永居。</p>
             </div>
           </div>
         </div>
@@ -164,14 +177,14 @@
     </div>
   </section>
 
-  <!-- ================= 4. 数字化科技底座 (Tech Hub) ================= -->
+  <!-- ================= 4. 數字化科技底座 (Tech Hub) ================= -->
   <section id="tech" class="py-24 bg-[#0b111a] relative border-y border-white/5 bg-grid">
     <div class="absolute inset-0 bg-gradient-to-b from-brand-navy via-transparent to-brand-navy opacity-80 pointer-events-none"></div>
     <div class="max-w-6xl mx-auto px-6 relative z-10">
       <div class="text-center mb-16">
         <div class="text-brand-gold text-sm font-mono tracking-widest mb-2">TECHNOLOGY & TOOLS</div>
         <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">矽谷級數字底座，傳統管家的科技武裝</h2>
-        <p class="text-brand-muted max-w-2xl mx-auto">我們摒棄了傳統中介的混亂郵件與紙本記錄，自主研發了全鏈路數字化運營系統。</p>
+        <p class="text-brand-muted max-w-2xl mx-auto">我們摒棄了傳統機構的混亂郵件與紙本記錄，自主研發了全鏈路數字化運營與合規交付系統。</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -182,9 +195,9 @@
           </div>
           <h3 class="text-lg text-white font-bold mb-3">加密客戶專屬看板</h3>
           <p class="text-sm text-brand-muted leading-relaxed mb-4">
-            客户凭专属密码即可实时查看办理进度，资料在浏览器本地完成 PBKDF2 60万次哈希 + AES-256 解密，杜绝数据泄露。
+            客戶憑專屬密碼即可實時查閱辦理進度與倒計時，資料在瀏覽器本地完成 PBKDF2 60萬次迭代 + AES-256-GCM 解密，杜絕數據外洩。
           </p>
-          <div class="text-xs text-brand-gold font-mono">> End-to-End Encrypted</div>
+          <div class="text-xs text-brand-gold font-mono">&gt; End-to-End Encrypted</div>
         </div>
 
         <!-- 工具 2 -->
@@ -192,11 +205,11 @@
           <div class="w-12 h-12 rounded bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-6">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
           </div>
-          <h3 class="text-lg text-white font-bold mb-3">云端财务审计底稿</h3>
+          <h3 class="text-lg text-white font-bold mb-3">雲端財務審計底稿</h3>
           <p class="text-sm text-brand-muted leading-relaxed mb-4">
-            自研 GAS 多币种四表联动系统，自动匹配 HSBC 周一汇率，暂记配平机制，一键生成符合审计标准的财务底稿。
+            自研 SME-FRS 多幣種四表聯動系統，自動匹配匯豐（HSBC）週一定盤匯率與暫記配平門禁，一鍵生成符合香港審計標準的財務底稿。
           </p>
-          <div class="text-xs text-brand-gold font-mono">> Real-time Ledger & Audit</div>
+          <div class="text-xs text-brand-gold font-mono">&gt; Real-time Ledger &amp; Audit</div>
         </div>
 
         <!-- 工具 3 -->
@@ -204,25 +217,25 @@
           <div class="w-12 h-12 rounded bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-6">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
           </div>
-          <h3 class="text-lg text-white font-bold mb-3">AI 数字员工矩阵</h3>
+          <h3 class="text-lg text-white font-bold mb-3">AI 數字專員協同矩陣</h3>
           <p class="text-sm text-brand-muted leading-relaxed mb-4">
-            13 位具备专业技能的 AI 数字员工（法务、财税、内容等）无缝协同，配合人类专家，为您提供全天候的交付与提醒。
+            12 大專業崗位的 AI 數字專員（法務合規、財稅核對、案卷歸檔等）無縫協同，配合人類專家顧問，提供高標準的節點提醒與品質把關。
           </p>
-          <div class="text-xs text-brand-gold font-mono">> AI Multi-Agent System</div>
+          <div class="text-xs text-brand-gold font-mono">&gt; AI Multi-Agent System</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 5. 成功案例与管家交付 (Cases & Process) ================= -->
+  <!-- ================= 5. 成功案例與管家交付 (Cases & Process) ================= -->
   <section id="cases" class="py-24 bg-brand-navy">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
         <div>
           <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">管家式交付，源於專業與細節</h2>
-          <p class="text-brand-muted">以下是脱敏后的服务场景，每一个细节都经过严格交叉核验。</p>
+          <p class="text-brand-muted">以下為過往服務場景脫敏描述，每一個環節均經過嚴格交叉核驗。</p>
         </div>
-        <a href="#" class="text-brand-gold text-sm border-b border-brand-gold pb-1 hover:text-brand-gold_light transition">查看全部服務場景 →</a>
+        <a href="cases.html" class="text-brand-gold text-sm border-b border-brand-gold pb-1 hover:text-brand-gold_light transition">查看全部服務場景 →</a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -230,20 +243,20 @@
         <div class="bg-brand-navy_light border border-white/10 rounded-xl p-8 hover:border-brand-gold/50 transition duration-300">
           <div class="flex justify-between items-start mb-6">
             <div>
-              <div class="text-xs text-brand-gold mb-2 border border-brand-gold/30 inline-block px-2 py-0.5 rounded">场景 A</div>
-              <h3 class="text-xl font-bold text-white">高才通自雇續簽規劃</h3>
+              <div class="text-xs text-brand-gold mb-2 border border-brand-gold/30 inline-block px-2 py-0.5 rounded">場景 A</div>
+              <h3 class="text-xl font-bold text-white">高才通自僱續簽規劃</h3>
             </div>
             <div class="text-right">
-              <div class="text-xs text-brand-muted">交付周期</div>
+              <div class="text-xs text-brand-muted">籌備週期</div>
               <div class="text-sm font-bold text-white">3-6 個月</div>
             </div>
           </div>
           <p class="text-sm text-brand-muted mb-6 leading-relaxed">
-            <strong>客戶背景：</strong>在港無雇主，具備資金實力與業務構想，面臨首次續簽壓力。
+            <strong>客戶背景：</strong>在港暫無僱主，具備資金實力與真實業務構想，面臨首次續簽材料籌備壓力。
           </p>
           <div class="bg-[#141c2b] p-4 rounded border-l-2 border-brand-gold">
             <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-brand-gold">管家交付：</strong>協助完成真實辦公場地租賃及打厘印；深度梳理真實運營流水與業務單據；專屬數字看板實時同步材料進度。
+              <strong class="text-brand-gold">管家交付：</strong>協助完成香港公司註冊、真實辦公場地租賃及租約打厘印；深度梳理真實運營流水與業務單據；專屬加密看板實時同步材料進度。
             </p>
           </div>
         </div>
@@ -252,20 +265,20 @@
         <div class="bg-brand-navy_light border border-white/10 rounded-xl p-8 hover:border-brand-gold/50 transition duration-300">
           <div class="flex justify-between items-start mb-6">
             <div>
-              <div class="text-xs text-brand-gold mb-2 border border-brand-gold/30 inline-block px-2 py-0.5 rounded">场景 B</div>
+              <div class="text-xs text-brand-gold mb-2 border border-brand-gold/30 inline-block px-2 py-0.5 rounded">場景 B</div>
               <h3 class="text-xl font-bold text-white">IANG 畢業生留港銜接</h3>
             </div>
             <div class="text-right">
-              <div class="text-xs text-brand-muted">交付周期</div>
+              <div class="text-xs text-brand-muted">籌備週期</div>
               <div class="text-sm font-bold text-white">1-2 個月</div>
             </div>
           </div>
           <p class="text-sm text-brand-muted mb-6 leading-relaxed">
-            <strong>客戶背景：</strong>應屆畢業生，暫未匹配到合適雇主，面臨簽證空窗期風險。
+            <strong>客戶背景：</strong>應屆畢業生，暫未匹配到合適僱主，面臨簽證到期後的空窗期風險。
           </p>
           <div class="bg-[#141c2b] p-4 rounded border-l-2 border-brand-gold">
             <p class="text-xs text-slate-300 leading-relaxed">
-              <strong class="text-brand-gold">管家交付：</strong>針對空窗期提供備用公司架構與運營支持；協助對接本地合規財稅服務；確保在港身份無縫合規銜接。
+              <strong class="text-brand-gold">管家交付：</strong>針對空窗期提供備用公司架構與實質運營支持；協助對接本地合規財稅服務；確保在港身份無縫合規銜接。
             </p>
           </div>
         </div>
@@ -273,13 +286,77 @@
     </div>
   </section>
 
-  <!-- ================= 6. 底部 (Footer) ================= -->
-  <footer class="bg-[#0b111a] pt-20 pb-10 border-t border-white/5">
+  <!-- ================= 6. 續簽風險診斷與自測包 (Assessment & Conversion) ================= -->
+  <section id="assessment" class="py-24 bg-[#0f1623] border-t border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="text-brand-gold text-sm font-mono tracking-widest mb-2">DIAGNOSIS &amp; SELF-ASSESSMENT</div>
+        <h2 class="font-serif text-3xl md:text-4xl text-white mb-4">明確您的續簽合規路徑</h2>
+        <p class="text-brand-muted">無論您處於初步規劃還是臨近遞交，我們提供清晰的評估工具與專家診斷方案。</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 左側：付費診斷 -->
+        <div class="bg-gradient-to-br from-brand-navy_light to-brand-navy border border-brand-gold/40 rounded-xl p-8 flex flex-col justify-between shadow-xl">
+          <div>
+            <div class="inline-block px-3 py-1 bg-brand-gold/15 text-brand-gold text-xs font-bold rounded mb-4">1 對 1 專家深度把關</div>
+            <h3 class="text-2xl font-serif text-white mb-2">續簽風險診斷 + 方案書</h3>
+            <div class="text-3xl font-bold text-brand-gold my-4 font-mono">
+              HKD 1,000 <span class="text-xs text-brand-muted font-sans font-normal">（簽約後續服務全額抵扣）</span>
+            </div>
+            <ul class="space-y-3 text-sm text-brand-muted my-6">
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 個人背景與在港聯繫深度評估</li>
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 受僱 / 自僱創業續簽路徑比選與規劃</li>
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 現有材料清單逐項核對與缺口分析</li>
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 潛在拒批/補件風險點排雷與時間表制定</li>
+            </ul>
+          </div>
+          <a href="https://wa.me/85252612799?text=%E6%88%91%E6%83%B3%E9%A0%90%E7%B4%84%E3%80%90%E7%BA%8C%E7%B0%BD%E9%A2%A8%E9%9A%AA%E8%A8%BA%E6%96%B7%20(HKD%201,000)%E3%80%91" target="_blank" class="w-full py-3.5 bg-brand-gold text-brand-navy font-bold text-center rounded hover:bg-brand-gold_light transition block">
+            WhatsApp 預約診斷服務
+          </a>
+        </div>
+
+        <!-- 右側：免費自測包 -->
+        <div class="bg-brand-navy_light border border-white/10 rounded-xl p-8 flex flex-col justify-between">
+          <div>
+            <div class="inline-block px-3 py-1 bg-white/10 text-white text-xs font-bold rounded mb-4">公開自助工具</div>
+            <h3 class="text-2xl font-serif text-white mb-2">在線續簽準備度自測包</h3>
+            <div class="text-3xl font-bold text-white my-4 font-mono">
+              Free <span class="text-xs text-brand-muted font-sans font-normal">（3 分鐘快速評估）</span>
+            </div>
+            <ul class="space-y-3 text-sm text-brand-muted my-6">
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 覆蓋高才通、優才、IANG 及新加坡 EP</li>
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 自動生成個人與公司必檢材料核對清單</li>
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 識別當前材料準備度的優先缺口與盲區</li>
+              <li class="flex items-center gap-2"><span class="text-brand-gold">✓</span> 純前端運行，無需上傳敏感文件原件</li>
+            </ul>
+          </div>
+          <a href="https://wa.me/85252612799?text=%E6%88%91%E6%83%B3%E7%8D%B2%E5%8F%96%E3%80%90%E7%BA%8C%E7%B0%BD%E6%BA%96%E5%82%99%E5%BA%A6%E8%87%AA%E6%B8%AC%E5%8C%85%E3%80%91" target="_blank" class="w-full py-3.5 border border-brand-gold text-brand-gold font-bold text-center rounded hover:bg-brand-gold/10 transition block">
+            立即獲取自測入口
+          </a>
+        </div>
+      </div>
+
+      <!-- B2B 渠道合作橫幅 -->
+      <div class="mt-12 p-6 md:p-8 rounded-xl bg-white/5 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h4 class="text-base font-bold text-brand-gold mb-1">致教育留學機構與渠道夥伴</h4>
+          <p class="text-xs text-brand-muted">學生畢業後的香港續簽與企業落地，交給專業後台承接。尊重渠道歸屬，共享雙向透明對賬系統。</p>
+        </div>
+        <a href="b2b.html" class="px-6 py-2.5 border border-white/30 text-white text-xs font-bold rounded hover:border-brand-gold hover:text-brand-gold transition shrink-0">
+          了解渠道合作方案 →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. 底部 (Footer) ================= -->
+  <footer id="about" class="bg-[#0b111a] pt-20 pb-10 border-t border-white/5">
     <div class="max-w-6xl mx-auto px-6">
       <div class="bg-white/5 border-l-2 border-brand-gold p-6 md:p-8 rounded-r-lg mb-16">
         <h4 class="text-sm font-bold text-white mb-3">合規聲明</h4>
         <p class="text-xs text-brand-muted leading-relaxed">
-          以上為服務範圍介紹，不構成獲批承諾；個案以入境處及相關部門要求為準。累計接觸與服務個案 1000 餘個（不以獲批計）。本頁面所展示的數字化系統與工具僅供內部管理及合規交付使用。
+          以上為服務範圍介紹，不構成獲批承諾；個案以香港入境事務處、新加坡人力部（MOM）及相關部門要求為準。累計接觸與服務個案 1000 餘個（不以獲批計）。本頁面所展示的數字化系統與工具僅供內部管理及合規交付使用，個人資料嚴格依香港《個人資料（私隱）條例》（第486章）處理。
         </p>
       </div>
 
@@ -288,7 +365,8 @@
           <div class="text-xl font-serif text-brand-gold tracking-widest mb-4">HARTHELM</div>
           <p class="text-xs text-brand-muted leading-relaxed">
             WHERE FAMILY FINDS ITS DIRECTION<br><br>
-            服務合約主體：宜居（國際）控股股份有限公司
+            服務合約主體：宜居（國際）控股股份有限公司<br>
+            ESPECIALLY FOR HOME (INTERNATIONAL) HOLDINGS LIMITED
           </p>
         </div>
         <div>
@@ -302,8 +380,8 @@
           <ul class="text-xs text-brand-muted space-y-2">
             <li><a href="#lifecycle" class="hover:text-brand-gold">全週期服務</a></li>
             <li><a href="#tech" class="hover:text-brand-gold">數字底座</a></li>
-            <li><a href="#" class="hover:text-brand-gold">私隱政策</a></li>
-            <li><a href="#" class="hover:text-brand-gold">免責聲明</a></li>
+            <li><a href="b2b.html" class="hover:text-brand-gold">渠道合作 (B2B)</a></li>
+            <li><a href="cases.html" class="hover:text-brand-gold">服務場景說明</a></li>
           </ul>
         </div>
       </div>
@@ -314,7 +392,7 @@
     </div>
   </footer>
 
-  <!-- 悬浮 WhatsApp -->
+  <!-- 懸浮 WhatsApp -->
   <a href="https://wa.me/85252612799" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition z-50 flex items-center justify-center" target="_blank" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
   </a>
