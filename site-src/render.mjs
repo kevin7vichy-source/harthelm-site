@@ -47,6 +47,7 @@ function urlFor(langId, route) {
 }
 
 const NAV = [
+  ["index.html", "nav.home"],
   ["about/index.html", "nav.about"],
   ["services/index.html", "nav.services"],
   ["insights/index.html", "nav.insights"],
