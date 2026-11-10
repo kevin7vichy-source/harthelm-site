@@ -54,6 +54,7 @@ const NAV = [
   ["cases.html", "nav.cases"],
   ["asmtp/index.html", "nav.asmtp"],
   ["iang/index.html", "nav.iang"],
+  ["legal/index.html", "nav.legal"],
 ];
 
 function navHtml(lang, route) {
@@ -61,11 +62,10 @@ function navHtml(lang, route) {
     const current = itemRoute === route ? ' aria-current="page"' : "";
     return `<a href="${esc(urlFor(lang, itemRoute))}"${current}>${esc(t(lang, key))}</a>`;
   }).join("");
-  const langRoute = route === "legal/index.html" ? "index.html" : route;
   const langs = LANGS.map((item) => {
     const current = item.id === lang ? ' aria-current="true"' : "";
     const label = item.id === "hant" ? "繁" : item.id === "hans" ? "简" : "EN";
-    return `<a href="${esc(urlFor(item.id, langRoute))}" hreflang="${item.html}" lang="${item.html}"${current}>${label}</a>`;
+    return `<a href="${esc(urlFor(item.id, route))}" hreflang="${item.html}" lang="${item.html}"${current}>${label}</a>`;
   }).join("");
   return `<header class="site-nav">
     <div class="nav-inner">
@@ -80,7 +80,6 @@ function navHtml(lang, route) {
 }
 
 function alternates(route) {
-  if (route === "legal/index.html") return "";
   return LANGS.map((item) => {
     return `<link rel="alternate" hreflang="${item.html}" href="${esc(urlFor(item.id, route))}">`;
   }).join("\n");
@@ -576,9 +575,9 @@ const LEGAL = [
     h2: { hant: "文本", hans: "文本", en: "Text" },
     p: [
       {
-        hant: "本聲明以繁體中文、簡體中文和英文一併發布。三種文本具同等效力。若含義有衝突，以繁體中文為準。在負責人確認前，本頁仍是草稿，不應視為公司已確認的法律文本。頁腳所鏈的服務場景說明、渠道合作頁和準備度自測，目前各只有一種語言。",
-        hans: "本声明以繁体中文、简体中文和英文一并发布。三种文本具同等效力。若含义有冲突，以繁体中文为准。在负责人确认前，本页仍是草稿，不应视为公司已确认的法律文本。页脚所链的服务场景说明、渠道合作页和准备度自测，目前各只有一种语言。",
-        en: "This notice is published in Traditional Chinese, Simplified Chinese, and English together. The three texts have equal force. If they conflict, the Traditional Chinese text prevails. Until the owner confirms it, this page remains a draft and should not be treated as the company’s confirmed legal text. The service-scenes page, the channel page, and the readiness self-check linked from the footer are each in one language only.",
+        hant: "本聲明以繁體中文、簡體中文和英文一併發布。三種文本具同等效力。若含義有衝突，以繁體中文為準。生效日期：2026-11-10。頁腳所鏈的服務場景說明、渠道合作頁和準備度自測，目前各只有一種語言。",
+        hans: "本声明以繁体中文、简体中文和英文一并发布。三种文本具同等效力。若含义有冲突，以繁体中文为准。生效日期：2026-11-10。页脚所链的服务场景说明、渠道合作页和准备度自测，目前各只有一种语言。",
+        en: "This notice is published in Traditional Chinese, Simplified Chinese, and English together. The three texts have equal force. If they conflict, the Traditional Chinese text prevails. Effective date: 2026-11-10. The service-scenes page, the channel page, and the readiness self-check linked from the footer are each in one language only.",
       },
     ],
   },
@@ -589,9 +588,14 @@ function legal(lang) {
     const paras = section.p.map((p) => `<p>${esc(tx(lang, p))}</p>`).join("");
     return `<h2>${esc(tx(lang, section.h2))}</h2>${paras}`;
   }).join("");
-  const body = `${pageHead(lang, t(lang, "legal.title"), `<span class="draft-flag">${esc(t(lang, "legal.draft"))}</span>`)}
+  const effective = tx(lang, {
+    hant: "生效日期：2026-11-10",
+    hans: "生效日期：2026-11-10",
+    en: "Effective date: 2026-11-10",
+  });
+  const body = `${pageHead(lang, t(lang, "legal.title"), esc(effective))}
   <article class="prose"><div class="wrap-s">${blocks}</div></article>`;
-  return shell(lang, "legal/index.html", "HARTHELM · " + t(lang, "legal.title"), t(lang, "legal.draft"), body, { legal: true });
+  return shell(lang, "legal/index.html", "HARTHELM · " + t(lang, "legal.title"), effective, body, { legal: true });
 }
 
 function validateTree(html, file) {
@@ -624,11 +628,8 @@ function validateTree(html, file) {
   if (html.includes("pending-confirm") || html.includes("待 Kevin 确认") || html.includes("preview-ribbon") || html.includes("預覽改版") || html.includes("管家式全鏈路") || html.includes("管家式全链路") || html.includes("Steward-style delivery across the compliance chain")) {
     throw new Error(file + " still has a removed mark or line");
   }
-  const hrefs = html.match(/href="[^"]*"/g) || [];
-  for (const href of hrefs) {
-    if (/\/legal\/?"/.test(href) && !href.includes("board-statement")) {
-      throw new Error(file + " links to /legal/: " + href);
-    }
+  if (file.endsWith("legal/index.html") && (html.includes("draft-flag") || html.includes("草稿，需") || html.includes("Draft, for the owner"))) {
+    throw new Error(file + " still has the draft banner");
   }
   if (!html.includes(PHONE_DISPLAY)) throw new Error(file + " missing phone");
   if (!html.includes("宜居")) throw new Error(file + " missing entity");
