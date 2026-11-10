@@ -85,25 +85,43 @@ function alternates(route) {
   }).join("\n");
 }
 
-function footer(lang) {
+function footer(lang, opts) {
+  const legalPage = !!(opts && opts.legal);
+  const entityEn = legalPage
+    ? esc(tx(lang, {
+        hant: "英文法定名稱：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
+        hans: "英文法定名称：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
+        en: "English legal name: HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
+      }))
+    : esc(t(lang, "foot.entityEn"));
+  const address = legalPage && lang === "en"
+    ? esc("FLAT/RM 1405B 14/F THE BELGIAN BANK BUILDING, NOS.721-725 NATHAN ROAD, MONGKOK, KL") + "<br>" + esc(ADDRESS.en)
+    : esc(ADDRESS[lang]);
+  const disclaimer = legalPage
+    ? esc(tx(lang, {
+        hant: "以上為服務範圍介紹，不構成獲批承諾；個案以香港入境事務處、新加坡人力部（MOM）及相關部門要求為準。審批由有關當局酌情決定，個別結果不同。累計接觸與服務個案 1000 餘個（不以獲批計）。個人資料依香港《個人資料（私隱）條例》（第 486 章）處理。如涉及新加坡的個人資料，亦按新加坡《個人資料保護法》（Personal Data Protection Act 2012）處理。",
+        hans: "以上为服务范围介绍，不构成获批承诺；个案以香港入境事务处、新加坡人力部（MOM）及相关部门要求为准。审批由有关当局酌情决定，个别结果不同。累计接触与服务个案 1000 余个（不以获批计）。个人资料依香港《个人资料（私隐）条例》（第 486 章）处理。如涉及新加坡的个人资料，亦按新加坡《个人资料保护法》（Personal Data Protection Act 2012）处理。",
+        en: "The pages describe a scope of work. They are not a promise of approval. Each case follows the requirements of Hong Kong Immigration, Singapore MOM, and any other authority involved. Those authorities decide, and individual outcomes differ. More than 1,000 cases we have come into contact with or served (not counted by approvals). Personal data we receive is handled under the Personal Data (Privacy) Ordinance (Cap. 486). Where personal data relates to Singapore, it is also handled under Singapore’s Personal Data Protection Act 2012.",
+      }))
+    : esc(t(lang, "foot.disclaimer"));
   const pages = NAV.map(([route, key]) => {
     return `<li><a href="${esc(urlFor(lang, route))}">${esc(t(lang, key))}</a></li>`;
   }).join("");
   return `<footer class="site-footer">
     <div class="wrap">
-      <div class="compliance"><p>${esc(t(lang, "foot.disclaimer"))}</p></div>
+      <div class="compliance"><p>${disclaimer}</p></div>
       <div class="foot-grid">
         <div>
           <h2>HARTHELM</h2>
           <p>${esc(t(lang, "foot.tagline"))}</p>
           <p>${esc(t(lang, "foot.entityLabel"))}：${esc(t(lang, "foot.entityName"))}</p>
-          <p>${esc(t(lang, "foot.entityEn"))}</p>
+          <p>${entityEn}</p>
         </div>
         <div>
           <h3>${esc(t(lang, "foot.contact"))}</h3>
           <p>Tel / WhatsApp <a href="https://wa.me/${PHONE_WA}">${esc(PHONE_DISPLAY)}</a></p>
           <p>Email <a href="mailto:office@harthelm.com">office@harthelm.com</a></p>
-          <p>${esc(ADDRESS[lang])}</p>
+          <p>${address}</p>
         </div>
         <div>
           <h3>${esc(t(lang, "foot.quick"))}</h3>
@@ -125,7 +143,7 @@ function footer(lang) {
   </a>`;
 }
 
-function shell(lang, route, title, description, body) {
+function shell(lang, route, title, description, body, opts) {
   const meta = LANGS.find((item) => item.id === lang);
   return `<!DOCTYPE html>
 <html lang="${meta.html}">
@@ -147,7 +165,7 @@ ${alternates(route)}
 ${navHtml(lang, route)}
 </div>
 ${body}
-${footer(lang)}
+${footer(lang, opts)}
 <script src="/assets/site.js"></script>
 </body>
 </html>
@@ -442,9 +460,9 @@ const LEGAL = [
     h2: { hant: "我們是誰", hans: "我们是谁", en: "Who we are" },
     p: [
       {
-        hant: "本網站由服務品牌 HARTHELM 發布。服務合約主體為宜居（國際）控股股份有限公司。英文法定名稱本頁留空。聯絡電郵只使用 office@harthelm.com。",
-        hans: "本网站由服务品牌 HARTHELM 发布。服务合约主体为宜居（國際）控股股份有限公司。英文法定名称本页留空。联络电邮只使用 office@harthelm.com。",
-        en: "This website is published under the service brand HARTHELM. The contracting entity is 宜居（國際）控股股份有限公司. The English legal name is left blank on this page. The only contact email is office@harthelm.com.",
+        hant: "資料使用者是宜居（國際）控股股份有限公司 / HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED（下稱「我們」）。HARTHELM 是我們的服務品牌，不是另一個資料使用者。個人資料主任（亦為新加坡《個人資料保護法》下的資料保護主任）的業務聯絡是 office@harthelm.com。對外電郵只使用這個地址。",
+        hans: "资料使用者是宜居（國際）控股股份有限公司 / HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED（下称「我们」）。HARTHELM 是我们的服务品牌，不是另一个资料使用者。个人资料主任（亦为新加坡《个人资料保护法》下的资料保护主任）的业务联络是 office@harthelm.com。对外电邮只使用这个地址。",
+        en: "The data user is 宜居（國際）控股股份有限公司 / HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED (“we”). HARTHELM is our service brand, not a separate data user. The business contact for the personal data officer, who is also the data protection officer under Singapore’s Personal Data Protection Act, is office@harthelm.com. That is the only email we use publicly.",
       },
     ],
   },
@@ -455,6 +473,11 @@ const LEGAL = [
         hant: "網站內容是一般資料，供閱讀用，不是法律意見，也不是香港入境事務處、人才辦、新加坡人力部或其他機關的官方文本。政策要點有整理日期，並鏈到當時所記的官方頁面。你作決定前應核對當日官網，或向合資格的顧問查詢你自己的情況。",
         hans: "网站内容是一般资料，供阅读用，不是法律意见，也不是香港入境事务处、人才办、新加坡人力部或其他机关的官方文本。政策要点有整理日期，并链到当时所记的官方页面。你作决定前应核对当日官网，或向合资格的顾问查询你自己的情况。",
         en: "The site is general information for reading. It is not legal advice, and it is not an official text of Hong Kong Immigration, Hong Kong Talent Engage, Singapore MOM, or any other authority. Policy notes carry a compilation date and link to the official page recorded then. Before you decide, check the official page that day, or ask a qualified adviser about your own facts.",
+      },
+      {
+        hant: "本頁不排除或限制適用法律不允許排除或限制的責任，包括但不限於香港《管制免責條款條例》（第 71 章）就疏忽引致死亡或人身傷害不得排除的責任，以及該條例與新加坡 Unfair Contract Terms Act 1977 要求須符合合理性的責任限制；亦不影響你作為消費者依法享有的權利。",
+        hans: "本页不排除或限制适用法律不允许排除或限制的责任，包括但不限于香港《管制免责条款条例》（第 71 章）就疏忽引致死亡或人身伤害不得排除的责任，以及该条例与新加坡 Unfair Contract Terms Act 1977 要求须符合合理性的责任限制；亦不影响你作为消费者依法享有的权利。",
+        en: "This page does not exclude or limit any liability that applicable law does not allow to be excluded or limited, including liability for death or personal injury caused by negligence, which cannot be excluded under Hong Kong’s Control of Exemption Clauses Ordinance (Cap. 71), and limits of liability that must satisfy the reasonableness test under that Ordinance and under Singapore’s Unfair Contract Terms Act 1977. It does not affect rights you have as a consumer.",
       },
     ],
   },
@@ -477,19 +500,64 @@ const LEGAL = [
     h2: { hant: "個人資料", hans: "个人资料", en: "Personal data" },
     p: [
       {
-        hant: "若你發電郵到 office@harthelm.com，或經頁面上的即時通訊連結聯絡我們，我們會收到你主動提供的內容，包括電郵地址和訊息文字。我們只用這些資料回覆和跟進你提出的事項。我們不出售個人資料。查閱或更正，請發電郵到上述地址。請不要在電郵中附上密碼、完整銀行帳號或身份證明文件圖像。",
-        hans: "若你发电邮到 office@harthelm.com，或经页面上的即时通讯连结联络我们，我们会收到你主动提供的内容，包括电邮地址和讯息文字。我们只用这些资料回复和跟进你提出的事项。我们不出售个人资料。查阅或更正，请发电邮到上述地址。请不要在电邮中附上密码、完整银行帐号或身份证明文件图像。",
-        en: "If you email office@harthelm.com, or contact us through a messaging link on the site, we receive what you choose to send, including the email address and the text. We use it to reply and to follow up the matter you raised. We do not sell personal data. To access or correct it, email that address. Do not attach passwords, full bank-account numbers, or images of identity documents.",
+        hant: "你發電郵到 office@harthelm.com，或經本站的 WhatsApp 連結聯絡我們時，我們會收到你主動提供的資料，包括電郵地址、WhatsApp 號碼和訊息文字。我們只用這些資料回覆和跟進你提出的事項。我們不出售個人資料。",
+        hans: "你发电邮到 office@harthelm.com，或经本站的 WhatsApp 连结联络我们时，我们会收到你主动提供的资料，包括电邮地址、WhatsApp 号码和讯息文字。我们只用这些资料回复和跟进你提出的事项。我们不出售个人资料。",
+        en: "If you email office@harthelm.com, or contact us through the WhatsApp link on this site, we receive what you choose to send, including your email address, WhatsApp number, and the text of the message. We use it only to reply and to follow up the matter you raised. We do not sell personal data.",
       },
       {
-        hant: "準備度自測在你的瀏覽器內運行。按該頁自己的說明，它不要求上傳證件原件；若你勾選在本機保存進度，資料留在你的瀏覽器。該工具不是入境處或人力部的系統。",
-        hans: "准备度自测在你的浏览器内运行。按该页自己的说明，它不要求上传证件原件；若你勾选在本机保存进度，资料留在你的浏览器。该工具不是入境处或人力部的系统。",
-        en: "The readiness self-check runs in your browser. On its own page, it does not ask you to upload original identity documents. If you choose to save progress on the device, that stays in your browser. The tool is not an Immigration or MOM system.",
+        hant: "本站由 GitHub Pages 托管。托管方可為保安目的記錄訪客的 IP 地址等技術資料。本頁載入 Google Fonts 時，你的瀏覽器會向 Google 傳送 IP 地址和瀏覽器資訊。這些服務的伺服器可能位於香港及新加坡以外。我們位於香港。",
+        hans: "本站由 GitHub Pages 托管。托管方可为保安目的记录访客的 IP 地址等技术资料。本页载入 Google Fonts 时，你的浏览器会向 Google 传送 IP 地址和浏览器信息。这些服务的服务器可能位于香港及新加坡以外。我们位于香港。",
+        en: "This site is hosted on GitHub Pages. The host may log a visitor’s IP address and similar technical data for security. When this page loads Google Fonts, your browser sends your IP address and browser information to Google. Those services’ servers may be outside Hong Kong and Singapore. We are in Hong Kong.",
       },
       {
-        hant: "已合作客戶使用公司經營看板時，另有一份客戶版資料聲明，存放於本站 /legal/board-statement/。該聲明只適用於其文內所寫的看板服務，不取代本頁；本頁也不取代該聲明。",
-        hans: "已合作客户使用公司经营看板时，另有一份客户版资料声明，存放于本站 /legal/board-statement/。该声明只适用于其文内所写的看板服务，不取代本页；本页也不取代该声明。",
-        en: "Clients who use the company operating board have a separate customer statement at /legal/board-statement/ on this site. That statement applies only to the board service it describes. It does not replace this page, and this page does not replace it.",
+        hant: "經 WhatsApp 聯絡時，相關資料由 WhatsApp／Meta 按其公開條款和私隱政策處理，並可能被轉移到香港以外。GitHub、Google 與 WhatsApp／Meta 按其公開條款處理資料；我們沒有與它們另行訂立資料處理協議。",
+        hans: "经 WhatsApp 联络时，相关资料由 WhatsApp／Meta 按其公开条款和隐私政策处理，并可能被转移到香港以外。GitHub、Google 与 WhatsApp／Meta 按其公开条款处理资料；我们没有与它们另行订立资料处理协议。",
+        en: "If you contact us on WhatsApp, WhatsApp / Meta processes the related data under its published terms and privacy policy, and the data may be transferred outside Hong Kong. GitHub, Google, and WhatsApp / Meta process data under their published terms. We have not entered into a separate data-processing agreement with them.",
+      },
+      {
+        hant: "個人資料依香港《個人資料（私隱）條例》（第 486 章）處理。如涉及新加坡的個人資料，亦按新加坡《個人資料保護法》（Personal Data Protection Act 2012）處理。",
+        hans: "个人资料依香港《个人资料（私隐）条例》（第 486 章）处理。如涉及新加坡的个人资料，亦按新加坡《个人资料保护法》（Personal Data Protection Act 2012）处理。",
+        en: "Personal data is handled under Hong Kong’s Personal Data (Privacy) Ordinance (Cap. 486). Where it relates to Singapore, it is also handled under Singapore’s Personal Data Protection Act 2012.",
+      },
+      {
+        hant: "你可以電郵 office@harthelm.com 撤回同意。我們會告知撤回的後果，並停止相關處理。撤回後，我們可能無法繼續回覆該項查詢或提供相關服務。撤回不影響撤回前已經進行的處理。",
+        hans: "你可以电邮 office@harthelm.com 撤回同意。我们会告知撤回的后果，并停止相关处理。撤回后，我们可能无法继续回复该项查询或提供相关服务。撤回不影响撤回前已经进行的处理。",
+        en: "You may withdraw consent by emailing office@harthelm.com. We will tell you the consequences and stop the processing that depends on that consent. After withdrawal, we may be unable to continue replying to that enquiry or providing the related service. Withdrawal does not affect processing already carried out.",
+      },
+      {
+        hant: "查閱或改正，請電郵 office@harthelm.com，寫明姓名和要求，由個人資料主任（兼資料保護主任）處理。請不要在電郵中附上密碼、完整銀行帳號或身份證明文件圖像。",
+        hans: "查阅或改正，请电邮 office@harthelm.com，写明姓名和要求，由个人资料主任（兼资料保护主任）处理。请不要在电邮中附上密码、完整银行账号或身份证明文件图像。",
+        en: "To ask for access or correction, email office@harthelm.com, and state your name and what you are asking for. The personal data officer, who is also the data protection officer, handles that request. Do not attach passwords, full bank-account numbers, or images of identity documents.",
+      },
+      {
+        hant: "在香港，查閱資料要求按《個人資料（私隱）條例》第 18 條提出，一般在收到後 40 日內依從（第 19(1) 條）；改正按第 22(1) 條。如需收費，我們會事先告知金額。在新加坡，你可以查閱我們持有的你的個人資料，以及過去一年的使用或披露方式（Personal Data Protection Act 第 21 條），要求更正（第 22 條），並按第 16 條撤回同意。",
+        hans: "在香港，查阅资料要求按《个人资料（私隐）条例》第 18 条提出，一般在收到后 40 日内依从（第 19(1) 条）；改正按第 22(1) 条。如需收费，我们会事先告知金额。在新加坡，你可以查阅我们持有的你的个人资料，以及过去一年的使用或披露方式（Personal Data Protection Act 第 21 条），要求更正（第 22 条），并按第 16 条撤回同意。",
+        en: "In Hong Kong, a data-access request is made under section 18 of the Personal Data (Privacy) Ordinance and is generally complied with within 40 days after it is received (section 19(1)). A correction request is made under section 22(1). If a fee is charged, we tell you the amount first. In Singapore, you may ask to be told what personal data of yours we hold and how it was used or disclosed in the past year (section 21 of the Personal Data Protection Act), ask for a correction (section 22), and withdraw consent (section 16).",
+      },
+      {
+        hant: "尚未簽約的查詢資料，自最後一次聯絡起保存 24 個月，然後刪除。已簽約客戶的資料在服務期內保存，並在服務結束後再保存 7 年，包括為符合香港《公司條例》（第 622 章）第 377 條對會計記錄的保存要求。法律另有要求，或資料涉及未了結的查詢、投訴或爭議的，保存至相關事項完結。資料不再為使用目的所需時，我們會採取切實可行的步驟刪除。",
+        hans: "尚未签约的查询资料，自最后一次联络起保存 24 个月，然后删除。已签约客户的资料在服务期内保存，并在服务结束后再保存 7 年，包括为符合香港《公司条例》（第 622 章）第 377 条对会计记录的保存要求。法律另有要求，或资料涉及未了结的查询、投诉或争议的，保存至相关事项完结。资料不再为使用目的所需时，我们会采取切实可行的步骤删除。",
+        en: "Enquiry data from people who do not sign is kept for 24 months from the last contact, and then deleted. A client’s data is kept during the service and for 7 years after it ends, including to meet the accounting-record period in section 377 of Hong Kong’s Companies Ordinance (Cap. 622). It is kept longer where the law requires, or while an enquiry, complaint, or dispute is still open, until that matter ends. When the data is no longer needed for the purpose, we take practicable steps to delete it.",
+      },
+      {
+        hant: "除非你另行同意，我們不會把你為查詢而提供的姓名和聯絡方式用於發送服務資訊或其他直接促銷，也不會把該等資料提供給其他機構作直接促銷。如日後擬作此用途，會事先按香港《個人資料（私隱）條例》第 6A 部（第 35C 條、第 35E 條）告知並取得同意。你可以隨時電郵 office@harthelm.com 要求停止，我們不收費。",
+        hans: "除非你另行同意，我们不会把你为查询而提供的姓名和联络方式用于发送服务信息或其他直接促销，也不会把该等资料提供给其他机构作直接促销。如日后拟作此用途，会事先按香港《个人资料（私隐）条例》第 6A 部（第 35C 条、第 35E 条）告知并取得同意。你可以随时电邮 office@harthelm.com 要求停止，我们不收费。",
+        en: "Unless you give a separate consent, we do not use the name and contact details you gave for an enquiry to send service information or other direct marketing, and we do not provide that data to anyone else for direct marketing. If we later propose to do so, we will first inform you and obtain consent under Part 6A of the Personal Data (Privacy) Ordinance (sections 35C and 35E). You may email office@harthelm.com at any time and ask us to stop. There is no charge.",
+      },
+      {
+        hant: "如發生影響你個人資料的外泄，我們會盡快評估並採取補救。香港《個人資料（私隱）條例》沒有法定的外泄通報期限。如屬新加坡《個人資料保護法》第 26C 條、第 26D 條須通報的情形，我們會在評估後 3 個公曆日內通知新加坡個人資料保護委員會，並在法律要求時通知受影響的人。",
+        hans: "如发生影响你个人资料的外泄，我们会尽快评估并采取补救。香港《个人资料（私隐）条例》没有法定的外泄通报期限。如属新加坡《个人资料保护法》第 26C 条、第 26D 条须通报的情形，我们会在评估后 3 个公历日内通知新加坡个人资料保护委员会，并在法律要求时通知受影响的人。",
+        en: "If personal data about you is breached, we assess it and take remedial steps promptly. Hong Kong’s Personal Data (Privacy) Ordinance sets no statutory deadline for notifying a breach. Where Singapore’s Personal Data Protection Act, sections 26C and 26D, requires notification, we notify the Personal Data Protection Commission within 3 calendar days after the assessment, and we notify affected individuals when the law requires it.",
+      },
+      {
+        hant: "準備度自測在你的瀏覽器內運行。按該頁自己的說明，它不要求上傳證件原件；若你勾選在本機保存進度，資料留在你的瀏覽器。該工具不是入境處或人力部的系統。該工具頁目前只有一種語言。",
+        hans: "准备度自测在你的浏览器内运行。按该页自己的说明，它不要求上传证件原件；若你勾选在本机保存进度，资料留在你的浏览器。该工具不是入境处或人力部的系统。该工具页目前只有一种语言。",
+        en: "The readiness self-check runs in your browser. On its own page, it does not ask you to upload original identity documents. If you choose to save progress on the device, that stays in your browser. The tool is not an Immigration or MOM system. That tool page is in one language only.",
+      },
+      {
+        hant: "已合作客戶使用公司經營看板時，另有一份客戶版資料聲明，存放於本站 /legal/board-statement/。該聲明目前以中文為準，只適用於其文內所寫的看板服務，不取代本頁；本頁也不取代該聲明。",
+        hans: "已合作客户使用公司经营看板时，另有一份客户版资料声明，存放于本站 /legal/board-statement/。该声明目前以中文为准，只适用于其文内所写的看板服务，不取代本页；本页也不取代该声明。",
+        en: "Clients who use the company operating board have a separate customer statement at /legal/board-statement/ on this site. That statement is currently governed by its Chinese text. It applies only to the board service it describes. It does not replace this page, and this page does not replace it.",
       },
     ],
   },
@@ -507,9 +575,9 @@ const LEGAL = [
     h2: { hant: "文本", hans: "文本", en: "Text" },
     p: [
       {
-        hant: "本聲明的繁體中文、簡體中文和英文一同起草。若日後定稿，以負責人確認的版本為準。在此之前，三種文字都只是草稿。",
-        hans: "本声明的繁体中文、简体中文和英文一同起草。若日后定稿，以负责人确认的版本为准。在此之前，三种文字都只是草稿。",
-        en: "This notice was drafted in Traditional Chinese, Simplified Chinese, and English together. If a final text is later confirmed, the version the owner confirms controls. Until then, all three are drafts.",
+        hant: "本聲明以繁體中文、簡體中文和英文一併發布。三種文本具同等效力。若含義有衝突，以繁體中文為準。在負責人確認前，本頁仍是草稿，不應視為公司已確認的法律文本。頁腳所鏈的服務場景說明、渠道合作頁和準備度自測，目前各只有一種語言。",
+        hans: "本声明以繁体中文、简体中文和英文一并发布。三种文本具同等效力。若含义有冲突，以繁体中文为准。在负责人确认前，本页仍是草稿，不应视为公司已确认的法律文本。页脚所链的服务场景说明、渠道合作页和准备度自测，目前各只有一种语言。",
+        en: "This notice is published in Traditional Chinese, Simplified Chinese, and English together. The three texts have equal force. If they conflict, the Traditional Chinese text prevails. Until the owner confirms it, this page remains a draft and should not be treated as the company’s confirmed legal text. The service-scenes page, the channel page, and the readiness self-check linked from the footer are each in one language only.",
       },
     ],
   },
@@ -522,7 +590,7 @@ function legal(lang) {
   }).join("");
   const body = `${pageHead(lang, t(lang, "legal.title"), `<span class="draft-flag">${esc(t(lang, "legal.draft"))}</span>`)}
   <article class="prose"><div class="wrap-s">${blocks}</div></article>`;
-  return shell(lang, "legal/index.html", "HARTHELM · " + t(lang, "legal.title"), t(lang, "legal.draft"), body);
+  return shell(lang, "legal/index.html", "HARTHELM · " + t(lang, "legal.title"), t(lang, "legal.draft"), body, { legal: true });
 }
 
 function validateTree(html, file) {
@@ -543,7 +611,7 @@ function validateTree(html, file) {
     /新港湾/,
     /身份獲批與診斷/,
     /身份获批与诊断/,
-    /ESPECIALLY FOR HOME/i,
+    /ESPECIALLY FOR HOME \(INTERNATIONAL\)/i,
     /100\s*%/,
     /href="#"/,
     /\/ops\//,
