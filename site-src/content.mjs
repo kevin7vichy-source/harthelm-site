@@ -231,9 +231,9 @@ export const STR = {
     "宜居（國際）控股股份有限公司"
   ),
   "foot.entityEn": row(
-    "英文法定名稱：留空，待確認。",
-    "英文法定名称：留空，待确认。",
-    "English legal name: left blank, pending confirmation."
+    "英文法定名稱：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
+    "英文法定名称：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
+    "Contracting entity: HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED (宜居（國際）控股股份有限公司)"
   ),
   "foot.contact": row("聯絡我們", "联络我们", "Contact"),
   "foot.quick": row("頁面", "页面", "Pages"),

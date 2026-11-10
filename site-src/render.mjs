@@ -87,13 +87,10 @@ function alternates(route) {
 
 function footer(lang, opts) {
   const legalPage = !!(opts && opts.legal);
-  const entityEn = legalPage
-    ? esc(tx(lang, {
-        hant: "英文法定名稱：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
-        hans: "英文法定名称：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
-        en: "English legal name: HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED",
-      }))
-    : esc(t(lang, "foot.entityEn"));
+  const entityLines = lang === "en"
+    ? `<p>${esc(t(lang, "foot.entityEn"))}</p>`
+    : `<p>${esc(t(lang, "foot.entityLabel"))}：${esc(t(lang, "foot.entityName"))}</p>
+          <p>${esc(t(lang, "foot.entityEn"))}</p>`;
   const address = legalPage && lang === "en"
     ? esc("FLAT/RM 1405B 14/F THE BELGIAN BANK BUILDING, NOS.721-725 NATHAN ROAD, MONGKOK, KL") + "<br>" + esc(ADDRESS.en)
     : esc(ADDRESS[lang]);
@@ -114,8 +111,7 @@ function footer(lang, opts) {
         <div>
           <h2>HARTHELM</h2>
           <p>${esc(t(lang, "foot.tagline"))}</p>
-          <p>${esc(t(lang, "foot.entityLabel"))}：${esc(t(lang, "foot.entityName"))}</p>
-          <p>${entityEn}</p>
+          ${entityLines}
         </div>
         <div>
           <h3>${esc(t(lang, "foot.contact"))}</h3>
