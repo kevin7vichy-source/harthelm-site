@@ -37,10 +37,6 @@ function tx(lang, obj) {
   return obj[lang];
 }
 
-function pending(inner) {
-  return `<span class="pending-confirm" title="待 Kevin 确认">${inner}</span>`;
-}
-
 function urlFor(langId, route) {
   const lang = LANGS.find((item) => item.id === langId);
   if (route === "index.html") return (lang.prefix || "") + "/" || "/";
@@ -57,7 +53,6 @@ const NAV = [
   ["cases.html", "nav.cases"],
   ["asmtp/index.html", "nav.asmtp"],
   ["iang/index.html", "nav.iang"],
-  ["legal/index.html", "nav.legal"],
 ];
 
 function navHtml(lang, route) {
@@ -65,10 +60,11 @@ function navHtml(lang, route) {
     const current = itemRoute === route ? ' aria-current="page"' : "";
     return `<a href="${esc(urlFor(lang, itemRoute))}"${current}>${esc(t(lang, key))}</a>`;
   }).join("");
+  const langRoute = route === "legal/index.html" ? "index.html" : route;
   const langs = LANGS.map((item) => {
     const current = item.id === lang ? ' aria-current="true"' : "";
     const label = item.id === "hant" ? "繁" : item.id === "hans" ? "简" : "EN";
-    return `<a href="${esc(urlFor(item.id, route))}" hreflang="${item.html}" lang="${item.html}"${current}>${label}</a>`;
+    return `<a href="${esc(urlFor(item.id, langRoute))}" hreflang="${item.html}" lang="${item.html}"${current}>${label}</a>`;
   }).join("");
   return `<header class="site-nav">
     <div class="nav-inner">
@@ -83,6 +79,7 @@ function navHtml(lang, route) {
 }
 
 function alternates(route) {
+  if (route === "legal/index.html") return "";
   return LANGS.map((item) => {
     return `<link rel="alternate" hreflang="${item.html}" href="${esc(urlFor(item.id, route))}">`;
   }).join("\n");
@@ -104,9 +101,9 @@ function footer(lang) {
         </div>
         <div>
           <h3>${esc(t(lang, "foot.contact"))}</h3>
-          <p>Tel / WhatsApp ${pending(`<a href="https://wa.me/${PHONE_WA}">${esc(PHONE_DISPLAY)}</a>`)}</p>
+          <p>Tel / WhatsApp <a href="https://wa.me/${PHONE_WA}">${esc(PHONE_DISPLAY)}</a></p>
           <p>Email <a href="mailto:office@harthelm.com">office@harthelm.com</a></p>
-          <p>${pending(esc(ADDRESS[lang]))}</p>
+          <p>${esc(ADDRESS[lang])}</p>
         </div>
         <div>
           <h3>${esc(t(lang, "foot.quick"))}</h3>
@@ -121,7 +118,7 @@ function footer(lang) {
       <p class="subfoot">${esc(t(lang, "foot.copy"))}</p>
     </div>
   </footer>
-  <a class="wa-float pending-confirm" title="待 Kevin 确认" href="https://wa.me/${PHONE_WA}" target="_blank" rel="noopener">
+  <a class="wa-float" style="background:#25D366;color:#fff" href="https://wa.me/${PHONE_WA}" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     <span>${esc(t(lang, "wa.name"))}</span>
     <span class="wa-num">${esc(PHONE_DISPLAY)}</span>
@@ -147,7 +144,6 @@ ${alternates(route)}
 </head>
 <body>
 <div class="site-top">
-<div class="preview-ribbon">${esc(t(lang, "ribbon"))}</div>
 ${navHtml(lang, route)}
 </div>
 ${body}
@@ -201,11 +197,10 @@ function home(lang) {
   </section>
   <section class="trust" aria-label="facts">
     <div class="wrap trust-grid">
-      <div class="trust-item"><strong>${pending(esc(t(lang, "trust.years")))}</strong><span>${esc(t(lang, "trust.yearsLabel"))}</span></div>
-      <div class="trust-item"><strong>${pending(esc(t(lang, "trust.seats")))}</strong><span>${esc(t(lang, "trust.seatsLabel"))}</span></div>
+      <div class="trust-item"><strong>${esc(t(lang, "trust.years"))}</strong><span>${esc(t(lang, "trust.yearsLabel"))}</span></div>
+      <div class="trust-item"><strong>${esc(t(lang, "trust.seats"))}</strong><span>${esc(t(lang, "trust.seatsLabel"))}</span></div>
     </div>
     <p class="trust-cases">${esc(t(lang, "trust.cases"))}</p>
-    <p class="trust-note">${esc(t(lang, "trust.note"))}</p>
   </section>
   <section class="section section-ivory" id="lifecycle">
     <div class="wrap">
@@ -254,7 +249,7 @@ function home(lang) {
           <h3>${esc(label)}${esc(t(lang, "dx.paid.rest"))}</h3>
           <p class="price">HKD 1,000 <small>${esc(t(lang, "dx.paid.note"))}</small></p>
           <ul>${dxItems}</ul>
-          <a class="btn btn-gold btn-block pending-confirm" title="待 Kevin 确认" href="${esc(waDiagnosis(lang))}" target="_blank" rel="noopener">${esc(t(lang, "dx.paid.cta"))}</a>
+          <a class="btn btn-gold btn-block" href="${esc(waDiagnosis(lang))}" target="_blank" rel="noopener">${esc(t(lang, "dx.paid.cta"))}</a>
         </article>
         <article class="panel panel-light">
           <div class="badge">${esc(t(lang, "dx.free.badge"))}</div>
@@ -307,10 +302,10 @@ function about(lang) {
     <h2>${esc(t(lang, "about.factsTitle"))}</h2>
     <p>${esc(t(lang, "about.factsBody"))}</p>
     <ul>
-      <li>${pending(esc(t(lang, "trust.years")))} · ${esc(t(lang, "trust.yearsLabel"))}</li>
-      <li>${pending(esc(t(lang, "trust.seats")))} · ${esc(t(lang, "trust.seatsLabel"))}</li>
-      <li>${pending(esc(ADDRESS[lang]))}</li>
-      <li>${pending(`<a href="https://wa.me/${PHONE_WA}">${esc(PHONE_DISPLAY)}</a>`)}</li>
+      <li>${esc(t(lang, "trust.years"))} · ${esc(t(lang, "trust.yearsLabel"))}</li>
+      <li>${esc(t(lang, "trust.seats"))} · ${esc(t(lang, "trust.seatsLabel"))}</li>
+      <li>${esc(ADDRESS[lang])}</li>
+      <li><a href="https://wa.me/${PHONE_WA}">${esc(PHONE_DISPLAY)}</a></li>
     </ul>
   </div></article>`;
   return shell(lang, "about/index.html", "HARTHELM · " + t(lang, "about.title"), t(lang, "about.lead"), body);
@@ -418,9 +413,9 @@ const ASMTP_PARAS = [
     en: "Within the scope already published, HARTHELM can help organise papers about a company, a post, and the operating record. Whether the post is genuine, whether pay is broadly in line with the market, and whether an application is approved, are for Immigration. This page does not quote an ASMTP package, and it does not treat a self-employed structure as automatically meeting the employment test.",
   },
   {
-    hant: "現有的免費自測只涵蓋高才通、優才和新加坡 Employment Pass，不涵蓋專才。專才問題請用電郵，或預約下方的診斷。診斷用的電話仍待確認。",
-    hans: "现有的免费自测只涵盖高才通、优才和新加坡 Employment Pass，不涵盖专才。专才问题请用电邮，或预约下方的诊断。诊断用的电话仍待确认。",
-    en: "The free self-check covers the Top Talent Pass, Quality Migrant Admission, and the Singapore Employment Pass. It does not cover ASMTP. For ASMTP, write by email, or book the review below. The phone number on that booking is still awaiting confirmation.",
+    hant: "現有的免費自測只涵蓋高才通、優才和新加坡 Employment Pass，不涵蓋專才。專才問題請用電郵，或預約下方的診斷。",
+    hans: "现有的免费自测只涵盖高才通、优才和新加坡 Employment Pass，不涵盖专才。专才问题请用电邮，或预约下方的诊断。",
+    en: "The free self-check covers the Top Talent Pass, Quality Migrant Admission, and the Singapore Employment Pass. It does not cover ASMTP. For ASMTP, write by email, or book the review below.",
   },
 ];
 
@@ -499,12 +494,12 @@ const LEGAL = [
     ],
   },
   {
-    h2: { hant: "外部連結與待確認資料", hans: "外部连结与待确认资料", en: "External links, and items not yet confirmed" },
+    h2: { hant: "外部連結", hans: "外部连结", en: "External links" },
     p: [
       {
-        hant: "鏈到政府或其他機構的頁面後，內容由該機構負責。黃底並帶有提示「待 Kevin 确认」的文字，是現有網站已寫出、但出處仍待負責人確認的項目，包括年期、工位數量、旺角地址和電話。確認前，不要把他們當成已核實事實。",
-        hans: "链到政府或其他机构的页面后，内容由该机构负责。黄底并带有提示「待 Kevin 确认」的文字，是现有网站已写出、但出处仍待负责人确认的项目，包括年期、工位数量、旺角地址和电话。确认前，不要把他们当成已核实事实。",
-        en: "After a link leaves this site for a government or other organisation, that organisation is responsible for the page. Text on a yellow background, with the tooltip “待 Kevin 确认”, is already on the current site but its source is not yet confirmed by the owner. That includes the year-count, the workstation count, the Mong Kok address, and the phone number. Until then, do not treat them as verified facts.",
+        hant: "鏈到政府或其他機構的頁面後，內容由該機構負責。",
+        hans: "链到政府或其他机构的页面后，内容由该机构负责。",
+        en: "After a link leaves this site for a government or other organisation, that organisation is responsible for the page.",
       },
     ],
   },
@@ -557,7 +552,15 @@ function validateTree(html, file) {
     if (pattern.test(html)) throw new Error(file + " matched " + pattern);
   }
   if (!html.includes("office@harthelm.com")) throw new Error(file + " missing email");
-  if (!html.includes("pending-confirm")) throw new Error(file + " missing pending marks");
+  if (html.includes("pending-confirm") || html.includes("待 Kevin 确认") || html.includes("preview-ribbon") || html.includes("預覽改版") || html.includes("管家式全鏈路") || html.includes("管家式全链路") || html.includes("Steward-style delivery across the compliance chain")) {
+    throw new Error(file + " still has a removed mark or line");
+  }
+  const hrefs = html.match(/href="[^"]*"/g) || [];
+  for (const href of hrefs) {
+    if (/\/legal\/?"/.test(href) && !href.includes("board-statement")) {
+      throw new Error(file + " links to /legal/: " + href);
+    }
+  }
   if (!html.includes(PHONE_DISPLAY)) throw new Error(file + " missing phone");
   if (!html.includes("宜居")) throw new Error(file + " missing entity");
 }

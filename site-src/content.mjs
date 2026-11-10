@@ -31,11 +31,6 @@ export const STR = {
   "nav.menu": row("開啟選單", "打开菜单", "Open menu"),
   "nav.primary": row("主要導覽", "主导航", "Primary"),
   "lang.group": row("語言", "语言", "Language"),
-  "ribbon": row(
-    "預覽改版 · 尚未取代 harthelm.com 線上頁 · 黃底項目待 Kevin 確認",
-    "预览改版 · 尚未取代 harthelm.com 线上页 · 黄底项目待 Kevin 确认",
-    "Preview redesign · not live on harthelm.com · yellow marks await Kevin’s confirmation"
-  ),
   "meta.home.title": row(
     "HARTHELM｜為家掌舵 · 為業遠行",
     "HARTHELM｜为家掌舵 · 为业远行",
@@ -68,11 +63,6 @@ export const STR = {
     "累計接觸與服務個案 1000 餘個（不以獲批計）",
     "累计接触与服务个案 1000 余个（不以获批计）",
     "More than 1,000 cases we have come into contact with or served (not counted by approvals)"
-  ),
-  "trust.note": row(
-    "管家式全鏈路合規交付保障",
-    "管家式全链路合规交付保障",
-    "Steward-style delivery across the compliance chain"
   ),
   "life.kicker": row("SERVICES", "SERVICES", "SERVICES"),
   "life.title": row("全週期服務 · 長期價值輸出", "全周期服务 · 长期价值输出", "A full cycle, not a one-off"),
@@ -275,11 +265,11 @@ export const STR = {
   "about.dont2": row("不把工作准證或學生入境寫成已經取得永久居民或公民身份。", "不把工作准证或学生入境写成已经取得永久居民或公民身份。", "A work pass or a student entry is not written up as permanent residence or citizenship."),
   "about.dont3": row("不使用其他品牌、其他電郵或其他簽約主體。", "不使用其他品牌、其他电邮或其他签约主体。", "We do not use another brand, another email, or another contracting entity."),
   "about.dont4": row("牌照、協會會員和「上市公司背景」一類表述，未經核驗證件，不寫進本站。", "牌照、协会会员和「上市公司背景」一类表述，未经核验证件，不写进本站。", "Licences, association memberships, and any “listed-company” claim stay off this site unless the underlying record has been checked."),
-  "about.factsTitle": row("待確認的四項", "待确认的四项", "Four items awaiting confirmation"),
+  "about.factsTitle": row("年期、工位與聯絡", "年期、工位与联络", "Years, workstations, and contact"),
   "about.factsBody": row(
-    "下列四項仍出現在站上，因為現有首頁已經使用，但出處尚未由負責人確認。它們以黃底標出，確認前不應當成已核實資歷或已核實聯絡地址。",
-    "下列四项仍出现在站上，因为现有首页已经使用，但出处尚未由负责人确认。它们以黄底标出，确认前不应当成已核实资历或已核实联络地址。",
-    "These four items stay on the site because the current homepage already uses them. Their sources are not yet confirmed by the owner. The yellow mark means they are not verified credentials or a verified address."
+    "以下為本站使用的年期、香港實體工位數、辦公室地址與電話。",
+    "以下为本站使用的年期、香港实体工位数、办公室地址与电话。",
+    "The years in the industry, the number of physical workstations in Hong Kong, the office address, and the phone number used on this site are below."
   ),
   "svc.title": row("服務", "服务", "Services"),
   "svc.lead": row(
