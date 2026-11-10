@@ -21,6 +21,7 @@ function row(hant, hans, en) {
 }
 
 export const STR = {
+  "nav.home": row("首頁", "首页", "Home"),
   "nav.about": row("關於我們", "关于我们", "About"),
   "nav.services": row("服務", "服务", "Services"),
   "nav.insights": row("資訊", "资讯", "Briefings"),
