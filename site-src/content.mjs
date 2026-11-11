@@ -50,11 +50,11 @@ export const STR = {
   "hero.l1": row("為家掌舵", "为家掌舵", "Set the family’s course"),
   "hero.l2": row("為業遠行", "为业远行", "Take the work further"),
   "hero.lead": row(
-    "立足香港與新加坡，專注身份續簽、企業落地與實體運營。我們以管家式服務與矽谷級數字底座，為高才、優才及 IANG 人士提供全週期合規護航。",
-    "立足香港与新加坡，专注身份续签、企业落地与实体运营。我们以管家式服务与硅谷级数字底座，为高才、优才及 IANG 人士提供全周期合规护航。",
-    "Based in Hong Kong and Singapore, we focus on stay extensions, company landing, and real operations. With steward-style service and a digital operating base, we support people under the Top Talent Pass, Quality Migrant Admission, and IANG arrangements across the cycle, on a compliance footing."
+    "立足香港與新加坡，專注身份續簽、企業落地與實體運營。為高才通、優才、IANG 和新加坡 EP 人士，把公司註冊、實體辦公室與續簽材料整理放在同一條服務線上。",
+    "立足香港与新加坡，专注身份续签、企业落地与实体运营。为高才通、优才、IANG 和新加坡 EP 人士，把公司注册、实体办公室与续签材料整理放在同一条服务线上。",
+    "Based in Hong Kong and Singapore, we focus on stay extensions, company landing, and real operations. For people under the Top Talent Pass, Quality Migrant Admission, IANG, and the Singapore Employment Pass, we put company registration, a real office, and extension-paper preparation on one service line."
   ),
-  "hero.ctaTech": row("探索數字化管家服務", "探索数字化管家服务", "Explore the digital steward tools"),
+  "hero.ctaTech": row("了解資料整理與提醒", "了解资料整理与提醒", "See how records and reminders work"),
   "hero.ctaDx": row("預約續簽診斷", "预约续签诊断", "Book the risk review"),
   "trust.years": row("13 年", "13 年", "13 years"),
   "trust.yearsLabel": row("香港行業深耕", "香港行业深耕", "Working in the Hong Kong industry"),
@@ -66,16 +66,16 @@ export const STR = {
     "More than 1,000 cases we have come into contact with or served (not counted by approvals)"
   ),
   "life.kicker": row("SERVICES", "SERVICES", "SERVICES"),
-  "life.title": row("全週期服務 · 長期價值輸出", "全周期服务 · 长期价值输出", "A full cycle, not a one-off"),
+  "life.title": row("身份安排之後的四項服務", "身份安排之后的四项服务", "Four services after a permission is in view"),
   "life.intro": row(
-    "身份規劃不是一錘子買賣，而是長達 7 年的穩健陪伴與合規留痕。",
-    "身份规划不是一锤子买卖，而是长达 7 年的稳健陪伴与合规留痕。",
-    "Status planning is not a one-off sale. It is steady company, and a compliance record, over a stretch that can last seven years."
+    "公司註冊、實體辦公室、經營記錄和續簽前提醒，放在同一條服務線上。",
+    "公司注册、实体办公室、经营记录和续签前提醒，放在同一条服务线上。",
+    "Company registration, a real office, an operating record, and reminders before an extension sit on one service line."
   ),
   "life.s1b": row(
-    "梳理背景優勢，明確高才／優才／IANG 的申請或自僱／受僱續簽路徑，排查潛在風險盲區。",
-    "梳理背景优势，明确高才／优才／IANG 的申请或自雇／受雇续签路径，排查潜在风险盲区。",
-    "We sort the strengths in a background, set out application or employed / self-employed extension paths under the Top Talent Pass, Quality Migrant Admission, and IANG, and look for blind spots."
+    "梳理背景優勢，明確高才／優才／IANG 的申請或自僱／受僱續簽路徑，以及新加坡 EP 的申請或更新路徑，排查潛在風險盲區。",
+    "梳理背景优势，明确高才／优才／IANG 的申请或自雇／受雇续签路径，以及新加坡 EP 的申请或更新路径，排查潜在风险盲区。",
+    "We sort the strengths in a background, set out application or employed / self-employed extension paths under the Top Talent Pass, Quality Migrant Admission, and IANG, as well as application or renewal paths under the Singapore Employment Pass, and look for blind spots."
   ),
   "life.s2": row("實體落地與打厘印", "实体落地与打厘印", "A real office, and stamp duty on the lease"),
   "life.s2b": row(
@@ -83,7 +83,7 @@ export const STR = {
     "协助注册香港公司，租赁真实可核验的实体办公室（HKD 2,500／月起），签署正式租约并加盖印花税（厘印）。",
     "Help to incorporate a Hong Kong company, lease a real office that can be checked (from HKD 2,500 a month), sign a formal tenancy, and stamp it."
   ),
-  "life.s3": row("合規運營與留痕", "合规运营与留痕", "Operations, with a record"),
+  "life.s3": row("經營記錄與核數文件", "经营记录与核数文件", "Operating records and audit papers"),
   "life.s3b": row(
     "建立強積金（MPF）、薪資派發、真實業務合同及法定審計底稿，供入境處核查實質經營時對照。",
     "建立强积金（MPF）、薪资派发、真实业务合同及法定审计底稿，供入境处核查实质经营时对照。",
@@ -91,47 +91,44 @@ export const STR = {
   ),
   "life.s4": row("續簽節點與永居規劃", "续签节点与永居规划", "Extension dates, and right of abode"),
   "life.s4b": row(
-    "在 T-90／T-60 關鍵時間節點進行專屬提醒與材料逐項覆核，穩步邁向 7 年轉永居。",
-    "在 T-90／T-60 关键时间节点进行专属提醒与材料逐项复核，稳步迈向 7 年转永居。",
-    "Reminders and a line-by-line check of papers at the T-90 and T-60 marks, toward the seven-year route to right of abode."
+    "在續簽前 120、90、60、40 天進行提醒與材料逐項覆核。是否可延長逗留或其後轉為永久居民，由當局及當時法例決定。",
+    "在续签前 120、90、60、40 天进行提醒与材料逐项复核。是否可延长逗留或其后转为永久居民，由当局及当时法例决定。",
+    "Reminders and a line-by-line check of papers at 120, 90, 60, and 40 days before an extension. Whether stay can be extended, or later become right of abode, is for the authority and the law then in force."
   ),
   "life.caveat": row(
-    "是否符合入境處或人力部的要求，由當局判斷。永久居民身份須符合當時法例。以上是服務範圍，不構成任何結果承諾。",
-    "是否符合入境处或人力部的要求，由当局判断。永久居民身份须符合当时法例。以上是服务范围，不构成任何结果承诺。",
-    "Whether papers meet Immigration or MOM requirements is for those authorities to decide. Right of abode depends on the law then in force. The list above is a scope of work, not a promise of any result."
+    "以上是服務範圍，審批由有關當局決定，不構成結果承諾。",
+    "以上是服务范围，审批由有关当局决定，不构成结果承诺。",
+    "The list above is a scope of work. The authority decides. This is not a promise of any result."
   ),
   "tech.kicker": row("TECHNOLOGY & TOOLS", "TECHNOLOGY & TOOLS", "TECHNOLOGY & TOOLS"),
   "tech.title": row(
-    "矽谷級數字底座，傳統管家的科技武裝",
-    "硅谷级数字底座，传统管家的科技武装",
-    "A digital base for a traditional steward service"
+    "資料整理與節點提醒",
+    "资料整理与节点提醒",
+    "Records and date reminders"
   ),
   "tech.intro": row(
-    "我們摒棄了傳統機構的混亂郵件與紙本記錄，自主研發了全鏈路數字化運營與合規交付系統。",
-    "我们摒弃了传统机构的混乱邮件与纸本记录，自主研发了全链路数字化运营与合规交付系统。",
-    "In place of scattered email and paper files, we built our own system for operations and compliance delivery."
+    "協助已合作客戶在其自己的域名上整理經營資料、節點提醒與材料進度。HARTHELM 作為顧問提供諮詢和指導，不代替當局作審批判斷。",
+    "协助已合作客户在其自己的域名上整理经营资料、节点提醒与材料进度。HARTHELM 作为顾问提供咨询和指导，不代替当局作审批判断。",
+    "We help engaged clients organise operating records, date reminders, and paper progress on the client’s own domain. HARTHELM advises and guides. We do not take the authority’s place in any approval decision."
   ),
-  "tech.1t": row("加密客戶專屬看板", "加密客户专属看板", "An encrypted client board"),
+  "tech.1t": row("客戶自己的經營看板", "客户自己的经营看板", "The client’s own operating board"),
   "tech.1b": row(
-    "客戶憑專屬密碼即可實時查閱辦理進度與倒計時。資料在瀏覽器本地完成 PBKDF2 60 萬次迭代 + AES-256-GCM 解密。",
-    "客户凭专属密码即可实时查阅办理进度与倒计时。资料在浏览器本地完成 PBKDF2 60 万次迭代 + AES-256-GCM 解密。",
-    "With a client password, progress and the countdown can be read live. Decryption runs in the browser: PBKDF2 with 600,000 iterations, and AES-256-GCM."
+    "看板放在客戶自己的域名上，用於整理資料進度與到期提醒。這是客戶自身的資料整理，HARTHELM 提供諮詢和指導。",
+    "看板放在客户自己的域名上，用于整理资料进度与到期提醒。这是客户自身的资料整理，HARTHELM 提供咨询和指导。",
+    "The board sits on the client’s own domain and is used to organise paper progress and due-date reminders. It is the client’s own record-keeping. HARTHELM provides advice and guidance."
   ),
-  "tech.1m": row("> End-to-End Encrypted", "> End-to-End Encrypted", "> End-to-End Encrypted"),
-  "tech.2t": row("雲端財務審計底稿", "云端财务审计底稿", "Audit working papers in the cloud"),
+  "tech.2t": row("經營報表與記錄核對", "经营报表与记录核对", "Operating reports and record checks"),
   "tech.2b": row(
-    "自研 SME-FRS 多幣種四表聯動系統，自動匹配匯豐（HSBC）週一定盤匯率與暫記配平門禁，一鍵生成符合香港審計標準的財務底稿。",
-    "自研 SME-FRS 多币种四表联动系统，自动匹配汇丰（HSBC）周一定盘汇率与暂记配平门禁，一键生成符合香港审计标准的财务底稿。",
-    "Our SME-FRS tool ties the four statements across currencies, matches HSBC’s Monday fixing, and blocks a close that does not balance, so a Hong Kong audit file can be produced in one pass."
+    "按客戶提供的資料整理經營記錄，並提示缺漏，供客戶及其會計核對。不代替審計、會計或稅務意見。",
+    "按客户提供的资料整理经营记录，并提示缺漏，供客户及其会计核对。不代替审计、会计或税务意见。",
+    "We organise operating records from what the client provides, and flag gaps for the client and their accountant to check. This is not an audit, and it is not accounting or tax advice."
   ),
-  "tech.2m": row("> Real-time Ledger & Audit", "> Real-time Ledger & Audit", "> Real-time Ledger & Audit"),
-  "tech.3t": row("AI 數字專員協同矩陣", "AI 数字专员协同矩阵", "A set of AI desk roles"),
+  "tech.3t": row("節點提醒與材料核對", "节点提醒与材料核对", "Date reminders and paper checks"),
   "tech.3b": row(
-    "12 大專業崗位的 AI 數字專員（法務合規、財稅核對、案卷歸檔等）無縫協同，配合人類專家顧問，提供高標準的節點提醒與品質把關。",
-    "12 大专业岗位的 AI 数字专员（法务合规、财税核对、案卷归档等）无缝协同，配合人类专家顾问，提供高标准的节点提醒与品质把关。",
-    "Twelve AI desk roles (compliance, tax checks, file archive, and others) work with human advisers on date reminders and review."
+    "在續簽及其他到期日前提醒，並協助核對材料是否齊備。審批由有關當局決定。",
+    "在续签及其他到期日前提醒，并协助核对材料是否齐备。审批由有关当局决定。",
+    "Reminders before extension and other due dates, and help checking whether papers are complete. The authority decides any application."
   ),
-  "tech.3m": row("> AI Multi-Agent System", "> AI Multi-Agent System", "> AI Multi-Agent System"),
   "scene.title": row("管家式交付，源於專業與細節", "管家式交付，源于专业与细节", "Steward-style delivery, in the detail"),
   "scene.intro": row(
     "以下為服務場景的脫敏描述，不是具名客戶案例，每一個環節均按我們公開的服務範圍來寫。",
@@ -150,9 +147,9 @@ export const STR = {
     "Setting: no employer in Hong Kong yet, funds and a real business plan, and pressure to prepare papers for a first extension."
   ),
   "scene.a.out": row(
-    "管家交付：協助完成香港公司註冊、真實辦公場地租賃及租約打厘印；深度梳理真實運營流水與業務單據；專屬加密看板實時同步材料進度。",
-    "管家交付：协助完成香港公司注册、真实办公场地租赁及租约打厘印；深度梳理真实运营流水与业务单据；专属加密看板实时同步材料进度。",
-    "What we deliver: Hong Kong incorporation, a real office lease and stamping, a close read of real operating records, and progress on the encrypted board."
+    "管家交付：協助完成香港公司註冊、真實辦公場地租賃及租約打厘印；梳理真實運營流水與業務單據；協助整理材料進度。",
+    "管家交付：协助完成香港公司注册、真实办公场地租赁及租约打厘印；梳理真实运营流水与业务单据；协助整理材料进度。",
+    "What we deliver: Hong Kong incorporation, a real office lease and stamping, a close read of real operating records, and help organising paper progress."
   ),
   "scene.b.tag": row("場景 B", "场景 B", "Scene B"),
   "scene.b.title": row("IANG 畢業生留港銜接", "IANG 毕业生留港衔接", "IANG, after graduation"),
@@ -163,9 +160,9 @@ export const STR = {
     "Setting: a fresh graduate, no suitable employer yet, and a gap risk when the current permission ends."
   ),
   "scene.b.out": row(
-    "管家交付：針對空窗期提供備用公司架構與實質運營支持；協助對接本地合規財稅服務。逗留是否可以銜接，由入境處決定。",
-    "管家交付：针对空窗期提供备用公司架构与实质运营支持；协助对接本地合规财税服务。逗留是否可以衔接，由入境处决定。",
-    "What we deliver: a backup company structure and real operating support for the gap, plus local accounting. Whether stay can continue is for Immigration to decide."
+    "管家交付：協助安排公司與辦公室，以備空窗期整理經營記錄；協助對接本地合規財稅服務。逗留是否可以銜接，由入境處決定。",
+    "管家交付：协助安排公司与办公室，以备空窗期整理经营记录；协助对接本地合规财税服务。逗留是否可以衔接，由入境处决定。",
+    "What we deliver: help arranging a company and an office, so operating records can be organised during a gap, plus local accounting. Whether stay can continue is for Immigration to decide."
   ),
   "dx.paid.rest": row(" + 方案書", " + 方案书", " — written note"),
   "dx.kicker": row("DIAGNOSIS & SELF-CHECK", "DIAGNOSIS & SELF-CHECK", "DIAGNOSIS & SELF-CHECK"),
@@ -209,9 +206,9 @@ export const STR = {
   "dx.free.cta": row("打開準備度自測", "打开准备度自测", "Open the self-check"),
   "b2b.title": row("致教育留學機構與渠道夥伴", "致教育留学机构与渠道伙伴", "For education agencies and channel partners"),
   "b2b.body": row(
-    "學生畢業後的香港續簽與企業落地，交給專業後台承接。尊重渠道歸屬，共享雙向透明對賬系統。",
-    "学生毕业后的香港续签与企业落地，交给专业后台承接。尊重渠道归属，共享双向透明对账系统。",
-    "After graduation, Hong Kong extensions and company landing can sit with one back office. Channel ownership stays with the partner, with a two-way reconciliation view."
+    "學生畢業後的香港續簽與企業落地，可由同一團隊承接。我們尊重渠道歸屬，並提供可查的對賬頁面。",
+    "学生毕业后的香港续签与企业落地，可由同一团队承接。我们尊重渠道归属，并提供可查的对账页面。",
+    "After graduation, Hong Kong extensions and company landing can be handled by one team. Channel ownership stays with the partner, and a reconciliation page is available to check."
   ),
   "b2b.cta": row("了解渠道合作方案", "了解渠道合作方案", "Channel partnership"),
   "foot.disclaimer": row(
@@ -242,14 +239,14 @@ export const STR = {
   "wa.name": row("WhatsApp", "WhatsApp", "WhatsApp"),
   "about.title": row("關於我們", "关于我们", "About"),
   "about.lead": row(
-    "HARTHELM 是服務品牌。對外品牌只用 HARTHELM，對外電郵只用 office@harthelm.com。",
-    "HARTHELM 是服务品牌。对外品牌只用 HARTHELM，对外电邮只用 office@harthelm.com。",
-    "HARTHELM is the service brand. The public brand is HARTHELM only, and the public email is office@harthelm.com only."
+    "HARTHELM 是服務品牌。對外電郵是 office@harthelm.com。",
+    "HARTHELM 是服务品牌。对外电邮是 office@harthelm.com。",
+    "HARTHELM is the service brand. The public email is office@harthelm.com."
   ),
   "about.p1": row(
-    "我們立足香港與新加坡，把身份安排之後的公司落地、實體辦公室、財稅留痕和節點提醒放在同一條服務線上。對象包括高才通、優才、IANG，以及另頁說明的輸入內地人才計劃。",
-    "我们立足香港与新加坡，把身份安排之后的公司落地、实体办公室、财税留痕和节点提醒放在同一条服务线上。对象包括高才通、优才、IANG，以及另页说明的输入内地人才计划。",
-    "From Hong Kong and Singapore, one line of work covers company landing after a permission is in view, a real office, an accounting record, and date reminders. That includes the Top Talent Pass, Quality Migrant Admission, IANG, and the Admission Scheme for Mainland Talents and Professionals, which has its own page."
+    "我們立足香港與新加坡，把身份安排之後的公司落地、實體辦公室、經營記錄和節點提醒放在同一條服務線上。對象包括高才通、優才、IANG、新加坡 EP，以及另頁說明的輸入內地人才計劃。",
+    "我们立足香港与新加坡，把身份安排之后的公司落地、实体办公室、经营记录和节点提醒放在同一条服务线上。对象包括高才通、优才、IANG、新加坡 EP，以及另页说明的输入内地人才计划。",
+    "From Hong Kong and Singapore, one line of work covers company landing after a permission is in view, a real office, an operating record, and date reminders. That includes the Top Talent Pass, Quality Migrant Admission, IANG, the Singapore Employment Pass, and the Admission Scheme for Mainland Talents and Professionals, which has its own page."
   ),
   "about.p2": row(
     "我們不是香港入境事務處、人才辦或新加坡人力部。頁面上的政策要點鏈到官方頁面，整理日期見資訊頁，不能代替當日官網。",
@@ -259,9 +256,9 @@ export const STR = {
   "about.doTitle": row("服務範圍", "服务范围", "Scope"),
   "about.do1": row("續簽材料的風險梳理，以及受僱與自僱路徑的對照。", "续签材料的风险梳理，以及受雇与自雇路径的对照。", "A risk read of extension papers, and a comparison of employed and self-employed paths."),
   "about.do2": row("香港公司註冊、可核驗的實體辦公室、租約厘印。", "香港公司注册、可核验的实体办公室、租约厘印。", "Hong Kong incorporation, an office that can be checked, and stamping of the lease."),
-  "about.do3": row("強積金、薪資、合同與審計底稿一類的經營留痕。", "强积金、薪资、合同与审计底稿一类的经营留痕。", "An operating record: MPF, payroll, contracts, and audit papers."),
-  "about.do4": row("T-90／T-60 節點提醒。數字看板與財務底稿工具供已合作客戶使用。", "T-90／T-60 节点提醒。数字看板与财务底稿工具供已合作客户使用。", "T-90 / T-60 reminders. The board and accounting tools are for clients already engaged."),
-  "about.dontTitle": row("我們不這樣說", "我们不这样说", "What we do not say"),
+  "about.do3": row("強積金、薪資、合同與核數文件一類的經營記錄。", "强积金、薪资、合同与核数文件一类的经营记录。", "An operating record: MPF, payroll, contracts, and audit papers."),
+  "about.do4": row("續簽前 120、90、60、40 天的提醒。已合作客戶可在其自己的域名上整理經營資料與到期提醒。", "续签前 120、90、60、40 天的提醒。已合作客户可在其自己的域名上整理经营资料与到期提醒。", "Reminders at 120, 90, 60, and 40 days before an extension. Engaged clients may organise operating records and due-date reminders on their own domain."),
+  "about.dontTitle": row("對客承諾", "对客承诺", "What we stand by"),
   "about.dont1": row("不承諾獲批、不寫申請結果的比例、不把單一個案寫成可複製結果。", "不承诺获批、不写申请结果的比例、不把单一个案写成可复制结果。", "We do not promise approval, we do not publish how often applications succeed, and we do not treat one case as a result you can copy."),
   "about.dont2": row("不把工作准證或學生入境寫成已經取得永久居民或公民身份。", "不把工作准证或学生入境写成已经取得永久居民或公民身份。", "A work pass or a student entry is not written up as permanent residence or citizenship."),
   "about.dont3": row("不使用其他品牌、其他電郵或其他簽約主體。", "不使用其他品牌、其他电邮或其他签约主体。", "We do not use another brand, another email, or another contracting entity."),
@@ -280,9 +277,9 @@ export const STR = {
   ),
   "svc.schemeTitle": row("計劃說明", "计划说明", "Schemes, in brief"),
   "svc.schemeLead": row(
-    "下面只指向核對為現行的公開計劃。細則、官方連結和限制寫在資訊頁；專才與 IANG 另有專頁。本站不把已變更或未核實的產品包裝列作服務。",
-    "下面只指向核对为现行的公开计划。细则、官方链接和限制写在资讯页；专才与 IANG 另有专页。本站不把已变更或未核实的产品包装列作服务。",
-    "The links below point only at schemes checked as current. Detail, official links, and limits sit on the briefings page. ASMTP and IANG have their own pages. Packaging that has changed, or was not verified, is not offered here."
+    "下面只列出與本站主業相關的港新計劃要點；其他司法管轄區的公開整理見資訊頁。細則、官方連結和限制寫在資訊頁；專才與 IANG 另有專頁。",
+    "下面只列出与本站主业相关的港新计划要点；其他司法管辖区的公开整理见资讯页。细则、官方链接和限制写在资讯页；专才与 IANG 另有专页。",
+    "The list below covers only Hong Kong and Singapore schemes related to our core work. Public notes on other jurisdictions are on the briefings page. Detail, official links, and limits sit there. ASMTP and IANG have their own pages."
   ),
   "ins.title": row("資訊", "资讯", "Briefings"),
   "ins.lead": row(
@@ -293,19 +290,19 @@ export const STR = {
   "ins.checked": row("整理日期：2026-11-10。狀態：現行。", "整理日期：2026-11-10。状态：现行。", "Compiled 10 November 2026. Status: current."),
   "cases.title": row("案例", "案例", "Cases"),
   "cases.lead": row(
-    "以下四則來自已公開資料的脫敏整理，已去掉姓名、姓氏字首、公司名和其他可識別細節。舊資料裡的結果寫法只說明該則當時如何描述，不是同類申請可以得到相同結果的保證。審批由有關當局決定，個別情況不同。",
-    "以下四则来自已公开资料的脱敏整理，已去掉姓名、姓氏字首、公司名和其他可识别细节。旧资料里的结果写法只说明该则当时如何描述，不是同类申请可以得到相同结果的保证。审批由有关当局决定，个别情况不同。",
-    "These four notes are desensitised from material already published. Names, initials, company names, and other identifying detail are removed. How a source described an outcome is not a promise that another application will end the same way. The authority decides, and situations differ."
+    "以下四則來自已公開資料的脫敏整理，已去掉姓名、姓氏字首、公司名和其他可識別細節。文中所寫的結果只說明該則當時的情況，不是同類申請可以得到相同結果的保證。審批由有關當局決定，個別情況不同。",
+    "以下四则来自已公开资料的脱敏整理，已去掉姓名、姓氏字首、公司名和其他可识别细节。文中所写的结果只说明该则当时的情况，不是同类申请可以得到相同结果的保证。审批由有关当局决定，个别情况不同。",
+    "These four notes are desensitised from material already published. Names, initials, company names, and other identifying detail are removed. An outcome written here only describes that note at the time, not a promise that another application will end the same way. The authority decides, and situations differ."
   ),
   "cases.dates": row(
-    "原始日期有互相矛盾的年份，本頁不採用年份。間隔只按資料所寫轉述，且不是時限承諾。",
-    "原始日期有互相矛盾的年份，本页不采用年份。间隔只按资料所写转述，且不是时限承诺。",
-    "The source dates used conflicting years, so this page uses none. Intervals are only what the source wrote, and they are not a promised timetable."
+    "本頁不寫具體年份。資料中出現的間隔只供了解該則當時的描述，不是時限承諾。",
+    "本页不写具体年份。资料中出现的间隔只供了解该则当时的描述，不是时限承诺。",
+    "This page does not use specific years. Any interval mentioned is only how that note was described at the time, not a promised timetable."
   ),
   "cases.bg": row("背景", "背景", "Background"),
-  "cases.diff": row("資料所寫的難點", "资料所写的难点", "What the source said was difficult"),
-  "cases.how": row("資料所寫的處理", "资料所写的处理", "What the source said was done"),
-  "cases.result": row("資料所寫的結果類型", "资料所写的结果类型", "How the source described the outcome"),
+  "cases.diff": row("當時的情況", "当时的情况", "The situation at the time"),
+  "cases.how": row("服務範圍內的處理", "服务范围内的处理", "What was done within our scope"),
+  "cases.result": row("該則結果（不是承諾）", "该则结果（不是承诺）", "How that note ended (not a promise)"),
   "asmtp.meta": row("輸入內地人才計劃（專才）", "输入内地人才计划（专才）", "Admission Scheme for Mainland Talents and Professionals"),
   "iang.meta": row("非本地畢業生留港／回港就業安排（IANG）", "非本地毕业生留港／回港就业安排（IANG）", "Immigration Arrangements for Non-local Graduates (IANG)"),
   "legal.title": row("法律聲明", "法律声明", "Legal"),
@@ -327,6 +324,117 @@ export const STR = {
   "more": row("本頁要點", "本页要点", "On this page"),
   "full": row("專頁", "专页", "Full page"),
   "notLegal": row("不構成法律意見。", "不构成法律意见。", "Not legal advice."),
+  "board.title": row("客戶版資料聲明", "客户版资料声明", "Customer data statement"),
+  "board.body": row(
+    "該聲明在開通看板時向已合作客戶提供，不在本站公開全文。如需查閱或索取適用於你的文本，請電郵 office@harthelm.com。",
+    "该声明在开通看板时向已合作客户提供，不在本站公开全文。如需查阅或索取适用于你的文本，请电邮 office@harthelm.com。",
+    "That statement is given to engaged clients when an operating board is opened. The full text is not published on this site. To request the text that applies to you, email office@harthelm.com."
+  ),
+  "b2b.why": row("為什麼與 HARTHELM 合作", "为什么与 HARTHELM 合作", "Why work with HARTHELM"),
+  "b2b.c1t": row("一次轉介，同一團隊承接", "一次转介，同一团队承接", "One referral, one team"),
+  "b2b.c1b": row(
+    "續簽、公司註冊、辦公室租賃、記賬年審可由同一團隊銜接，減少多方協調的溝通成本。",
+    "续签、公司注册、办公室租赁、记账年审可由同一团队衔接，减少多方协调的沟通成本。",
+    "Extensions, company registration, office leasing, bookkeeping and the annual audit can sit with one team, so the partner does not have to coordinate several parties."
+  ),
+  "b2b.c2t": row("尊重渠道歸屬", "尊重渠道归属", "Channel ownership stays with the partner"),
+  "b2b.c2b": row(
+    "轉介客戶以對賬記錄為準。我們原則上不越過合作機構，直接向學生客戶推廣業務。",
+    "转介客户以对账记录为准。我们原则上不越过合作机构，直接向学生客户推广业务。",
+    "Referred clients are recorded on the reconciliation page. As a rule, we do not go around the partner to market directly to the student."
+  ),
+  "b2b.c3t": row("對賬清晰可查", "对账清晰可查", "A reconciliation page you can check"),
+  "b2b.c3b": row(
+    "提供可查的對賬頁面。業務進度、關鍵節點與分佣明細可供核對，保障雙方權益。",
+    "提供可查的对账页面。业务进度、关键节点与分佣明细可供核对，保障双方权益。",
+    "A reconciliation page is available to check. Progress, key dates, and commission details can be reviewed, so both sides can see the record."
+  ),
+  "b2b.c4t": row("分佣安排，逐案溝通", "分佣安排，逐案沟通", "Commission, agreed case by case"),
+  "b2b.c4b": row(
+    "分佣比例與結算方式以雙方簽署的書面合作協議為準，結算經對賬核對。",
+    "分佣比例与结算方式以双方签署的书面合作协议为准，结算经对账核对。",
+    "Commission rates and settlement follow the written partnership agreement. Payments are checked against the reconciliation page."
+  ),
+  "b2b.c5t": row("個人資料審慎處理", "个人资料审慎处理", "Personal data is handled with care"),
+  "b2b.c5b": row(
+    "嚴格遵守香港《個人資料（私隱）條例》。客戶資料僅作委託事項之用，不會濫用或外泄。",
+    "严格遵守香港《个人资料（私隐）条例》。客户资料仅作委托事项之用，不会滥用或外泄。",
+    "We follow Hong Kong’s Personal Data (Privacy) Ordinance. Client data is used only for the matter entrusted to us, and is not misused or disclosed."
+  ),
+  "b2b.c6t": row("專人對接跟進", "专人对接跟进", "A dedicated contact"),
+  "b2b.c6b": row(
+    "渠道合作由專人跟進。遇到複雜的身份或經營個案，會提前與合作機構溝通評估情況。",
+    "渠道合作由专人跟进。遇到复杂的身份或经营个案，会提前与合作机构沟通评估情况。",
+    "A dedicated contact follows the partnership. On a complex immigration or operating case, we speak with the partner first and review the facts together."
+  ),
+  "b2b.invite": row("歡迎教育留學機構約談合作", "欢迎教育留学机构约谈合作", "Education agencies are welcome to talk about a partnership"),
+  "b2b.wa": row("聯繫合作洽詢（WhatsApp）", "联系合作洽询（WhatsApp）", "Enquire on WhatsApp"),
+  "b2b.orEmail": row("或發送郵件至：", "或发送邮件至：", "Or email"),
+  "scenesPage.lead": row(
+    "以下為服務場景的脫敏描述，不是具名客戶案例。每一則均按已公開的服務範圍來寫。審批由有關當局決定。",
+    "以下为服务场景的脱敏描述，不是具名客户案例。每一则均按已公开的服务范围来写。审批由有关当局决定。",
+    "The notes below are desensitised service scenes, not named client cases. Each one follows the scope already published. The authority decides any application."
+  ),
+  "scenesPage.after": row(
+    "以上為過往服務場景的脫敏描述，不構成獲批承諾。累計接觸與服務個案 1000 餘個（不以獲批計）。",
+    "以上为过往服务场景的脱敏描述，不构成获批承诺。累计接触与服务个案 1000 余个（不以获批计）。",
+    "The notes above are desensitised accounts of past service scenes. They are not a promise of approval. More than 1,000 cases we have come into contact with or served (not counted by approvals)."
+  ),
+  "scenesPage.bg": row("客戶背景", "客户背景", "Background"),
+  "scenesPage.act": row("服務範圍內的處理", "服务范围内的处理", "What was done within our scope"),
+  "scenesPage.out": row("交付說明", "交付说明", "What was delivered"),
+  "scenesPage.cta": row("預約續簽診斷", "预约续签诊断", "Book the risk review"),
+  "scenesPage.a.tag": row("高才通／優才", "高才通／优才", "Top Talent Pass / Quality Migrant Admission"),
+  "scenesPage.a.title": row("自僱創業路徑續簽規劃", "自雇创业路径续签规划", "A self-employed path, and an extension plan"),
+  "scenesPage.a.bg": row(
+    "客戶在港暫無僱主，但具備一定資金實力與真實業務構想，面臨首次續簽的材料籌備壓力。",
+    "客户在港暂无雇主，但具备一定资金实力与真实业务构想，面临首次续签的材料筹备压力。",
+    "No employer in Hong Kong yet, funds and a real business plan, and pressure to prepare papers for a first extension."
+  ),
+  "scenesPage.a.act": row(
+    "協助完成香港公司註冊與商業登記，提供符合要求的實體辦公室及正式租約（厘印）；梳理真實運營流水與業務單據，並協助整理自僱續簽所需材料。",
+    "协助完成香港公司注册与商业登记，提供符合要求的实体办公室及正式租约（厘印）；梳理真实运营流水与业务单据，并协助整理自雇续签所需材料。",
+    "Help with Hong Kong incorporation and a business registration, a real office and a stamped tenancy, a close read of real operating records, and organising papers for a self-employed extension."
+  ),
+  "scenesPage.a.out": row(
+    "協助建立真實可核驗的經營實體，整理出自僱續簽材料清單，並由團隊逐項核對後協助遞交。是否批准，由入境處決定。",
+    "协助建立真实可核验的经营实体，整理出自雇续签材料清单，并由团队逐项核对后协助递交。是否批准，由入境处决定。",
+    "Help setting up a real, checkable operating entity, a list of papers for a self-employed extension, and a line-by-line check before filing. Whether the application is approved is for Immigration."
+  ),
+  "scenesPage.b.tag": row("IANG 畢業生", "IANG 毕业生", "IANG graduate"),
+  "scenesPage.b.title": row("留港空窗期的公司與辦公室安排", "留港空窗期的公司与办公室安排", "A company and office during a gap in stay"),
+  "scenesPage.b.bg": row(
+    "應屆畢業生，暫未匹配到合適僱主，面臨現有逗留到期後的空窗期風險。",
+    "应届毕业生，暂未匹配到合适雇主，面临现有逗留到期后的空窗期风险。",
+    "A fresh graduate, no suitable employer yet, and a gap risk when the current permission ends."
+  ),
+  "scenesPage.b.act": row(
+    "協助安排公司與辦公室，以備空窗期整理經營記錄；協助對接本地財稅服務。逗留是否可以銜接，由入境處決定。",
+    "协助安排公司与办公室，以备空窗期整理经营记录；协助对接本地财税服务。逗留是否可以衔接，由入境处决定。",
+    "Help arranging a company and an office, so operating records can be organised during a gap, plus local accounting. Whether stay can continue is for Immigration to decide."
+  ),
+  "scenesPage.b.out": row(
+    "協助完成公司註冊與經營場地落地，以便在空窗期整理經營記錄，為其後轉工作准證或自僱續簽作準備。結果由入境處決定。",
+    "协助完成公司注册与经营场地落地，以便在空窗期整理经营记录，为其后转工作准证或自雇续签作准备。结果由入境处决定。",
+    "Help with incorporation and a workplace, so records can be organised during a gap, and papers can later be prepared for a work pass or a self-employed extension. The outcome is for Immigration."
+  ),
+  "scenesPage.c.tag": row("企業落地／實體運營", "企业落地／实体运营", "Company landing / real operations"),
+  "scenesPage.c.title": row("獲批優才後的赴港落地與續簽材料", "获批优才后的赴港落地与续签材料", "Landing in Hong Kong after Quality Migrant Admission, and later papers"),
+  "scenesPage.c.bg": row(
+    "已獲批優才，需準備赴港運營，以及其後多年續簽所需的材料規劃。",
+    "已获批优才，需准备赴港运营，以及其后多年续签所需的材料规划。",
+    "Quality Migrant Admission has already been granted. The client needs to land operations in Hong Kong, and to plan papers for later extensions."
+  ),
+  "scenesPage.c.act": row(
+    "協助安排實體辦公工位、辦理商業登記，提供日常記賬與年審支持，並提供續簽材料方面的諮詢。",
+    "协助安排实体办公工位、办理商业登记，提供日常记账与年审支持，并提供续签材料方面的咨询。",
+    "Help arranging a real workstation, a business registration, day-to-day bookkeeping and the annual audit, and advice on papers for later extensions."
+  ),
+  "scenesPage.c.out": row(
+    "完成香港實地辦公空間落地，建立規範的財務與稅務記錄，為其後按當時法例申請延長逗留或永久居民準備材料。是否批准，由當局決定。",
+    "完成香港实地办公空间落地，建立规范的财务与税务记录，为其后按当时法例申请延长逗留或永久居民准备材料。是否批准，由当局决定。",
+    "A real office in Hong Kong, and an orderly financial and tax record, so papers can later be prepared for an extension of stay or right of abode under the law then in force. Whether that is approved is for the authority."
+  ),
 };
 
 export const POLICIES = [
@@ -518,19 +626,19 @@ export const CASES = [
       "Early thirties to under forty; a bachelor’s degree; cross-border e-commerce."
     ),
     difficulty: row(
-      "原始資料沒有寫需要克服的特殊障礙，只強調從遞交到出結果的間隔較短。",
-      "原始资料没有写需要克服的特殊障碍，只强调从递交到出结果的间隔较短。",
-      "The source did not describe a particular obstacle. It only stressed a short gap between filing and a result."
+      "公開資料沒有寫出需要克服的特殊障礙，只提到遞交到結果的間隔較短。",
+      "公开资料没有写出需要克服的特殊障碍，只提到递交到结果的间隔较短。",
+      "The published note did not describe a special obstacle; it only mentioned a short gap between filing and a result."
     ),
     handling: row(
-      "原始資料沒有披露具體的材料策略，只呈現為提交申請後等待結果。",
-      "原始资料没有披露具体的材料策略，只呈现为提交申请后等待结果。",
-      "The source did not disclose a document strategy. It only showed an application, then a wait."
+      "公開資料沒有說明具體的材料安排，只寫到提交申請後等候結果。",
+      "公开资料没有说明具体的材料安排，只写到提交申请后等候结果。",
+      "The published note did not set out a document plan. It only recorded that an application was filed, then a wait followed."
     ),
     outcome: row(
-      "資料把結果寫成工作准證獲得批准，並把間隔寫成約 18 日。Employment Pass 是工作准證，不是永久居民或公民身份。約 18 日不是時限，其他申請沒有理由期待相同間隔。",
-      "资料把结果写成工作准证获得批准，并把间隔写成约 18 日。Employment Pass 是工作准证，不是永久居民或公民身份。约 18 日不是时限，其他申请没有理由期待相同间隔。",
-      "The source described the outcome as approval of a work pass, and the gap as about 18 days. An Employment Pass is a work pass, not permanent residence or citizenship. Eighteen days is not a timetable, and another application has no reason to expect the same gap."
+      "該則寫工作准證獲得批准，間隔約 18 日。Employment Pass 是工作准證，不是永久居民或公民身份。約 18 日不是時限，其他申請不必期待相同間隔。",
+      "该则写工作准证获得批准，间隔约 18 日。Employment Pass 是工作准证，不是永久居民或公民身份。约 18 日不是时限，其他申请不必期待相同间隔。",
+      "The note recorded approval of a work pass, with a gap of about 18 days. An Employment Pass is a work pass, not permanent residence or citizenship. About 18 days is not a timetable, and another application should not expect the same gap."
     ),
   },
   {
@@ -542,19 +650,19 @@ export const CASES = [
       "A bachelor’s degree; founder of a technology company on the mainland. The company name and any listing venue are omitted."
     ),
     difficulty: row(
-      "原始資料沒有說明收入證明或其他資格如何對上 A 類門檻。",
-      "原始资料没有说明收入证明或其他资格如何对上 A 类门槛。",
-      "The source did not explain how income evidence, or any other criterion, met the Category A threshold."
+      "公開資料沒有說明收入證明或其他資格如何對上 A 類門檻。",
+      "公开资料没有说明收入证明或其他资格如何对上 A 类门槛。",
+      "The published note did not explain how income evidence, or any other criterion, met the Category A threshold."
     ),
     handling: row(
-      "原始資料沒有寫具體的論證方法，也沒有材料清單。",
-      "原始资料没有写具体的论证方法，也没有材料清单。",
-      "The source did not describe a method of argument, or a document list."
+      "公開資料沒有寫具體的論證方法，也沒有材料清單。",
+      "公开资料没有写具体的论证方法，也没有材料清单。",
+      "The published note did not describe a method of argument, or a document list."
     ),
     outcome: row(
-      "資料把結果寫成獲得批准，並把周期寫成約兩個半月。不能由此認為創辦人申請高才通 A 類都會在約兩個半月得到批准。A 類收入門檻以入境處頁面為準：緊接申請前一年全年收入達港幣 250 萬元或以上。",
-      "资料把结果写成获得批准，并把周期写成约两个半月。不能由此认为创办人申请高才通 A 类都会在约两个半月得到批准。A 类收入门槛以入境处页面为准：紧接申请前一年全年收入达港币 250 万元或以上。",
-      "The source described the outcome as an approval, and the period as about two and a half months. That does not mean a founder’s Category A application is approved in about two and a half months. The Category A income test, on the Immigration page, is annual income of HK$2.5 million or above in the year immediately before the application."
+      "該則寫獲得批准，周期約兩個半月。不能由此認為創辦人申請高才通 A 類都會在約兩個半月得到批准。A 類收入門檻以入境處頁面為準：緊接申請前一年全年收入達港幣 250 萬元或以上。",
+      "该则写获得批准，周期约两个半月。不能由此认为创办人申请高才通 A 类都会在约两个半月得到批准。A 类收入门槛以入境处页面为准：紧接申请前一年全年收入达港币 250 万元或以上。",
+      "The note recorded an approval, and a period of about two and a half months. That does not mean a founder’s Category A application is approved in about two and a half months. The Category A income test, on the Immigration page, is annual income of HK$2.5 million or above in the year immediately before the application."
     ),
   },
   {
@@ -566,19 +674,19 @@ export const CASES = [
       "Early thirties; a bachelor’s degree; garment trade."
     ),
     difficulty: row(
-      "原始資料沒有寫難點，只給出很短的遞交與出結果間隔。",
-      "原始资料没有写难点，只给出很短的递交与出结果间隔。",
-      "The source did not describe a difficulty. It only gave a very short gap between filing and a result."
+      "公開資料沒有寫出難點，只提到遞交到結果的間隔很短。",
+      "公开资料没有写出难点，只提到递交到结果的间隔很短。",
+      "The published note did not describe a difficulty; it only mentioned a very short gap between filing and a result."
     ),
     handling: row(
-      "未披露。",
-      "未披露。",
-      "Not disclosed."
+      "公開資料沒有寫處理過程。",
+      "公开资料没有写处理过程。",
+      "The published note did not describe what was done."
     ),
     outcome: row(
-      "資料把結果寫成獲得批准。按其所寫的遞交與結果日期，間隔約 7 日。同一則又出現另一套年份，前後矛盾，本頁不採用該時間線。約 7 日不是時限。Employment Pass 不是永久居民或公民身份。",
-      "资料把结果写成获得批准。按其所写的递交与结果日期，间隔约 7 日。同一则又出现另一套年份，前后矛盾，本页不采用该时间线。约 7 日不是时限。Employment Pass 不是永久居民或公民身份。",
-      "The source described an approval. On the filing and result dates it wrote, the gap was about seven days. The same note also used another set of years, which conflict, so this page does not adopt that timeline. Seven days is not a timetable. An Employment Pass is not permanent residence or citizenship."
+      "該則寫獲得批准。按其寫明的遞交與結果日期，間隔約 7 日。同一則出現兩套互相矛盾的年份，因此本頁不採用具體時間線。約 7 日不是時限。Employment Pass 不是永久居民或公民身份。",
+      "该则写获得批准。按其写明的递交与结果日期，间隔约 7 日。同一则出现两套互相矛盾的年份，因此本页不采用具体时间线。约 7 日不是时限。Employment Pass 不是永久居民或公民身份。",
+      "The note recorded an approval. On the filing and result dates it gave, the gap was about seven days. The same note also used two conflicting sets of years, so this page does not adopt a specific timeline. About seven days is not a timetable. An Employment Pass is not permanent residence or citizenship."
     ),
   },
   {
@@ -590,19 +698,19 @@ export const CASES = [
       "About 40; a senior manager at a listed company. The company, the full job title, and the industry niche are omitted."
     ),
     difficulty: row(
-      "須以固定薪資、年終績效和項目獎金等合計，證明達到高才通 A 類收入門檻。官方標準為緊接申請前一年全年收入達港幣 250 萬元或以上。原始資料把綜合年收入達標寫成關鍵。",
-      "须以固定薪资、年终绩效和项目奖金等合计，证明达到高才通 A 类收入门槛。官方标准为紧接申请前一年全年收入达港币 250 万元或以上。原始资料把综合年收入达标写成关键。",
-      "Fixed salary, year-end performance pay, and project bonuses had to be added together to show the Category A income test. The official test is annual income of HK$2.5 million or above in the year immediately before the application. The source treated combined annual income as the key point."
+      "須以固定薪資、年終績效和項目獎金等合計，證明達到高才通 A 類收入門檻。官方標準為緊接申請前一年全年收入達港幣 250 萬元或以上。該則把綜合年收入達標寫成關鍵。",
+      "须以固定薪资、年终绩效和项目奖金等合计，证明达到高才通 A 类收入门槛。官方标准为紧接申请前一年全年收入达港币 250 万元或以上。该则把综合年收入达标写成关键。",
+      "Fixed salary, year-end performance pay, and project bonuses had to be added together to show the Category A income test. The official test is annual income of HK$2.5 million or above in the year immediately before the application. The note treated combined annual income as the key point."
     ),
     handling: row(
-      "原始資料沒有材料清單，只強調一次提交。本頁不把「一次提交」寫成可以照做的方法。",
-      "原始资料没有材料清单，只强调一次提交。本页不把「一次提交」写成可以照做的方法。",
-      "The source gave no document list. It only stressed a single filing. This page does not turn “file once” into a method to copy."
+      "公開資料沒有材料清單，只提到一次提交。這不是可以照做的方法。",
+      "公开资料没有材料清单，只提到一次提交。这不是可以照做的方法。",
+      "The published note gave no document list. It only mentioned a single filing. That is not a method to copy."
     ),
     outcome: row(
-      "資料把結果寫成獲得批准，並把周期寫成 38 日。38 日不是承諾，也不能理解成可以保證無須補件。",
-      "资料把结果写成获得批准，并把周期写成 38 日。38 日不是承诺，也不能理解成可以保证无须补件。",
-      "The source described an approval and a period of 38 days. Thirty-eight days is not a promise, and it is not an assurance that no further documents will be asked for."
+      "該則寫獲得批准，周期 38 日。38 日不是承諾，也不能理解成可以保證無須補件。",
+      "该则写获得批准，周期 38 日。38 日不是承诺，也不能理解成可以保证无须补件。",
+      "The note recorded an approval and a period of 38 days. Thirty-eight days is not a promise, and it is not an assurance that no further documents will be asked for."
     ),
   },
 ];
@@ -617,9 +725,6 @@ export const SCHEMES = [
   { href: "/insights/#ep", title: STR["scheme.ep"] },
   { href: "/insights/#owp", title: STR["scheme.owp"] },
   { href: "/insights/#csp", title: STR["scheme.csp"] },
-  { href: "/insights/#tr", title: STR["scheme.tr"] },
-  { href: "/insights/#mt", title: STR["scheme.mt"] },
-  { href: "/insights/#eb1", title: STR["scheme.eb1"] },
 ];
 
 const langs = ["hant", "hans", "en"];

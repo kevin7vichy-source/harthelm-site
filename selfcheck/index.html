@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex,nofollow" />
-  <title>HARTHELM 准备度自测（离线）</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HARTHELM 准备度自测</title>
+<meta name="description" content="高才通、优才与新加坡 Employment Pass 资料准备度自测。不评分、不报价、不承诺获批。">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="alternate" hreflang="zh-Hant" href="/selfcheck/">
+<link rel="alternate" hreflang="zh-Hans" href="/selfcheck/">
+<link rel="alternate" hreflang="en" href="/selfcheck/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&family=Noto+Serif+TC:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/selfcheck/styles.css">
 </head>
 <body>
-  <div class="homebar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:#141c2b;">
-    <a href="/" style="display:flex;align-items:center;"><img src="/assets/logo-horizontal-reversed.svg" alt="HARTHELM" style="height:36px;width:auto;"></a>
-    <a href="/" style="color:#f4efe6;text-decoration:none;letter-spacing:.08em;font-size:15px;">首页</a>
-  </div>
-  <div class="wrap">
+<div class="site-top">
+<header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="/zh-hans/"><img src="/assets/logo-horizontal-reversed.svg" alt="HARTHELM" width="176" height="52"></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="打开菜单"><span></span><span></span><span></span></button>
+      <div id="nav-panel" class="nav-panel">
+        <nav class="nav-links" aria-label="主导航"><a href="/zh-hans/">首页</a><a href="/zh-hans/about/">关于我们</a><a href="/zh-hans/services/">服务</a><a href="/zh-hans/insights/">资讯</a><a href="/zh-hans/cases.html">案例</a><a href="/zh-hans/asmtp/">专才</a><a href="/zh-hans/iang/">IANG</a><a href="/zh-hans/legal/">法律声明</a></nav>
+        <div class="lang-switch" aria-label="语言"><a href="/selfcheck/" hreflang="zh-Hant" lang="zh-Hant">繁</a><a href="/selfcheck/" hreflang="zh-Hans" lang="zh-Hans" aria-current="true">简</a><a href="/selfcheck/" hreflang="en" lang="en">EN</a></div>
+      </div>
+    </div>
+  </header>
+</div>
+<div class="selfcheck-app">
+    <div class="wrap">
     <div class="topbar">
       <div class="brand">HARTHELM <span>准备度自测</span></div>
       <div class="badge">离线本地 · 非官方系统 · 无留资</div>
@@ -28,17 +47,16 @@
     </div>
 
     <div class="notice" style="margin-top:12px">
-      想离线使用？<a href="HARTHELM-selfcheck-offline-v1.1.zip" download>下载离线包（zip，约 11 KB）</a>，解压后用浏览器打开 index.html 即可，无需联网。 · <a href="../">返回 HARTHELM 主页</a>
+      想离线使用？<a href="HARTHELM-selfcheck-offline-v1.2.zip" download>下载离线包（zip）</a>，解压后用浏览器打开 index.html 即可，无需联网。
     </div>
 
-    <!-- HOME -->
     <section id="step-home" class="card">
       <h2>选择身份入口</h2>
       <p class="sub">三选一进入；答卷可选保存在本机浏览器，默认不外传。</p>
       <div class="grid-3">
         <button type="button" class="entry-btn" data-type="ttps">
           <strong>高才通 TTPS</strong>
-          <small>含人才办问卷、首次入境标签口径</small>
+          <small>含人才办问卷、首次入境标签说明</small>
         </button>
         <button type="button" class="entry-btn" data-type="qmas">
           <strong>优才 QMAS</strong>
@@ -57,7 +75,6 @@
       </div>
     </section>
 
-    <!-- FORM -->
     <section id="step-form" class="hidden">
       <div class="card">
         <h2 id="form-title">资料自检</h2>
@@ -86,7 +103,6 @@
       </div>
     </section>
 
-    <!-- RESULT -->
     <section id="step-result" class="hidden">
       <div class="card">
         <h2>自测结果</h2>
@@ -111,7 +127,42 @@
 不收集您的邮箱、电话或证件号码；答卷默认仅存于本机。
 请勿将本结果理解为获批承诺、通过率或报价依据。
 资料清单更新日期：2026-10-23</footer>
+    </div>
   </div>
-  <script src="app.js"></script>
+<footer class="site-footer">
+    <div class="wrap">
+      <div class="compliance"><p>以上为服务范围介绍，不构成获批承诺；个案以香港入境事务处、新加坡人力部（MOM）及相关部门要求为准。审批由有关当局酌情决定，个别结果不同。累计接触与服务个案 1000 余个（不以获批计）。个人资料依香港《个人资料（私隐）条例》（第 486 章）处理。</p></div>
+      <div class="foot-grid">
+        <div>
+          <h2>HARTHELM</h2>
+          <p>WHERE FAMILY FINDS ITS DIRECTION</p>
+          <p>服务合约主体：宜居（國際）控股股份有限公司</p>
+          <p>英文法定名称：HK ESPECIALLY FOR HOME HOLDING SHARES CO., LIMITED</p>
+        </div>
+        <div>
+          <h3>联络我们</h3>
+          <p>Tel / WhatsApp <a href="https://wa.me/85252612799">+852 5261 2799</a></p>
+          <p>Email <a href="mailto:office@harthelm.com">office@harthelm.com</a></p>
+          <p>香港九龙旺角弥敦道 721-725 号比利时银行大厦 14 楼 1405B 室</p>
+        </div>
+        <div>
+          <h3>页面</h3>
+          <ul>
+            <li><a href="/zh-hans/">首页</a></li><li><a href="/zh-hans/about/">关于我们</a></li><li><a href="/zh-hans/services/">服务</a></li><li><a href="/zh-hans/insights/">资讯</a></li><li><a href="/zh-hans/cases.html">案例</a></li><li><a href="/zh-hans/asmtp/">专才</a></li><li><a href="/zh-hans/iang/">IANG</a></li><li><a href="/zh-hans/legal/">法律声明</a></li>
+            <li><a href="/zh-hans/case.html">服务场景说明</a></li><li><a href="/zh-hans/b2b.html">了解渠道合作方案</a></li><li><a href="/selfcheck/">打开准备度自测</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="subfoot">© 2026 HARTHELM. All rights reserved.</p>
+    </div>
+  </footer>
+  <a class="wa-float" style="background:#25D366;color:#fff" href="https://wa.me/85252612799" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <span>WhatsApp</span>
+    <span class="wa-num">+852 5261 2799</span>
+  </a>
+<script src="/assets/chrome.js"></script>
+<script src="/assets/site.js"></script>
+<script src="/selfcheck/app.js"></script>
 </body>
 </html>

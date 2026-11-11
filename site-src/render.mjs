@@ -1,5 +1,6 @@
-import { mkdirSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   ADDRESS,
   CASES,
@@ -10,167 +11,36 @@ import {
   SCHEMES,
   STR,
 } from "./content.mjs";
+import {
+  EMAIL,
+  LANGS,
+  emitChromeJs,
+  esc,
+  footer,
+  navHtml,
+  shell,
+  t,
+  tx,
+  urlFor,
+} from "./chrome.mjs";
 
-const ROOT = new URL("..", import.meta.url).pathname;
-const LANGS = [
-  { id: "hant", html: "zh-Hant", prefix: "" },
-  { id: "hans", html: "zh-Hans", prefix: "/zh-hans" },
-  { id: "en", html: "en", prefix: "/en" },
-];
-
-function esc(s) {
-  return String(s)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-function t(lang, key) {
-  const row = STR[key];
-  if (!row || !row[lang]) throw new Error("Missing key " + key + " / " + lang);
-  return row[lang];
-}
-
-function tx(lang, obj) {
-  if (!obj || !obj[lang]) throw new Error("Missing inline " + lang + " " + JSON.stringify(obj));
-  return obj[lang];
-}
-
-function urlFor(langId, route) {
-  const lang = LANGS.find((item) => item.id === langId);
-  if (route === "index.html") return (lang.prefix || "") + "/" || "/";
-  if (route.endsWith("/index.html")) {
-    return lang.prefix + "/" + route.slice(0, -"index.html".length);
-  }
-  return lang.prefix + "/" + route;
-}
-
-const NAV = [
-  ["index.html", "nav.home"],
-  ["about/index.html", "nav.about"],
-  ["services/index.html", "nav.services"],
-  ["insights/index.html", "nav.insights"],
-  ["cases.html", "nav.cases"],
-  ["asmtp/index.html", "nav.asmtp"],
-  ["iang/index.html", "nav.iang"],
-  ["legal/index.html", "nav.legal"],
-];
-
-function navHtml(lang, route) {
-  const links = NAV.map(([itemRoute, key]) => {
-    const current = itemRoute === route ? ' aria-current="page"' : "";
-    return `<a href="${esc(urlFor(lang, itemRoute))}"${current}>${esc(t(lang, key))}</a>`;
-  }).join("");
-  const langs = LANGS.map((item) => {
-    const current = item.id === lang ? ' aria-current="true"' : "";
-    const label = item.id === "hant" ? "繁" : item.id === "hans" ? "简" : "EN";
-    return `<a href="${esc(urlFor(item.id, route))}" hreflang="${item.html}" lang="${item.html}"${current}>${label}</a>`;
-  }).join("");
-  return `<header class="site-nav">
-    <div class="nav-inner">
-      <a class="brand" href="${esc(urlFor(lang, "index.html"))}"><img src="/assets/logo-horizontal-reversed.svg" alt="HARTHELM" width="176" height="52"></a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="${esc(t(lang, "nav.menu"))}"><span></span><span></span><span></span></button>
-      <div id="nav-panel" class="nav-panel">
-        <nav class="nav-links" aria-label="${esc(t(lang, "nav.primary"))}">${links}</nav>
-        <div class="lang-switch" aria-label="${esc(t(lang, "lang.group"))}">${langs}</div>
-      </div>
-    </div>
-  </header>`;
-}
-
-function alternates(route) {
-  return LANGS.map((item) => {
-    return `<link rel="alternate" hreflang="${item.html}" href="${esc(urlFor(item.id, route))}">`;
-  }).join("\n");
-}
-
-function footer(lang, opts) {
-  const legalPage = !!(opts && opts.legal);
-  const entityLines = lang === "en"
-    ? `<p>${esc(t(lang, "foot.entityEn"))}</p>`
-    : `<p>${esc(t(lang, "foot.entityLabel"))}：${esc(t(lang, "foot.entityName"))}</p>
-          <p>${esc(t(lang, "foot.entityEn"))}</p>`;
-  const address = legalPage && lang === "en"
-    ? esc("FLAT/RM 1405B 14/F THE BELGIAN BANK BUILDING, NOS.721-725 NATHAN ROAD, MONGKOK, KL") + "<br>" + esc(ADDRESS.en)
-    : esc(ADDRESS[lang]);
-  const disclaimer = legalPage
-    ? esc(tx(lang, {
-        hant: "以上為服務範圍介紹，不構成獲批承諾；個案以香港入境事務處、新加坡人力部（MOM）及相關部門要求為準。審批由有關當局酌情決定，個別結果不同。累計接觸與服務個案 1000 餘個（不以獲批計）。個人資料依香港《個人資料（私隱）條例》（第 486 章）處理。如涉及新加坡的個人資料，亦按新加坡《個人資料保護法》（Personal Data Protection Act 2012）處理。",
-        hans: "以上为服务范围介绍，不构成获批承诺；个案以香港入境事务处、新加坡人力部（MOM）及相关部门要求为准。审批由有关当局酌情决定，个别结果不同。累计接触与服务个案 1000 余个（不以获批计）。个人资料依香港《个人资料（私隐）条例》（第 486 章）处理。如涉及新加坡的个人资料，亦按新加坡《个人资料保护法》（Personal Data Protection Act 2012）处理。",
-        en: "The pages describe a scope of work. They are not a promise of approval. Each case follows the requirements of Hong Kong Immigration, Singapore MOM, and any other authority involved. Those authorities decide, and individual outcomes differ. More than 1,000 cases we have come into contact with or served (not counted by approvals). Personal data we receive is handled under the Personal Data (Privacy) Ordinance (Cap. 486). Where personal data relates to Singapore, it is also handled under Singapore’s Personal Data Protection Act 2012.",
-      }))
-    : esc(t(lang, "foot.disclaimer"));
-  const pages = NAV.map(([route, key]) => {
-    return `<li><a href="${esc(urlFor(lang, route))}">${esc(t(lang, key))}</a></li>`;
-  }).join("");
-  return `<footer class="site-footer">
-    <div class="wrap">
-      <div class="compliance"><p>${disclaimer}</p></div>
-      <div class="foot-grid">
-        <div>
-          <h2>HARTHELM</h2>
-          <p>${esc(t(lang, "foot.tagline"))}</p>
-          ${entityLines}
-        </div>
-        <div>
-          <h3>${esc(t(lang, "foot.contact"))}</h3>
-          <p>Tel / WhatsApp <a href="https://wa.me/${PHONE_WA}">${esc(PHONE_DISPLAY)}</a></p>
-          <p>Email <a href="mailto:office@harthelm.com">office@harthelm.com</a></p>
-          <p>${address}</p>
-        </div>
-        <div>
-          <h3>${esc(t(lang, "foot.quick"))}</h3>
-          <ul>
-            ${pages}
-            <li><a href="/case.html">${esc(t(lang, "foot.scenes"))}</a></li>
-            <li><a href="/b2b.html">${esc(t(lang, "b2b.cta"))}</a></li>
-            <li><a href="/selfcheck/">${esc(t(lang, "dx.free.cta"))}</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="subfoot">${esc(t(lang, "foot.copy"))}</p>
-    </div>
-  </footer>
-  <a class="wa-float" style="background:#25D366;color:#fff" href="https://wa.me/${PHONE_WA}" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-    <span>${esc(t(lang, "wa.name"))}</span>
-    <span class="wa-num">${esc(PHONE_DISPLAY)}</span>
-  </a>`;
-}
-
-function shell(lang, route, title, description, body, opts) {
-  const meta = LANGS.find((item) => item.id === lang);
-  return `<!DOCTYPE html>
-<html lang="${meta.html}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)}</title>
-<meta name="description" content="${esc(description)}">
-<link rel="icon" href="/assets/favicon.ico" sizes="any">
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-${alternates(route)}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&family=Noto+Serif+TC:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
-</head>
-<body>
-<div class="site-top">
-${navHtml(lang, route)}
-</div>
-${body}
-${footer(lang, opts)}
-<script src="/assets/site.js"></script>
-</body>
-</html>
-`;
+const HERE = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(HERE, "..");
+if (!ROOT.endsWith("harthelm-site-preview")) {
+  throw new Error("Refusing to write outside the preview folder: " + ROOT);
 }
 
 function waDiagnosis(lang) {
   const text = t(lang, "dx.paid.cta") + " " + RENEWAL_DIAGNOSIS_LABEL[lang] + " HKD 1,000";
   return `https://wa.me/${PHONE_WA}?text=${encodeURIComponent(text)}`;
+}
+
+
+function nowrapLead(lang) {
+  let s = esc(t(lang, "hero.lead"));
+  s = s.replaceAll("新加坡 EP", '<span class="nowrap">新加坡 EP</span>');
+  s = s.replaceAll("Singapore Employment Pass", '<span class="nowrap">Singapore Employment Pass</span>');
+  return s;
 }
 
 function home(lang) {
@@ -183,12 +53,12 @@ function home(lang) {
     [t(lang, "life.s4"), t(lang, "life.s4b")],
   ];
   const cards = stages.map(([title, body], index) => {
-    return `<article class="card"><div class="idx">0${index + 1}</div><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`;
+    return `<article class="card is-animate"><div class="idx">0${index + 1}</div><h3>${esc(title)}</h3><p>${esc(body)}</p></article>`;
   }).join("");
   const tech = [1, 2, 3].map((n) => {
-    return `<article class="card"><h3>${esc(t(lang, "tech." + n + "t"))}</h3><p>${esc(t(lang, "tech." + n + "b"))}</p><p class="mono">${esc(t(lang, "tech." + n + "m"))}</p></article>`;
+    return `<article class="card is-animate"><h3>${esc(t(lang, "tech." + n + "t"))}</h3><p>${esc(t(lang, "tech." + n + "b"))}</p></article>`;
   }).join("");
-  const scene = (id) => `<article class="card">
+  const scene = (id) => `<article class="card is-animate">
     <div class="idx">${esc(t(lang, "scene." + id + ".tag"))}</div>
     <h3>${esc(t(lang, "scene." + id + ".title"))}</h3>
     <p class="muted">${esc(t(lang, "scene.a.timeLabel"))} ${esc(t(lang, "scene." + id + ".time"))}</p>
@@ -202,7 +72,7 @@ function home(lang) {
       <p class="eyebrow">${esc(t(lang, "hero.eyebrow"))}</p>
       <h1>${esc(t(lang, "hero.l1"))}<br><span>${esc(t(lang, "hero.l2"))}</span></h1>
       <hr class="rule">
-      <p class="lead">${esc(t(lang, "hero.lead"))}</p>
+      <p class="lead">${nowrapLead(lang)}</p>
       <div class="hero-actions">
         <a class="btn btn-gold" href="#tech">${esc(t(lang, "hero.ctaTech"))}</a>
         <a class="btn btn-ghost" href="#diagnosis">${esc(book)} ${esc(label)}</a>
@@ -246,7 +116,7 @@ function home(lang) {
       <div class="cards-2">${scene("a")}${scene("b")}</div>
       <p class="center" style="margin-top:22px">
         <a href="${esc(urlFor(lang, "cases.html"))}">${esc(t(lang, "scene.more"))}</a>
-        · <a href="/case.html">${esc(t(lang, "scene.legacy"))}</a>
+        · <a href="${esc(urlFor(lang, "case.html"))}">${esc(t(lang, "scene.legacy"))}</a>
       </p>
     </div>
   </section>
@@ -258,14 +128,14 @@ function home(lang) {
         <p class="intro">${esc(t(lang, "dx.intro"))}</p>
       </div>
       <div class="split">
-        <article class="panel panel-navy">
+        <article class="panel panel-navy is-animate">
           <div class="badge">${esc(t(lang, "dx.paid.badge"))}</div>
           <h3>${esc(label)}${esc(t(lang, "dx.paid.rest"))}</h3>
           <p class="price">HKD 1,000 <small>${esc(t(lang, "dx.paid.note"))}</small></p>
           <ul>${dxItems}</ul>
           <a class="btn btn-gold btn-block" href="${esc(waDiagnosis(lang))}" target="_blank" rel="noopener">${esc(t(lang, "dx.paid.cta"))}</a>
         </article>
-        <article class="panel panel-light">
+        <article class="panel panel-light is-animate">
           <div class="badge">${esc(t(lang, "dx.free.badge"))}</div>
           <h3>${esc(t(lang, "dx.free.title"))}</h3>
           <p class="price">${esc(t(lang, "dx.free.price"))} <small>${esc(t(lang, "dx.free.note"))}</small></p>
@@ -278,7 +148,7 @@ function home(lang) {
           <strong>${esc(t(lang, "b2b.title"))}</strong>
           <p>${esc(t(lang, "b2b.body"))}</p>
         </div>
-        <a href="/b2b.html">${esc(t(lang, "b2b.cta"))} →</a>
+        <a href="${esc(urlFor(lang, "b2b.html"))}">${esc(t(lang, "b2b.cta"))} →</a>
       </div>
     </div>
   </section>`;
@@ -332,7 +202,7 @@ function services(lang) {
     [t(lang, "life.s2"), t(lang, "life.s2b")],
     [t(lang, "life.s3"), t(lang, "life.s3b")],
     [t(lang, "life.s4"), t(lang, "life.s4b")],
-  ].map(([title, text], index) => `<article class="card"><div class="idx">0${index + 1}</div><h3>${esc(title)}</h3><p>${esc(text)}</p></article>`).join("");
+  ].map(([title, text], index) => `<article class="card is-animate"><div class="idx">0${index + 1}</div><h3>${esc(title)}</h3><p>${esc(text)}</p></article>`).join("");
   const schemes = SCHEMES.map((item) => {
     const href = item.href.startsWith("/insights/") || item.href.startsWith("/asmtp") || item.href.startsWith("/iang")
       ? urlFor(lang, item.href === "/asmtp/" ? "asmtp/index.html" : item.href === "/iang/" ? "iang/index.html" : "insights/index.html") + (item.href.includes("#") ? item.href.slice(item.href.indexOf("#")) : "")
@@ -363,7 +233,7 @@ function insights(lang) {
       : policy.id === "iang"
         ? `<p><a href="${esc(urlFor(lang, "iang/index.html"))}">${esc(t(lang, "full"))}</a></p>`
         : "";
-    return `<article class="policy" id="${policy.id}">
+    return `<article class="policy is-animate" id="${policy.id}">
       <h2>${esc(tx(lang, policy.title))}</h2>
       <p class="muted">${esc(t(lang, "ins.checked"))} ${esc(t(lang, "notLegal"))}</p>
       <ul>${points}</ul>
@@ -378,7 +248,7 @@ function insights(lang) {
 
 function cases(lang) {
   const blocks = CASES.map((item) => {
-    return `<article class="policy" id="${item.id}">
+    return `<article class="policy is-animate" id="${item.id}">
       <h2>${esc(tx(lang, item.title))}</h2>
       <h3>${esc(t(lang, "cases.bg"))}</h3><p>${esc(tx(lang, item.background))}</p>
       <h3>${esc(t(lang, "cases.diff"))}</h3><p>${esc(tx(lang, item.difficulty))}</p>
@@ -390,7 +260,7 @@ function cases(lang) {
   <article class="prose"><div class="wrap-s">
     <p class="notice">${esc(t(lang, "cases.dates"))}</p>
     ${blocks}
-    <p><a href="/case.html">${esc(t(lang, "scene.legacy"))}</a></p>
+    <p><a href="${esc(urlFor(lang, "case.html"))}">${esc(t(lang, "scene.legacy"))}</a></p>
   </div></article>`;
   return shell(lang, "cases.html", "HARTHELM · " + t(lang, "cases.title"), t(lang, "cases.lead"), body);
 }
@@ -408,7 +278,6 @@ function schemePage(lang, route, titleKey, policyId, paras) {
     <p class="muted">${esc(t(lang, "ins.checked"))}</p>
     <ul>${points}</ul>
     <ul class="link-list">${links}</ul>
-    <p class="notice">${esc(t(lang, "dx.f1"))}</p>
     <p><a class="btn btn-line" href="${esc(urlFor(lang, "index.html"))}#diagnosis">${esc(label)} · HKD 1,000</a>
     <a class="btn btn-line" href="mailto:office@harthelm.com">office@harthelm.com</a></p>
   </div></article>`;
@@ -546,14 +415,14 @@ const LEGAL = [
         en: "If personal data about you is breached, we assess it and take remedial steps promptly. Hong Kong’s Personal Data (Privacy) Ordinance sets no statutory deadline for notifying a breach. Where Singapore’s Personal Data Protection Act, sections 26C and 26D, requires notification, we notify the Personal Data Protection Commission within 3 calendar days after the assessment, and we notify affected individuals when the law requires it.",
       },
       {
-        hant: "準備度自測在你的瀏覽器內運行。按該頁自己的說明，它不要求上傳證件原件；若你勾選在本機保存進度，資料留在你的瀏覽器。該工具不是入境處或人力部的系統。該工具頁目前只有一種語言。",
-        hans: "准备度自测在你的浏览器内运行。按该页自己的说明，它不要求上传证件原件；若你勾选在本机保存进度，资料留在你的浏览器。该工具不是入境处或人力部的系统。该工具页目前只有一种语言。",
-        en: "The readiness self-check runs in your browser. On its own page, it does not ask you to upload original identity documents. If you choose to save progress on the device, that stays in your browser. The tool is not an Immigration or MOM system. That tool page is in one language only.",
+        hant: "準備度自測在你的瀏覽器內運行。按該頁自己的說明，它不要求上傳證件原件；若你勾選在本機保存進度，資料留在你的瀏覽器。該工具不是入境處或人力部的系統。",
+        hans: "准备度自测在你的浏览器内运行。按该页自己的说明，它不要求上传证件原件；若你勾选在本机保存进度，资料留在你的浏览器。该工具不是入境处或人力部的系统。",
+        en: "The readiness self-check runs in your browser. On its own page, it does not ask you to upload original identity documents. If you choose to save progress on the device, that stays in your browser. The tool is not an Immigration or MOM system.",
       },
       {
-        hant: "已合作客戶使用公司經營看板時，另有一份客戶版資料聲明，存放於本站 /legal/board-statement/。該聲明目前以中文為準，只適用於其文內所寫的看板服務，不取代本頁；本頁也不取代該聲明。",
-        hans: "已合作客户使用公司经营看板时，另有一份客户版资料声明，存放于本站 /legal/board-statement/。该声明目前以中文为准，只适用于其文内所写的看板服务，不取代本页；本页也不取代该声明。",
-        en: "Clients who use the company operating board have a separate customer statement at /legal/board-statement/ on this site. That statement is currently governed by its Chinese text. It applies only to the board service it describes. It does not replace this page, and this page does not replace it.",
+        hant: "已合作客戶如使用經營看板，會在開通時另行獲提供一份客戶版資料聲明。該聲明只適用於其所寫的看板服務，不取代本頁；本頁也不取代該聲明。",
+        hans: "已合作客户如使用经营看板，会在开通时另行获提供一份客户版资料声明。该声明只适用于其所写的看板服务，不取代本页；本页也不取代该声明。",
+        en: "Engaged clients who use an operating board are given a separate customer data statement when the board is opened. That statement applies only to the board service it describes. It does not replace this page, and this page does not replace it.",
       },
     ],
   },
@@ -571,9 +440,9 @@ const LEGAL = [
     h2: { hant: "文本", hans: "文本", en: "Text" },
     p: [
       {
-        hant: "本聲明以繁體中文、簡體中文和英文一併發布。三種文本具同等效力。若含義有衝突，以繁體中文為準。生效日期：2026-11-10。頁腳所鏈的服務場景說明、渠道合作頁和準備度自測，目前各只有一種語言。",
-        hans: "本声明以繁体中文、简体中文和英文一并发布。三种文本具同等效力。若含义有冲突，以繁体中文为准。生效日期：2026-11-10。页脚所链的服务场景说明、渠道合作页和准备度自测，目前各只有一种语言。",
-        en: "This notice is published in Traditional Chinese, Simplified Chinese, and English together. The three texts have equal force. If they conflict, the Traditional Chinese text prevails. Effective date: 2026-11-10. The service-scenes page, the channel page, and the readiness self-check linked from the footer are each in one language only.",
+        hant: "本聲明以繁體中文、簡體中文和英文一併發布。三種文本具同等效力。若含義有衝突，以繁體中文為準。生效日期：2026-11-10。",
+        hans: "本声明以繁体中文、简体中文和英文一并发布。三种文本具同等效力。若含义有冲突，以繁体中文为准。生效日期：2026-11-10。",
+        en: "This notice is published in Traditional Chinese, Simplified Chinese, and English together. The three texts have equal force. If they conflict, the Traditional Chinese text prevails. Effective date: 2026-11-10.",
       },
     ],
   },
@@ -592,6 +461,164 @@ function legal(lang) {
   const body = `${pageHead(lang, t(lang, "legal.title"), esc(effective))}
   <article class="prose"><div class="wrap-s">${blocks}</div></article>`;
   return shell(lang, "legal/index.html", "HARTHELM · " + t(lang, "legal.title"), effective, body, { legal: true });
+}
+
+function boardStatement(lang) {
+  const body = `${pageHead(lang, t(lang, "board.title"), esc(t(lang, "board.body")))}
+  <article class="prose"><div class="wrap-s">
+    <p>Email <a href="mailto:${EMAIL}">${EMAIL}</a></p>
+  </div></article>`;
+  return shell(lang, "legal/board-statement/index.html", "HARTHELM · " + t(lang, "board.title"), t(lang, "board.body"), body, { legal: true });
+}
+
+function b2bPage(lang) {
+  const cards = [1, 2, 3, 4, 5, 6].map((n) => {
+    return `<article class="card is-animate"><h3>${esc(t(lang, "b2b.c" + n + "t"))}</h3><p>${esc(t(lang, "b2b.c" + n + "b"))}</p></article>`;
+  }).join("");
+  const body = `${pageHead(lang, t(lang, "b2b.title"), esc(t(lang, "b2b.body")))}
+  <article class="prose"><div class="wrap">
+    <h2>${esc(t(lang, "b2b.why"))}</h2>
+    <div class="cards-3">${cards}</div>
+    <div class="band" style="margin-top:36px">
+      <div>
+        <strong>${esc(t(lang, "b2b.invite"))}</strong>
+        <p>${esc(t(lang, "b2b.orEmail"))} <a href="mailto:${EMAIL}">${EMAIL}</a></p>
+      </div>
+      <a class="btn btn-gold" href="https://wa.me/${PHONE_WA}" target="_blank" rel="noopener">${esc(t(lang, "b2b.wa"))}</a>
+    </div>
+  </div></article>`;
+  return shell(lang, "b2b.html", "HARTHELM · " + t(lang, "b2b.title"), t(lang, "b2b.body"), body);
+}
+
+function scenesPage(lang) {
+  const block = (id) => `<article class="policy is-animate" id="scene-${id}">
+      <p class="muted">${esc(t(lang, "scenesPage." + id + ".tag"))}</p>
+      <h2>${esc(t(lang, "scenesPage." + id + ".title"))}</h2>
+      <h3>${esc(t(lang, "scenesPage.bg"))}</h3><p>${esc(t(lang, "scenesPage." + id + ".bg"))}</p>
+      <h3>${esc(t(lang, "scenesPage.act"))}</h3><p>${esc(t(lang, "scenesPage." + id + ".act"))}</p>
+      <h3>${esc(t(lang, "scenesPage.out"))}</h3><p>${esc(t(lang, "scenesPage." + id + ".out"))}</p>
+    </article>`;
+  const body = `${pageHead(lang, t(lang, "foot.scenes"), esc(t(lang, "scenesPage.lead")))}
+  <article class="prose"><div class="wrap-s">
+    ${block("a")}${block("b")}${block("c")}
+    <p class="notice">${esc(t(lang, "scenesPage.after"))}</p>
+    <p><a class="btn btn-line" href="${esc(urlFor(lang, "index.html"))}#diagnosis">${esc(t(lang, "scenesPage.cta"))}</a></p>
+  </div></article>`;
+  return shell(lang, "case.html", "HARTHELM · " + t(lang, "foot.scenes"), t(lang, "scenesPage.lead"), body);
+}
+
+function selfcheckBody() {
+  return `<div class="selfcheck-app">
+    <div class="wrap">
+    <div class="topbar">
+      <div class="brand">HARTHELM <span>准备度自测</span></div>
+      <div class="badge">离线本地 · 非官方系统 · 无留资</div>
+    </div>
+
+    <div class="hero">
+      <h1>高才通 / 优才 / 新加坡 EP 资料准备度自测</h1>
+      <p>勾选「有 / 无 / 已过期 / 不适用」，本机生成缺失清单与准备度描述。不评分、不报价、不承诺获批。</p>
+    </div>
+
+    <div class="notice">
+      本工具由 HARTHELM 提供，仅供资料整理参考，不构成法律意见，亦非香港入境事务处、人才办、新加坡 MOM 或其他机关的官方系统或标准。清单以当日官网为准。
+    </div>
+
+    <div class="notice" style="margin-top:12px">
+      想离线使用？<a href="HARTHELM-selfcheck-offline-v1.2.zip" download>下载离线包（zip）</a>，解压后用浏览器打开 index.html 即可，无需联网。
+    </div>
+
+    <section id="step-home" class="card">
+      <h2>选择身份入口</h2>
+      <p class="sub">三选一进入；答卷可选保存在本机浏览器，默认不外传。</p>
+      <div class="grid-3">
+        <button type="button" class="entry-btn" data-type="ttps">
+          <strong>高才通 TTPS</strong>
+          <small>含人才办问卷、首次入境标签说明</small>
+        </button>
+        <button type="button" class="entry-btn" data-type="qmas">
+          <strong>优才 QMAS</strong>
+          <small>申请 / 原则批 / 续签资料自检</small>
+        </button>
+        <button type="button" class="entry-btn" data-type="ep">
+          <strong>新加坡 EP</strong>
+          <small>Employment Pass 申请或更新自检</small>
+        </button>
+      </div>
+      <div class="actions" style="margin-top:16px">
+        <label class="toolbar-note">
+          <input type="checkbox" id="saveLocal" /> 在本机保存进度（localStorage，不上传）
+        </label>
+        <button type="button" class="btn btn-danger-ghost" id="btn-clear">清除本机答卷</button>
+      </div>
+    </section>
+
+    <section id="step-form" class="hidden">
+      <div class="card">
+        <h2 id="form-title">资料自检</h2>
+        <p class="sub" id="form-blurb"></p>
+        <div id="entry-fields"></div>
+        <div id="expiry-fields"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-back-home">返回入口</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>个人资料清单</h2>
+        <p class="sub">必检项影响准备度描述；选检项只进入「可按情况补充」。</p>
+        <div id="personal-list"></div>
+      </div>
+
+      <div class="card hidden" id="company-card">
+        <h2>公司 / 雇主资料清单</h2>
+        <p class="sub">仅当入口选择「已有公司 / 雇主」时展开。请勿填写账号、薪金等敏感数字。</p>
+        <div id="company-list"></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="btn-eval">生成缺失清单与准备度</button>
+      </div>
+    </section>
+
+    <section id="step-result" class="hidden">
+      <div class="card">
+        <h2>自测结果</h2>
+        <p class="sub" id="result-meta"></p>
+        <div id="result-tier" class="result-tier tier-gaps"></div>
+
+        <div class="section-title">建议优先补齐</div>
+        <ul class="miss-list" id="miss-priority"></ul>
+
+        <div class="section-title">可按情况补充</div>
+        <ul class="miss-list" id="miss-optional"></ul>
+
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btn-back-form">返回修改勾选</button>
+          <button type="button" class="btn btn-primary" onclick="window.print()">打印 / 另存为 PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">本自测表由 HARTHELM 提供，结果仅供参考，不构成法律或移民意见，政策以官方公布为准。
+本工具亦非香港入境事务处、人才办、新加坡 MOM 或其他机关之官方系统或标准。
+不收集您的邮箱、电话或证件号码；答卷默认仅存于本机。
+请勿将本结果理解为获批承诺、通过率或报价依据。
+资料清单更新日期：2026-10-23</footer>
+    </div>
+  </div>`;
+}
+
+function selfcheckPage() {
+  const lang = "hans";
+  const title = "HARTHELM 准备度自测";
+  const desc = "高才通、优才与新加坡 Employment Pass 资料准备度自测。不评分、不报价、不承诺获批。";
+  return shell(lang, "selfcheck/index.html", title, desc, selfcheckBody(), {
+    extraHead: '<link rel="stylesheet" href="/selfcheck/styles.css">\n',
+    extraScripts: '<script src="/selfcheck/app.js"></script>\n',
+    robots: "noindex,nofollow",
+    fixedPath: "/selfcheck/",
+  });
 }
 
 function validateTree(html, file) {
@@ -640,11 +667,14 @@ const pages = [
   ["asmtp/index.html", (lang) => schemePage(lang, "asmtp/index.html", "asmtp.meta", "asmtp", ASMTP_PARAS)],
   ["iang/index.html", (lang) => schemePage(lang, "iang/index.html", "iang.meta", "iang", IANG_PARAS)],
   ["legal/index.html", legal],
+  ["legal/board-statement/index.html", boardStatement],
+  ["b2b.html", b2bPage],
+  ["case.html", scenesPage],
 ];
 
+emitChromeJs(ROOT);
+
 const used = new Set();
-const realT = t;
-// wrap not needed
 
 for (const lang of LANGS) {
   for (const [route, build] of pages) {
@@ -658,6 +688,16 @@ for (const lang of LANGS) {
   }
 }
 
+const selfcheckHtml = selfcheckPage();
+const selfcheckRel = "selfcheck/index.html";
+validateTree(selfcheckHtml, selfcheckRel);
+mkdirSync(join(ROOT, "selfcheck"), { recursive: true });
+writeFileSync(join(ROOT, selfcheckRel), selfcheckHtml);
+used.add(selfcheckRel);
+
 if (POLICIES.length !== 12) throw new Error("policy count");
+if (SCHEMES.some((item) => /#tr$|#mt$|#eb1$/.test(item.href))) {
+  throw new Error("services scheme list still includes Türkiye, Malta, or EB-1A");
+}
 const linkCount = POLICIES.reduce((sum, item) => sum + item.links.length, 0);
-console.log("Wrote " + used.size + " pages, policies " + POLICIES.length + ", official links " + linkCount);
+console.log("Wrote " + used.size + " pages, policies " + POLICIES.length + ", official links " + linkCount + ", schemes on services " + SCHEMES.length);
