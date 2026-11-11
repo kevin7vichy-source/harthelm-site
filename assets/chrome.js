@@ -90,32 +90,6 @@
       }
     },
     {
-      "route": "asmtp/index.html",
-      "href": {
-        "hant": "/asmtp/",
-        "hans": "/zh-hans/asmtp/",
-        "en": "/en/asmtp/"
-      },
-      "label": {
-        "hant": "專才",
-        "hans": "专才",
-        "en": "ASMTP"
-      }
-    },
-    {
-      "route": "iang/index.html",
-      "href": {
-        "hant": "/iang/",
-        "hans": "/zh-hans/iang/",
-        "en": "/en/iang/"
-      },
-      "label": {
-        "hant": "IANG",
-        "hans": "IANG",
-        "en": "IANG"
-      }
-    },
-    {
       "route": "legal/index.html",
       "href": {
         "hant": "/legal/",

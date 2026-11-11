@@ -19,8 +19,6 @@ export const NAV = [
   ["services/index.html", "nav.services"],
   ["insights/index.html", "nav.insights"],
   ["cases.html", "nav.cases"],
-  ["asmtp/index.html", "nav.asmtp"],
-  ["iang/index.html", "nav.iang"],
   ["legal/index.html", "nav.legal"],
 ];
 

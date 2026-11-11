@@ -244,9 +244,9 @@ export const STR = {
     "HARTHELM is the service brand. The public email is office@harthelm.com."
   ),
   "about.p1": row(
-    "我們立足香港與新加坡，把身份安排之後的公司落地、實體辦公室、經營記錄和節點提醒放在同一條服務線上。對象包括高才通、優才、IANG、新加坡 EP，以及另頁說明的輸入內地人才計劃。",
-    "我们立足香港与新加坡，把身份安排之后的公司落地、实体办公室、经营记录和节点提醒放在同一条服务线上。对象包括高才通、优才、IANG、新加坡 EP，以及另页说明的输入内地人才计划。",
-    "From Hong Kong and Singapore, one line of work covers company landing after a permission is in view, a real office, an operating record, and date reminders. That includes the Top Talent Pass, Quality Migrant Admission, IANG, the Singapore Employment Pass, and the Admission Scheme for Mainland Talents and Professionals, which has its own page."
+    "我們立足香港與新加坡，把身份安排之後的公司落地、實體辦公室、經營記錄和節點提醒放在同一條服務線上。對象包括高才通、優才、專才、IANG 和新加坡 EP。",
+    "我们立足香港与新加坡，把身份安排之后的公司落地、实体办公室、经营记录和节点提醒放在同一条服务线上。对象包括高才通、优才、专才、IANG 和新加坡 EP。",
+    "From Hong Kong and Singapore, one line of work covers company landing after a permission is in view, a real office, an operating record, and date reminders. That includes the Top Talent Pass, Quality Migrant Admission, the Admission Scheme for Mainland Talents and Professionals, IANG, and the Singapore Employment Pass."
   ),
   "about.p2": row(
     "我們不是香港入境事務處、人才辦或新加坡人力部。頁面上的政策要點鏈到官方頁面，整理日期見資訊頁，不能代替當日官網。",
@@ -277,9 +277,9 @@ export const STR = {
   ),
   "svc.schemeTitle": row("計劃說明", "计划说明", "Schemes, in brief"),
   "svc.schemeLead": row(
-    "下面只列出與本站主業相關的港新計劃要點；其他司法管轄區的公開整理見資訊頁。細則、官方連結和限制寫在資訊頁；專才與 IANG 另有專頁。",
-    "下面只列出与本站主业相关的港新计划要点；其他司法管辖区的公开整理见资讯页。细则、官方链接和限制写在资讯页；专才与 IANG 另有专页。",
-    "The list below covers only Hong Kong and Singapore schemes related to our core work. Public notes on other jurisdictions are on the briefings page. Detail, official links, and limits sit there. ASMTP and IANG have their own pages."
+    "下面只列出與本站主業相關的港新計劃要點；其他司法管轄區的公開整理見資訊頁。細則、官方連結和限制寫在資訊頁，亦可從下方進入對應說明。",
+    "下面只列出与本站主业相关的港新计划要点；其他司法管辖区的公开整理见资讯页。细则、官方链接和限制写在资讯页，也可从下方进入对应说明。",
+    "The list below covers only Hong Kong and Singapore schemes related to our core work. Public notes on other jurisdictions are on the briefings page. Detail, official links, and limits sit there, and the list below also leads to the matching notes."
   ),
   "ins.title": row("資訊", "资讯", "Briefings"),
   "ins.lead": row(
@@ -480,7 +480,7 @@ export const POLICIES = [
       row("申請人須具備香港所需、而本地不易覓得的技能或經驗。", "申请人须具备香港所需、而本地不易觅得的技能或经验。", "The applicant needs skills or experience that Hong Kong requires and that are not readily available locally."),
       row("通常須有相關學士學位；特殊情況可以專業能力或經驗證明。", "通常须有相关学士学位；特殊情况可以专业能力或经验证明。", "A relevant bachelor’s degree is usually required. In special cases, professional ability or experience may be shown instead."),
       row("職位須真實，工作與學歷或經驗相關，薪酬福利須與市場水平大致相同。", "职位须真实，工作与学历或经验相关，薪酬福利须与市场水平大致相同。", "The post must be genuine, the work related to the degree or experience, and the package broadly in line with the market."),
-      row("與高才通、優才不同，一般須事先獲得聘用。專頁見本站「專才」。", "与高才通、优才不同，一般须事先获得聘用。专页见本站「专才」。", "Unlike the Top Talent Pass and Quality Migrant Admission, employment is generally required first. See the ASMTP page on this site."),
+      row("與高才通、優才不同，一般須事先獲得聘用。", "与高才通、优才不同，一般须事先获得聘用。", "Unlike the Top Talent Pass and Quality Migrant Admission, employment is generally required first."),
     ],
     links: [
       { href: "https://www.immd.gov.hk/hks/services/visas/ASMTP.html", label: row("入境處：輸入內地人才計劃", "入境处：输入内地人才计划", "Immigration: Admission Scheme for Mainland Talents and Professionals") },
@@ -494,7 +494,7 @@ export const POLICIES = [
       row("適用於在港修讀全日制、經本地評審課程並取得學士或更高資歷的非本地學生。合資格大灣區校園等其他安排以官網為準。", "适用于在港修读全日制、经本地评审课程并取得学士或更高资历的非本地学生。合资格大湾区校园等其他安排以官网为准。", "For non-local students who have studied full-time in Hong Kong on a locally accredited programme and obtained a bachelor’s degree or higher. Other arrangements, including eligible Greater Bay Area campuses, follow the official page."),
       row("畢業後六個月內申請的應屆畢業生，一般無須先有聘書，首次通常可獲准逗留 24 個月。", "毕业后六个月内申请的应届毕业生，一般无须先有聘书，首次通常可获准逗留 24 个月。", "Fresh graduates who apply within six months of graduation generally do not need an offer first, and are usually granted 24 months on the first permission."),
       row("逾期再申請，通常須已經獲聘，且職位與薪酬須符合規定。延長逗留須已經獲聘。", "逾期再申请，通常须已经获聘，且职位与薪酬须符合规定。延长逗留须已经获聘。", "A later application generally requires employment already secured, with the post and pay meeting the rules. An extension of stay also requires employment."),
-      row("赴港就讀的學生簽證與 IANG 是前後兩段安排。入學不等於已經取得香港身份。專頁見本站「IANG」。", "赴港就读的学生签证与 IANG 是前后两段安排。入学不等于已经取得香港身份。专页见本站「IANG」。", "A student entry and IANG are two arrangements, one after the other. Starting a course is not the same as already holding a Hong Kong status. See the IANG page."),
+      row("赴港就讀的學生簽證與 IANG 是前後兩段安排。入學不等於已經取得香港身份。", "赴港就读的学生签证与 IANG 是前后两段安排。入学不等于已经取得香港身份。", "A student entry and IANG are two arrangements, one after the other. Starting a course is not the same as already holding a Hong Kong status."),
     ],
     links: [
       { href: "https://www.immd.gov.hk/hks/services/visas/IANG.html", label: row("入境處：IANG", "入境处：IANG", "Immigration: IANG") },
