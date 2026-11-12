@@ -2,8 +2,23 @@
 (function () {
   "use strict";
 
-  var STORAGE_KEY = "harthelm_selfcheck_v1";
+  var STORAGE_KEY = "harthelm_selfcheck_v2";
   var BRAND = "HARTHELM";
+
+  var DIRECTIONS = {
+    match: {
+      id: "match",
+      title: "移民计划匹配诊断",
+      short: "首次申请身份",
+      blurb: "适用于尚未持有目标身份、计划首次申请的人士。请按申请材料准备情况勾选。"
+    },
+    renew: {
+      id: "renew",
+      title: "续签风险诊断",
+      short: "已有身份延续",
+      blurb: "适用于已持有相关身份、需要办理延续或更新的人士。请按现有资料准备情况勾选。"
+    }
+  };
 
   var STATUS_OPTS = [
     { v: "have", t: "有（仍有效）" },
@@ -44,9 +59,9 @@
           key: "path",
           label: "当前阶段",
           options: [
-            { v: "hold", t: "已持有，关注续签准备" },
-            { v: "apply", t: "计划首次申请" },
-            { v: "learn", t: "仅了解" }
+            { v: "hold", t: "已持有，关注续签准备", when: "renew" },
+            { v: "apply", t: "计划首次申请", when: "match" },
+            { v: "learn", t: "仅了解", when: "match" }
           ]
         },
         {
@@ -63,6 +78,7 @@
           key: "first",
           label: "是否已完成赴港首次入境并取得入境标签",
           hint: "只核首次入境标签（入境标签），不要求「最近一次入境标签」。",
+          when: "renew",
           options: [
             { v: "yes", t: "是" },
             { v: "no", t: "否" },
@@ -73,6 +89,7 @@
           key: "surv",
           label: "人才办「专属问卷」确认通知书",
           hint: "续签网上递交前，官网要求先完成人才办问卷并保存确认通知书（以官网为准）。",
+          when: "renew",
           options: [
             { v: "have", t: "已有确认通知书" },
             { v: "know", t: "知悉但尚未完成" },
@@ -81,7 +98,9 @@
         },
         {
           key: "co",
-          label: "是否已有 / 计划设立香港公司",
+          label: "是否已有香港公司",
+          hintMatch: "如尚无公司，身份获批后再按需考虑注册与实体落地；本项可先选「否」或「不确定」。",
+          hintRenew: "按现有情况选择；如需补齐落地与经营记录，请在下方清单勾选。",
           options: [
             { v: "yes", t: "是" },
             { v: "no", t: "否" },
@@ -98,37 +117,37 @@
         }
       ],
       personal: function (ans) {
-        var renew = ans.path === "hold";
+        var renew = state.direction === "renew" || ans.path === "hold";
         var firstYes = ans.first === "yes";
         var items = [
           { code: "P-ID-01", name: "护照个人资料页", required: false, critical: false, hint: "选检；有则建议备妥且在有效期内" },
           { code: "P-ID-02", name: "香港身份证（如有）", required: false, critical: false },
-          { code: "P-ID-03", name: "现签证 / e-Visa 页", required: renew, critical: renew, hint: renew ? "已持有场景必检" : "获批后请备妥" },
+          { code: "P-ID-03", name: "现签证 / e-Visa 页", required: renew, critical: renew, hint: "已持有场景必检", when: "renew" },
           { code: "P-ID-04", name: "近照（规格以官网为准）", required: true, critical: false },
           { code: "P-ID-05", name: "往来港澳通行证", required: true, critical: true, validityCover: true, hint: "默认为必检；有效期须覆盖后续逗留或批核的最长期限", shortHint: "有效期不足以覆盖后续逗留或批核的最长期限，建议尽快更新港澳通行证。", expiredHint: "已过期或失效，建议尽快更新港澳通行证。" },
           { code: "P-ID-06", name: "内地居民身份证", required: false, critical: false },
-          { code: "P-TRAV-01", name: "入境标签（首次入境）", required: renew && firstYes, critical: false, hint: "只核首次入境那张；遗失须申请补发" },
+          { code: "P-TRAV-01", name: "入境标签（首次入境）", required: renew && firstYes, critical: false, hint: "只核首次入境那张；遗失须申请补发", when: "renew" },
           { code: "P-EDU-01", name: "学历证明", required: false, critical: false },
           { code: "P-ADDR-01", name: "住址证明", required: false, critical: false },
-          { code: "P-EMP-01", name: "雇佣 / 自雇说明相关文件", required: false, critical: false },
+          { code: "P-EMP-01", name: "雇佣 / 自雇说明相关文件", required: false, critical: false, when: "renew" },
           { code: "P-TAX-01", name: "税务相关证明（如需要）", required: false, critical: false },
-          { code: "P-INTEG-01", name: "本地融入凭证（商会/展会/社团等）", required: false, critical: false },
-          { code: "P-PLAN-01", name: "商业计划书 / 续签方案书", required: false, critical: false },
-          { code: "P-PLAN-02", name: "合理解释信（签署件）", required: false, critical: false },
-          { code: "P-SURV-01", name: "人才办专属问卷确认通知书", required: renew, critical: renew, hint: "续签场景优先核对；申请阶段可先了解" },
+          { code: "P-INTEG-01", name: "本地融入凭证（商会/展会/社团等）", required: false, critical: false, when: "renew" },
+          { code: "P-PLAN-01", name: "商业计划书 / 续签方案书", nameMatch: "商业计划书（如有）", required: false, critical: false },
+          { code: "P-PLAN-02", name: "合理解释信（签署件）", nameMatch: "赴港同意书", required: false, critical: false },
+          { code: "P-SURV-01", name: "人才办专属问卷确认通知书", required: renew, critical: renew, hint: "续签网上递交前优先核对（以官网为准）", when: "renew" },
           { code: "P-OTHER", name: "其他入境处要求项", required: false, critical: false }
         ];
         if (ans.dep === "yes") {
           items.push({ code: "P-DEP-01", name: "受养人资料", required: true, critical: false });
         }
-        return items;
+        return forDirection(items);
       },
       company: function (ans) {
         return ans.co === "yes" ? HK_COMPANY.slice() : [];
       },
       extraGaps: function (ans) {
         var gaps = [];
-        if (ans.path === "hold" && ans.surv !== "have") {
+        if ((state.direction === "renew" || ans.path === "hold") && ans.surv !== "have") {
           gaps.push({
             name: "人才办专属问卷确认通知书",
             reason: "网上递交前，请按人才办要求完成专属问卷并保存确认通知书（以官网为准）。",
@@ -148,10 +167,10 @@
           key: "stage",
           label: "优才进度",
           options: [
-            { v: "prep", t: "准备递交" },
-            { v: "prin", t: "已获原则性批准" },
-            { v: "formal", t: "已获正式批准逗留" },
-            { v: "renew", t: "续签阶段" },
+            { v: "prep", t: "准备递交", when: "match" },
+            { v: "prin", t: "已获原则性批准", when: "match" },
+            { v: "formal", t: "已获正式批准逗留", when: "renew" },
+            { v: "renew", t: "续签阶段", when: "renew" },
             { v: "unk", t: "暂不清楚" }
           ]
         },
@@ -166,7 +185,9 @@
         },
         {
           key: "co",
-          label: "是否已有 / 计划设立香港公司",
+          label: "是否已有香港公司",
+          hintMatch: "如尚无公司，身份获批后再按需考虑注册与实体落地；本项可先选「否」或「不确定」。",
+          hintRenew: "按现有情况选择；如需补齐落地与经营记录，请在下方清单勾选。",
           options: [
             { v: "yes", t: "是" },
             { v: "no", t: "否" },
@@ -183,26 +204,26 @@
         }
       ],
       personal: function (ans) {
-        var applyLike = ans.stage === "prep" || ans.stage === "unk" || ans.stage === "prin";
-        var holdLike = ans.stage === "formal" || ans.stage === "renew";
+        var applyLike = state.direction === "match";
+        var holdLike = state.direction === "renew";
         var items = [
           { code: "P-ID-01", name: "护照个人资料页", required: false, critical: false, hint: "选检；有则建议备妥且在有效期内" },
-          { code: "P-ID-03", name: "现签证 / e-Visa / 批准文件", required: holdLike, critical: holdLike },
+          { code: "P-ID-03", name: "现签证 / e-Visa / 批准文件", required: holdLike, critical: holdLike, when: "renew" },
           { code: "P-ID-04", name: "近照", required: true, critical: false },
           { code: "P-ID-05", name: "往来港澳通行证", required: true, critical: true, validityCover: true, hint: "默认为必检；有效期须覆盖后续逗留或批核的最长期限", shortHint: "有效期不足以覆盖后续逗留或批核的最长期限，建议尽快更新港澳通行证。", expiredHint: "已过期或失效，建议尽快更新港澳通行证。" },
           { code: "P-ID-06", name: "内地居民身份证", required: false, critical: false },
           { code: "P-EDU-01", name: "学历及认证相关证明", required: applyLike, critical: applyLike },
           { code: "P-EMP-01", name: "工作履历与证明文件", required: applyLike, critical: false },
-          { code: "P-PLAN-01", name: "赴港计划 / 业务计划相关", required: false, critical: false },
+          { code: "P-PLAN-01", name: "赴港计划 / 业务计划相关", required: applyLike, critical: false },
           { code: "P-ADDR-01", name: "住址证明", required: false, critical: false },
-          { code: "P-TRAV-01", name: "入境标签（首次入境）", required: holdLike, critical: false, hint: "已入境后只核首次入境标签" },
-          { code: "P-INTEG-01", name: "在港活动 / 融入类证明", required: false, critical: false },
+          { code: "P-TRAV-01", name: "入境标签（首次入境）", required: holdLike, critical: false, hint: "已入境后只核首次入境标签", when: "renew" },
+          { code: "P-INTEG-01", name: "在港活动 / 融入类证明", required: false, critical: false, when: "renew" },
           { code: "P-OTHER", name: "其他入境处要求项", required: false, critical: false }
         ];
         if (ans.dep === "yes") {
           items.push({ code: "P-DEP-01", name: "受养人资料", required: true, critical: false });
         }
-        return items;
+        return forDirection(items);
       },
       company: function (ans) {
         return ans.co === "yes" ? HK_COMPANY.slice() : [];
@@ -227,15 +248,17 @@
           key: "spath",
           label: "阶段",
           options: [
-            { v: "apply", t: "计划申请" },
-            { v: "hold", t: "已持有 EP" },
-            { v: "renew", t: "续签或更新" },
+            { v: "apply", t: "计划申请", when: "match" },
+            { v: "hold", t: "已持有 EP", when: "renew" },
+            { v: "renew", t: "续签或更新", when: "renew" },
             { v: "unk", t: "暂不清楚" }
           ]
         },
         {
           key: "sco",
           label: "是否已有新加坡雇佣实体 / 赞助雇主",
+          hintMatch: "首次申请通常需要有赞助雇主；如尚未确定，可先选「不确定」。",
+          hintRenew: "按现有雇主或赞助安排选择。",
           options: [
             { v: "yes", t: "是" },
             { v: "no", t: "否" },
@@ -252,12 +275,12 @@
         }
       ],
       personal: function (ans) {
-        var applyLike = ans.spath === "apply" || ans.spath === "unk";
-        var holdLike = ans.spath === "hold" || ans.spath === "renew";
+        var applyLike = state.direction === "match";
+        var holdLike = state.direction === "renew";
         var items = [
           { code: "P-ID-01", name: "护照个人资料页", required: false, critical: false, hint: "选检；有则建议备妥且在有效期内" },
-          { code: "P-SG-EP-01", name: "现有 EP / IPA / 准证相关文件", required: holdLike, critical: holdLike },
-          { code: "P-ID-04", name: "近照（规格按 MOM/官网）", required: applyLike || holdLike, critical: false },
+          { code: "P-SG-EP-01", name: "现有 EP / IPA / 准证相关文件", required: holdLike, critical: holdLike, when: "renew" },
+          { code: "P-ID-04", name: "近照（规格按 MOM/官网）", required: true, critical: false },
           { code: "P-EDU-01", name: "学历证明", required: applyLike, critical: false },
           { code: "P-EMP-01", name: "简历与雇佣相关说明", required: true, critical: false },
           { code: "P-SG-SAL-01", name: "薪金 / 聘书优先页（只问有无，请勿填写金额）", required: applyLike, critical: applyLike },
@@ -266,7 +289,7 @@
         if (ans.dep === "yes") {
           items.push({ code: "P-DEP-01", name: "家属准证规划资料", required: true, critical: false });
         }
-        return items;
+        return forDirection(items);
       },
       company: function (ans) {
         return ans.sco === "yes" ? SG_COMPANY.slice() : [];
@@ -276,6 +299,7 @@
   };
 
   var state = {
+    direction: null,
     type: null,
     answers: {},
     statuses: {},
@@ -285,12 +309,73 @@
 
   function $(id) { return document.getElementById(id); }
 
+  function currentDirection() {
+    return state.direction ? DIRECTIONS[state.direction] : null;
+  }
+
+  function currentType() {
+    return state.type ? TYPES[state.type] : null;
+  }
+
+  function optionsFor(field) {
+    return (field.options || []).filter(function (opt) {
+      return !opt.when || opt.when === state.direction;
+    });
+  }
+
+  function visibleEntries(t) {
+    if (!t) return [];
+    return t.entries.filter(function (field) {
+      if (field.when && field.when !== state.direction) return false;
+      var opts = optionsFor(field);
+      if (!opts.length) return false;
+      if (opts.length === 1 && field.key === "path" && opts[0].v === "hold") return false;
+      return true;
+    });
+  }
+
+  function fieldHint(field) {
+    if (state.direction === "match" && field.hintMatch) return field.hintMatch;
+    if (state.direction === "renew" && field.hintRenew) return field.hintRenew;
+    return field.hint || "";
+  }
+
+  function applyDirectionDefaults() {
+    if (state.type === "ttps" && state.direction === "renew") {
+      state.answers.path = "hold";
+    }
+  }
+
+  function directionLabel() {
+    var d = currentDirection();
+    return d ? (d.title + "（" + d.short + "）") : "";
+  }
+
+  function forDirection(items) {
+    return (items || []).filter(function (it) {
+      return !it.when || it.when === state.direction;
+    }).map(function (it) {
+      var copy = it;
+      if (state.direction === "match" && it.nameMatch) copy = Object.assign({}, it, { name: it.nameMatch });
+      if (state.direction === "renew" && it.nameRenew) copy = Object.assign({}, it, { name: it.nameRenew });
+      return copy;
+    });
+  }
+
+  function hideAllSteps() {
+    ["step-direction", "step-home", "step-form", "step-result"].forEach(function (id) {
+      var el = $(id);
+      if (el) el.classList.add("hidden");
+    });
+  }
+
   function loadSaved() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       var data = JSON.parse(raw);
       if (data && typeof data === "object") {
+        state.direction = data.direction || null;
         state.type = data.type || null;
         state.answers = data.answers || {};
         state.statuses = data.statuses || {};
@@ -304,6 +389,7 @@
     if (!state.saveLocal) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        direction: state.direction,
         type: state.type,
         answers: state.answers,
         statuses: state.statuses,
@@ -315,9 +401,9 @@
 
   function clearLocal() {
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
-    state = { type: null, answers: {}, statuses: {}, expiry: "", saveLocal: false };
+    state = { direction: null, type: null, answers: {}, statuses: {}, expiry: "", saveLocal: false };
     $("saveLocal").checked = false;
-    renderHome();
+    renderDirection();
   }
 
   function daysUntil(dateStr) {
@@ -331,10 +417,43 @@
     return Math.round((d - today) / 86400000);
   }
 
+  function renderDirection() {
+    hideAllSteps();
+    $("step-direction").classList.remove("hidden");
+    document.querySelectorAll(".dir-btn").forEach(function (btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-direction") === state.direction);
+    });
+  }
+
   function renderHome() {
+    hideAllSteps();
     $("step-home").classList.remove("hidden");
-    $("step-form").classList.add("hidden");
-    $("step-result").classList.add("hidden");
+    var d = currentDirection();
+    var crumb = $("home-crumb");
+    if (crumb) crumb.textContent = d ? ("当前方向：" + d.title + " · " + d.short) : "";
+    var sub = $("home-sub");
+    if (sub && d) {
+      sub.textContent = (state.direction === "match"
+        ? "请选择您正在考虑申请的计划，再核对该计划的申请材料准备度。"
+        : "请选择您目前持有、需要延续或更新的计划，再核对材料缺口。") + " 答卷可选保存在本机浏览器，默认不外传。本工具目前覆盖高才通、优才、新加坡 EP。";
+    }
+    var hints = {
+      match: {
+        ttps: "首次申请资料自检",
+        qmas: "首次申请或原则性批准阶段自检",
+        ep: "首次申请资料自检"
+      },
+      renew: {
+        ttps: "续签资料自检，含人才办问卷与首次入境标签",
+        qmas: "已获正式批准或续签阶段资料自检",
+        ep: "续签或更新资料自检"
+      }
+    };
+    var pack = hints[state.direction] || hints.match;
+    ["ttps", "qmas", "ep"].forEach(function (k) {
+      var el = $("hint-" + k);
+      if (el) el.textContent = pack[k];
+    });
     document.querySelectorAll(".entry-btn").forEach(function (btn) {
       btn.classList.toggle("active", btn.getAttribute("data-type") === state.type);
     });
@@ -354,28 +473,28 @@
     return wrap;
   }
 
-  function currentType() {
-    return state.type ? TYPES[state.type] : null;
-  }
-
   function renderForm() {
     var t = currentType();
     if (!t) return;
-    $("step-home").classList.add("hidden");
+    applyDirectionDefaults();
+    hideAllSteps();
     $("step-form").classList.remove("hidden");
-    $("step-result").classList.add("hidden");
+    var d = currentDirection();
+    var crumb = $("form-crumb");
+    if (crumb) crumb.textContent = d ? ("当前方向：" + d.title + " · " + t.title) : t.title;
     $("form-title").textContent = t.title + " · 资料自检";
-    $("form-blurb").textContent = t.blurb;
+    $("form-blurb").textContent = d ? d.blurb : t.blurb;
 
     var entryBox = $("entry-fields");
     entryBox.innerHTML = "";
-    t.entries.forEach(function (field) {
+    visibleEntries(t).forEach(function (field) {
       var div = document.createElement("div");
       div.className = "field";
       var lab = document.createElement("label");
-      lab.innerHTML = field.label + (field.hint ? '<div class="hint">' + field.hint + "</div>" : "");
+      var hint = fieldHint(field);
+      lab.innerHTML = field.label + (hint ? '<div class="hint">' + hint + "</div>" : "");
       div.appendChild(lab);
-      div.appendChild(chipGroup(field.options, state.answers[field.key], function (v) {
+      div.appendChild(chipGroup(optionsFor(field), state.answers[field.key], function (v) {
         state.answers[field.key] = v;
         persist();
         renderForm();
@@ -383,36 +502,49 @@
       entryBox.appendChild(div);
     });
 
-    // expiry
+    // expiry: renew direction, or if a date was already filled
     var expBox = $("expiry-fields");
     expBox.innerHTML = "";
+    var showExpiry = state.direction === "renew" || !!state.expiry;
     var expField = document.createElement("div");
     expField.className = "field";
-    expField.innerHTML = '<label>现签证或准证到期日<span class="hint">（可选，仅本机提示距今天数，不作官方窗口承诺）</span></label>';
-    var row = document.createElement("div");
-    row.className = "exp-row";
-    var inp = document.createElement("input");
-    inp.type = "date";
-    inp.value = state.expiry || "";
-    inp.addEventListener("change", function () {
-      state.expiry = inp.value;
-      persist();
-      var n = daysUntil(state.expiry);
-      tip.textContent = n === null ? "" : (n >= 0 ? ("距今约 " + n + " 天") : ("已过期约 " + Math.abs(n) + " 天"));
-    });
-    var tip = document.createElement("span");
-    tip.className = "toolbar-note";
-    var n0 = daysUntil(state.expiry);
-    tip.textContent = n0 === null ? "" : (n0 >= 0 ? ("距今约 " + n0 + " 天") : ("已过期约 " + Math.abs(n0) + " 天"));
-    row.appendChild(inp);
-    row.appendChild(tip);
-    expField.appendChild(row);
-    expBox.appendChild(expField);
+    if (showExpiry) {
+      expField.innerHTML = '<label>现签证或准证到期日<span class="hint">（可选，仅本机提示距今天数，不作官方窗口承诺）</span></label>';
+    } else {
+      expField.innerHTML = "";
+    }
+    if (showExpiry) {
+      var row = document.createElement("div");
+      row.className = "exp-row";
+      var inp = document.createElement("input");
+      inp.type = "date";
+      inp.value = state.expiry || "";
+      inp.addEventListener("change", function () {
+        state.expiry = inp.value;
+        persist();
+        var n = daysUntil(state.expiry);
+        tip.textContent = n === null ? "" : (n >= 0 ? ("距今约 " + n + " 天") : ("已过期约 " + Math.abs(n) + " 天"));
+      });
+      var tip = document.createElement("span");
+      tip.className = "toolbar-note";
+      var n0 = daysUntil(state.expiry);
+      tip.textContent = n0 === null ? "" : (n0 >= 0 ? ("距今约 " + n0 + " 天") : ("已过期约 " + Math.abs(n0) + " 天"));
+      row.appendChild(inp);
+      row.appendChild(tip);
+      expField.appendChild(row);
+      expBox.appendChild(expField);
+    }
 
     var personal = t.personal(state.answers);
     var company = t.company(state.answers);
     renderItemList($("personal-list"), personal, "个人资料");
     var coCard = $("company-card");
+    var coSub = $("company-sub");
+    if (coSub) {
+      coSub.textContent = state.direction === "match"
+        ? "仅当选择已有公司或雇主时展开。首次申请如尚无公司，身份获批后再按需考虑注册与实体落地。请勿填写账号、薪金等敏感数字。"
+        : "仅当入口选择已有公司或雇主时展开。请勿填写账号、薪金等敏感数字。";
+    }
     if (company.length) {
       coCard.classList.remove("hidden");
       renderItemList($("company-list"), company, "公司 / 雇主资料");
@@ -554,24 +686,46 @@
     if (tier === "R4" && requiredHave > 0 && requiredGaps > 0 && requiredGaps < 4 && criticalGaps < 2) tier = "R2";
     if (tier === "R4" && requiredHave > 0 && (requiredGaps >= 4 || criticalGaps >= 2)) tier = "R3";
 
-    var copy = {
-      R1: {
-        title: "基础材料较齐",
-        body: "就自测勾选结果看，基础必检材料已较齐。正式递交前仍须对照当日官网清单与顾问核对原件规格，本结果不代表可递交或可获批。"
-      },
-      R2: {
-        title: "仍有若干缺口",
-        body: "仍有若干必检材料待补齐或更新。建议按下方缺失清单逐项准备；补齐后可再跑一次自测。本结果仅为准备度参考。"
-      },
-      R3: {
-        title: "优先材料缺口较多",
-        body: "身份或公司优先材料缺口较多。建议先集中补齐清单中的优先项，再考虑时间表与顾问沟通。本工具不评估获批可能。"
-      },
-      R4: {
-        title: "尚未开始准备",
-        body: "目前多数字段尚未确认或仍为「无」。可先从往来港澳通行证等必检身份文件与公司登记证明等基础项开始收集（护照为选检）。"
-      }
-    };
+    var copy;
+    if (state.direction === "match") {
+      copy = {
+        R1: {
+          title: "申请材料基础较齐",
+          body: "就自测勾选结果看，首次申请的基础必检材料已较齐。正式递交前仍须对照当日官网清单与顾问核对原件规格，本结果不代表可递交或可获批，也不构成计划匹配结论。"
+        },
+        R2: {
+          title: "申请材料仍有若干缺口",
+          body: "首次申请仍有若干必检材料待补齐。建议按下方缺失清单逐项准备；补齐后可再跑一次自测。本结果仅为准备度参考，不评估获批可能。"
+        },
+        R3: {
+          title: "申请优先材料缺口较多",
+          body: "首次申请的优先材料缺口较多。建议先集中补齐清单中的优先项，再与顾问沟通。本工具不评估获批可能，也不替代诊断与方案书。"
+        },
+        R4: {
+          title: "尚未开始准备",
+          body: "目前多数字段尚未确认或仍为「无」。可先从往来港澳通行证等必检身份文件开始收集（护照为选检）。如尚无公司，身份获批后再按需考虑注册与实体落地。"
+        }
+      };
+    } else {
+      copy = {
+        R1: {
+          title: "基础材料较齐",
+          body: "就自测勾选结果看，延续所需的基础必检材料已较齐。正式递交前仍须对照当日官网清单与顾问核对原件规格，本结果不代表可递交或可获批。"
+        },
+        R2: {
+          title: "仍有若干缺口",
+          body: "延续所需仍有若干必检材料待补齐或更新。建议按下方缺失清单逐项准备；补齐后可再跑一次自测。本结果仅为准备度参考。"
+        },
+        R3: {
+          title: "优先材料缺口较多",
+          body: "身份或公司优先材料缺口较多。建议先集中补齐清单中的优先项，再对照到期安排与顾问沟通。本工具不评估获批可能。"
+        },
+        R4: {
+          title: "尚未开始准备",
+          body: "目前多数字段尚未确认或仍为「无」。可先从往来港澳通行证等必检身份文件与公司登记证明等基础项开始收集（护照为选检）。"
+        }
+      };
+    }
 
     return {
       tier: tier,
@@ -579,15 +733,15 @@
       priority: priority,
       optional: optional,
       typeTitle: t.title,
-      days: daysUntil(state.expiry)
+      directionTitle: directionLabel(),
+      days: state.direction === "renew" ? daysUntil(state.expiry) : null
     };
   }
 
   function renderResult() {
     var res = evaluate();
     if (!res) return;
-    $("step-home").classList.add("hidden");
-    $("step-form").classList.add("hidden");
+    hideAllSteps();
     $("step-result").classList.remove("hidden");
 
     var tierEl = $("result-tier");
@@ -595,8 +749,13 @@
     tierEl.className = "result-tier " + tierClass;
     tierEl.innerHTML = "<h3>" + res.copy.title + "</h3><p>" + res.copy.body + "</p>";
 
+    var crumb = $("result-crumb");
+    if (crumb) crumb.textContent = res.directionTitle ? ("当前方向：" + res.directionTitle + " · " + res.typeTitle) : ("身份入口：" + res.typeTitle);
+
     var meta = $("result-meta");
-    var bits = ["身份入口：" + res.typeTitle];
+    var bits = [];
+    if (res.directionTitle) bits.push(res.directionTitle);
+    bits.push("计划类别：" + res.typeTitle);
     if (res.days !== null) {
       bits.push(res.days >= 0 ? ("距填写的到期日约 " + res.days + " 天（仅参考）") : ("填写的到期日已过约 " + Math.abs(res.days) + " 天（仅参考）"));
     }
@@ -630,20 +789,42 @@
 
   function entriesReady() {
     var t = currentType();
-    if (!t) return false;
-    return t.entries.every(function (f) { return !!state.answers[f.key]; });
+    if (!t || !state.direction) return false;
+    applyDirectionDefaults();
+    return visibleEntries(t).every(function (f) { return !!state.answers[f.key]; });
   }
 
   function bind() {
+    document.querySelectorAll(".dir-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var next = btn.getAttribute("data-direction");
+        if (state.direction !== next) {
+          state.type = null;
+          state.answers = {};
+          state.statuses = {};
+          state.expiry = "";
+        }
+        state.direction = next;
+        persist();
+        renderHome();
+      });
+    });
     document.querySelectorAll(".entry-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
         state.type = btn.getAttribute("data-type");
         state.answers = {};
         state.statuses = {};
+        applyDirectionDefaults();
         persist();
         renderForm();
       });
     });
+    var backDir = $("btn-back-direction");
+    if (backDir) {
+      backDir.addEventListener("click", function () {
+        renderDirection();
+      });
+    }
     $("btn-back-home").addEventListener("click", function () {
       renderHome();
     });
@@ -674,6 +855,7 @@
   loadSaved();
   bind();
   $("saveLocal").checked = !!state.saveLocal;
-  if (state.type && TYPES[state.type]) renderForm();
-  else renderHome();
+  if (state.direction && state.type && TYPES[state.type] && DIRECTIONS[state.direction]) renderForm();
+  else if (state.direction && DIRECTIONS[state.direction]) renderHome();
+  else renderDirection();
 })();

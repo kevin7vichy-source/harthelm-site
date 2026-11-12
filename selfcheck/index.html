@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HARTHELM 准备度自测</title>
-<meta name="description" content="高才通、优才与新加坡 Employment Pass 资料准备度自测。不评分、不报价、不承诺获批。">
+<meta name="description" content="移民计划匹配诊断与续签风险诊断资料准备度自测。不评分、不报价、不承诺获批。">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -38,8 +38,8 @@
     </div>
 
     <div class="hero">
-      <h1>高才通 / 优才 / 新加坡 EP 资料准备度自测</h1>
-      <p>勾选「有 / 无 / 已过期 / 不适用」，本机生成缺失清单与准备度描述。不评分、不报价、不承诺获批。</p>
+      <h1>一个工具，两个方向</h1>
+      <p>请先选择您目前的情况，再选择计划并勾选资料准备情况。本机生成缺失清单与准备度描述。<span class="nowrap">不评分、不报价、不承诺获批。</span></p>
     </div>
 
     <div class="notice">
@@ -47,42 +47,64 @@
     </div>
 
     <div class="notice" style="margin-top:12px">
-      想离线使用？<a href="HARTHELM-selfcheck-offline-v1.2.zip" download>下载离线包（zip）</a>，解压后用浏览器打开 index.html 即可，无需联网。
+      想离线使用？<a href="HARTHELM-selfcheck-offline-v1.3.zip" download>下载离线包（zip）</a>，解压后用浏览器打开 index.html 即可，无需联网。
     </div>
 
-    <section id="step-home" class="card">
-      <h2>选择身份入口</h2>
-      <p class="sub">三选一进入；答卷可选保存在本机浏览器，默认不外传。</p>
-      <div class="grid-3">
-        <button type="button" class="entry-btn" data-type="ttps">
-          <strong>高才通 TTPS</strong>
-          <small>含人才办问卷、首次入境标签说明</small>
+    <section id="step-direction" class="card">
+      <h2>请先选择方向</h2>
+      <p class="sub">请按您目前的情况选择对应方向，再进入资料准备度自测。</p>
+      <div class="grid-2">
+        <button type="button" class="dir-btn" data-direction="match">
+          <span class="kicker">首次申请身份</span>
+          <strong>移民计划匹配诊断</strong>
+          <small>尚未持有目标身份、计划首次申请。请选择计划并勾选申请材料准备情况。</small>
         </button>
-        <button type="button" class="entry-btn" data-type="qmas">
-          <strong>优才 QMAS</strong>
-          <small>申请 / 原则批 / 续签资料自检</small>
-        </button>
-        <button type="button" class="entry-btn" data-type="ep">
-          <strong>新加坡 EP</strong>
-          <small>Employment Pass 申请或更新自检</small>
+        <button type="button" class="dir-btn" data-direction="renew">
+          <span class="kicker">已有身份延续</span>
+          <strong>续签风险诊断</strong>
+          <small>已持有相关身份，需要办理延续或更新。请选择计划并勾选资料准备情况。</small>
         </button>
       </div>
       <div class="actions" style="margin-top:16px">
         <label class="toolbar-note">
-          <input type="checkbox" id="saveLocal" /> 在本机保存进度（localStorage，不上传）
+          <input type="checkbox" id="saveLocal" /> 在本机保存进度（不上传）
         </label>
         <button type="button" class="btn btn-danger-ghost" id="btn-clear">清除本机答卷</button>
       </div>
     </section>
 
+    <section id="step-home" class="card hidden">
+      <p class="crumb" id="home-crumb"></p>
+      <h2>选择计划类别</h2>
+      <p class="sub" id="home-sub">三选一进入；答卷可选保存在本机浏览器，默认不外传。本工具目前覆盖高才通、优才、新加坡 EP。</p>
+      <div class="grid-3">
+        <button type="button" class="entry-btn" data-type="ttps">
+          <strong>高才通 TTPS</strong>
+          <small id="hint-ttps">含人才办问卷、首次入境标签说明</small>
+        </button>
+        <button type="button" class="entry-btn" data-type="qmas">
+          <strong>优才 QMAS</strong>
+          <small id="hint-qmas">申请 / 原则批 / 续签资料自检</small>
+        </button>
+        <button type="button" class="entry-btn" data-type="ep">
+          <strong>新加坡 EP</strong>
+          <small id="hint-ep">Employment Pass 申请或更新自检</small>
+        </button>
+      </div>
+      <div class="actions" style="margin-top:16px">
+        <button type="button" class="btn btn-ghost" id="btn-back-direction">返回选择方向</button>
+      </div>
+    </section>
+
     <section id="step-form" class="hidden">
       <div class="card">
+        <p class="crumb" id="form-crumb"></p>
         <h2 id="form-title">资料自检</h2>
         <p class="sub" id="form-blurb"></p>
         <div id="entry-fields"></div>
         <div id="expiry-fields"></div>
         <div class="actions">
-          <button type="button" class="btn btn-ghost" id="btn-back-home">返回入口</button>
+          <button type="button" class="btn btn-ghost" id="btn-back-home">返回计划类别</button>
         </div>
       </div>
 
@@ -94,7 +116,7 @@
 
       <div class="card hidden" id="company-card">
         <h2>公司 / 雇主资料清单</h2>
-        <p class="sub">仅当入口选择「已有公司 / 雇主」时展开。请勿填写账号、薪金等敏感数字。</p>
+        <p class="sub" id="company-sub">仅当入口选择「已有公司 / 雇主」时展开。请勿填写账号、薪金等敏感数字。</p>
         <div id="company-list"></div>
       </div>
 
@@ -105,6 +127,7 @@
 
     <section id="step-result" class="hidden">
       <div class="card">
+        <p class="crumb" id="result-crumb"></p>
         <h2>自测结果</h2>
         <p class="sub" id="result-meta"></p>
         <div id="result-tier" class="result-tier tier-gaps"></div>
@@ -126,7 +149,9 @@
 本工具亦非香港入境事务处、人才办、新加坡 MOM 或其他机关之官方系统或标准。
 不收集您的邮箱、电话或证件号码；答卷默认仅存于本机。
 请勿将本结果理解为获批承诺、通过率或报价依据。
-资料清单更新日期：2026-10-23</footer>
+本页为免费的资料准备度自测，不替代「移民计划匹配诊断 + 方案书」或「续签风险诊断 + 方案书」。
+资料清单更新日期：2026-10-23
+工具界面更新日期：2026-11-13</footer>
     </div>
   </div>
 <footer class="site-footer">
